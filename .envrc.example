@@ -1,1 +1,4 @@
 export GO111MODULE=on
+export GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4
+export GITLAB_BASE_URL=https://your-gitlab.example.com
+export GITLAB_PRIVATE_TOKEN=xxxxxxxxxxxxxx
