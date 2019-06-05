@@ -21,15 +21,19 @@ type GitLabUrlParserParams struct {
 	PrivateToken string
 }
 
-func NewGitlabUrlParser(params GitLabUrlParserParams) *GitlabUrlParser {
+func NewGitlabUrlParser(params GitLabUrlParserParams) (*GitlabUrlParser, error) {
 	p := &GitlabUrlParser{
 		baseUrl: params.BaseUrl,
 	}
 
 	p.client = gitlab.NewClient(nil, params.PrivateToken)
-	p.client.SetBaseURL(params.ApiEndpoint)
+	err := p.client.SetBaseURL(params.ApiEndpoint)
 
-	return p
+	if err != nil {
+		return nil, err
+	}
+
+	return p, nil
 }
 
 func (p *GitlabUrlParser) FetchUrl(url string) (*GitLabPage, error) {

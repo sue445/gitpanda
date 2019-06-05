@@ -45,11 +45,16 @@ func TestGitlabUrlParser_FetchUrl(t *testing.T) {
 		httpmock.NewStringResponder(200, readTestData("users.json")),
 	)
 
-	p := NewGitlabUrlParser(GitLabUrlParserParams{
+	p, err := NewGitlabUrlParser(GitLabUrlParserParams{
 		ApiEndpoint:  "http://example.com/api/v4",
 		BaseUrl:      "http://example.com",
 		PrivateToken: "xxxxxxxxxx",
 	})
+
+	if err != nil {
+		panic(err)
+	}
+
 	type args struct {
 		url string
 	}
