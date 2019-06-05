@@ -39,6 +39,11 @@ func TestGitlabUrlParser_FetchUrl(t *testing.T) {
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
 		httpmock.NewStringResponder(200, readTestData("merge_request.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/users?username=john_smith",
+		httpmock.NewStringResponder(200, readTestData("users.json")),
+	)
 
 	p := NewGitlabUrlParser(GitLabUrlParserParams{
 		ApiEndpoint:  "http://example.com/api/v4",
@@ -105,6 +110,19 @@ func TestGitlabUrlParser_FetchUrl(t *testing.T) {
 				AuthorName:       "Administrator",
 				AuthorAvatarURL:  "https://gitlab.example.com/images/admin.png",
 				ProjectAvatarURL: "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+			},
+		},
+		{
+			name: "User URL",
+			args: args{
+				url: "http://example.com/john_smith",
+			},
+			want: &GitLabPage{
+				Title:            "John Smith",
+				Description:      "John Smith",
+				AuthorName:       "John Smith",
+				AuthorAvatarURL:  "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				ProjectAvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 			},
 		},
 	}

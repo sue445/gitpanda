@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	//"github.com/xanzy/go-gitlab"
 	"github.com/sue445/go-gitlab"
 	"regexp"
@@ -65,6 +67,17 @@ func (p *GitlabUrlParser) FetchUrl(url string) (*GitLabPage, error) {
 
 	// Project URL
 	page, err = p.fetchProjectUrl(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if page != nil {
+		return page, nil
+	}
+
+	// User URL
+	page, err = p.fetchUserUrl(path)
 
 	if err != nil {
 		return nil, err
@@ -163,6 +176,38 @@ func (p *GitlabUrlParser) fetchProjectUrl(path string) (*GitLabPage, error) {
 		AuthorName:       project.Owner.Name,
 		AuthorAvatarURL:  project.Owner.AvatarURL,
 		ProjectAvatarURL: project.AvatarURL,
+	}
+
+	return page, nil
+}
+
+func (p *GitlabUrlParser) fetchUserUrl(path string) (*GitLabPage, error) {
+	re := regexp.MustCompile("^([^/]+)/?$")
+	matched := re.FindStringSubmatch(path)
+
+	if matched == nil {
+		return nil, nil
+	}
+
+	username := matched[1]
+	users, _, err := p.client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &username})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if len(users) < 1 {
+		return nil, fmt.Errorf("NotFound user: %s", username)
+	}
+
+	user := users[0]
+
+	page := &GitLabPage{
+		Title:            user.Name,
+		Description:      user.Name,
+		AuthorName:       user.Name,
+		AuthorAvatarURL:  user.AvatarURL,
+		ProjectAvatarURL: user.AvatarURL,
 	}
 
 	return page, nil
