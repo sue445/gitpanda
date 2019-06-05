@@ -136,8 +136,7 @@ func (p *GitlabUrlParser) fetchMergeRequestUrl(path string) (*GitLabPage, error)
 		Title:            mr.Title,
 		Description:      mr.Description,
 		AuthorName:       mr.Author.Name,
-		// AuthorAvatarURL:  mr.Author.AvatarURL, TODO: fix after
-		AuthorAvatarURL: "",
+		AuthorAvatarURL:  mr.Author.AvatarURL,
 		ProjectAvatarURL: project.AvatarURL,
 	}
 
