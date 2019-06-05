@@ -19,7 +19,7 @@ func readTestData(filename string) string {
 	return string(buf)
 }
 
-func TestGitlabUrlParser_FetchUrl(t *testing.T) {
+func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -133,13 +133,13 @@ func TestGitlabUrlParser_FetchUrl(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := p.FetchUrl(tt.args.url)
+			got, err := p.FetchURL(tt.args.url)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GitlabUrlParser.FetchUrl() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("GitlabUrlParser.FetchURL() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GitlabUrlParser.FetchUrl() = %v, want %v", got, tt.want)
+				t.Errorf("GitlabUrlParser.FetchURL() = %v, want %v", got, tt.want)
 			}
 		})
 	}
