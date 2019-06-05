@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-
-	//"github.com/xanzy/go-gitlab"
-	"github.com/sue445/go-gitlab"
+	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strconv"
 	"strings"
