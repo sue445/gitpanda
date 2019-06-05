@@ -95,7 +95,7 @@ func (p *GitlabUrlParser) FetchUrl(url string) (*GitLabPage, error) {
 }
 
 func (p *GitlabUrlParser) fetchIssueUrl(path string) (*GitLabPage, error) {
-	re := regexp.MustCompile("^(.+)/(.+)/issues/(\\d+)")
+	re := regexp.MustCompile("^([^/]+)/([^/]+)/issues/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
@@ -128,7 +128,7 @@ func (p *GitlabUrlParser) fetchIssueUrl(path string) (*GitLabPage, error) {
 }
 
 func (p *GitlabUrlParser) fetchMergeRequestUrl(path string) (*GitLabPage, error) {
-	re := regexp.MustCompile("^(.+)/(.+)/merge_requests/(\\d+)")
+	re := regexp.MustCompile("^([^/]+)/([^/]+)/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
@@ -161,7 +161,7 @@ func (p *GitlabUrlParser) fetchMergeRequestUrl(path string) (*GitLabPage, error)
 }
 
 func (p *GitlabUrlParser) fetchProjectUrl(path string) (*GitLabPage, error) {
-	re := regexp.MustCompile("^(.+)/(.+)/?$")
+	re := regexp.MustCompile("^([^/]+)/([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
