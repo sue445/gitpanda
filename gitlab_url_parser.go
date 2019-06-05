@@ -113,11 +113,11 @@ func (p *GitlabUrlParser) fetchIssueUrl(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:            issue.Title,
-		Description:      issue.Description,
-		AuthorName:       issue.Author.Name,
-		AuthorAvatarURL:  issue.Author.AvatarURL,
-		ProjectAvatarURL: project.AvatarURL,
+		Title:           issue.Title,
+		Description:     issue.Description,
+		AuthorName:      issue.Author.Name,
+		AuthorAvatarURL: issue.Author.AvatarURL,
+		AvatarURL:       project.AvatarURL,
 	}
 
 	return page, nil
@@ -146,11 +146,11 @@ func (p *GitlabUrlParser) fetchMergeRequestUrl(path string) (*GitLabPage, error)
 	}
 
 	page := &GitLabPage{
-		Title:            mr.Title,
-		Description:      mr.Description,
-		AuthorName:       mr.Author.Name,
-		AuthorAvatarURL:  mr.Author.AvatarURL,
-		ProjectAvatarURL: project.AvatarURL,
+		Title:           mr.Title,
+		Description:     mr.Description,
+		AuthorName:      mr.Author.Name,
+		AuthorAvatarURL: mr.Author.AvatarURL,
+		AvatarURL:       project.AvatarURL,
 	}
 
 	return page, nil
@@ -171,11 +171,11 @@ func (p *GitlabUrlParser) fetchProjectUrl(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:            project.NameWithNamespace,
-		Description:      project.Description,
-		AuthorName:       project.Owner.Name,
-		AuthorAvatarURL:  project.Owner.AvatarURL,
-		ProjectAvatarURL: project.AvatarURL,
+		Title:           project.NameWithNamespace,
+		Description:     project.Description,
+		AuthorName:      project.Owner.Name,
+		AuthorAvatarURL: project.Owner.AvatarURL,
+		AvatarURL:       project.AvatarURL,
 	}
 
 	return page, nil
@@ -203,11 +203,11 @@ func (p *GitlabUrlParser) fetchUserUrl(path string) (*GitLabPage, error) {
 	user := users[0]
 
 	page := &GitLabPage{
-		Title:            user.Name,
-		Description:      user.Name,
-		AuthorName:       user.Name,
-		AuthorAvatarURL:  user.AvatarURL,
-		ProjectAvatarURL: user.AvatarURL,
+		Title:           user.Name,
+		Description:     user.Name,
+		AuthorName:      user.Name,
+		AuthorAvatarURL: user.AvatarURL,
+		AvatarURL:       user.AvatarURL,
 	}
 
 	return page, nil
