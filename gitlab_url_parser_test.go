@@ -27,22 +27,22 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, readTestData("project.json")),
+		httpmock.NewStringResponder(200, readTestData("gitlab/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1",
-		httpmock.NewStringResponder(200, readTestData("issue.json")),
+		httpmock.NewStringResponder(200, readTestData("gitlab/issue.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, readTestData("merge_request.json")),
+		httpmock.NewStringResponder(200, readTestData("gitlab/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, readTestData("users.json")),
+		httpmock.NewStringResponder(200, readTestData("gitlab/users.json")),
 	)
 
 	p, err := NewGitlabUrlParser(GitLabUrlParserParams{
