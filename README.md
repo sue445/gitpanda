@@ -1,4 +1,4 @@
-# gitpanda
+# gitpanda :panda_face:
 GitLab URL expander for Slack
 
 ## Setup
