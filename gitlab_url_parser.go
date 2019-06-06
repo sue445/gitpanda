@@ -19,7 +19,7 @@ type GitLabUrlParserParams struct {
 	PrivateToken string
 }
 
-func NewGitlabUrlParser(params GitLabUrlParserParams) (*GitlabUrlParser, error) {
+func NewGitlabUrlParser(params *GitLabUrlParserParams) (*GitlabUrlParser, error) {
 	p := &GitlabUrlParser{
 		baseURL: params.BaseUrl,
 	}

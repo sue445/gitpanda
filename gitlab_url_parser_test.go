@@ -45,7 +45,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		httpmock.NewStringResponder(200, readTestData("gitlab/users.json")),
 	)
 
-	p, err := NewGitlabUrlParser(GitLabUrlParserParams{
+	p, err := NewGitlabUrlParser(&GitLabUrlParserParams{
 		ApiEndpoint:  "http://example.com/api/v4",
 		BaseUrl:      "http://example.com",
 		PrivateToken: "xxxxxxxxxx",
