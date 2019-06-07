@@ -7,15 +7,18 @@ import (
 	"github.com/nlopes/slack/slackevents"
 )
 
+// SlackWebhook represents Slack webhook
 type SlackWebhook struct {
 	slackToken            string
-	gitLabUrlParserParams *GitLabUrlParserParams
+	gitLabURLParserParams *GitLabURLParserParams
 }
 
-func NewSlackWebhook(slackToken string, gitLabUrlParserParams *GitLabUrlParserParams) *SlackWebhook {
-	return &SlackWebhook{slackToken: slackToken, gitLabUrlParserParams: gitLabUrlParserParams}
+// NewSlackWebhook create new SlackWebhook instance
+func NewSlackWebhook(slackToken string, gitLabURLParserParams *GitLabURLParserParams) *SlackWebhook {
+	return &SlackWebhook{slackToken: slackToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
+// Request handles Slack event
 func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 	option := slackevents.OptionNoVerifyToken()
 	if verifyToken {
@@ -37,10 +40,10 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 		return r.Challenge, nil
 
 	case slackevents.CallbackEvent:
-		p, err := NewGitlabUrlParser(s.gitLabUrlParserParams)
+		p, err := NewGitlabURLParser(s.gitLabURLParserParams)
 
 		if err != nil {
-			return "Failed: NewGitlabUrlParser", err
+			return "Failed: NewGitlabURLParser", err
 		}
 
 		innerEvent := eventsAPIEvent.InnerEvent
