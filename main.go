@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -21,8 +23,36 @@ func main() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
+	w.Header().Set("Content-Type", "text")
+
+	switch r.Method {
+	case http.MethodGet:
 		w.Write([]byte("It works"))
-		return
+
+	case http.MethodPost:
+		buf := new(bytes.Buffer)
+		buf.ReadFrom(r.Body)
+		body := buf.String()
+
+		s := NewSlackWebhook(
+			os.Getenv("SLACK_TOKEN"),
+			&GitLabUrlParserParams{
+				ApiEndpoint:  os.Getenv("GITLAB_API_ENDPOINT"),
+				BaseUrl:      os.Getenv("GITLAB_BASE_URL"),
+				PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),
+			},
+		)
+		response, err := s.Request(
+			body,
+			true,
+		)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		w.Write([]byte(response))
 	}
 }
