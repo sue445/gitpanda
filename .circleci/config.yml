@@ -12,7 +12,7 @@ executors:
       GO111MODULE: "on"
 
 jobs:
-  build:
+  test:
     executor: golang
 
     steps:
@@ -23,6 +23,26 @@ jobs:
       - run:
           command: go test
 
+  golint:
+    executor: golang
+
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/sue445/gitpanda
+      - run:
+          command: go get -u golang.org/x/lint/golint
+      - run:
+          command: golint -set_exit_status
+
+  go-vet:
+    executor: golang
+
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/sue445/gitpanda
+      - run:
+          command: go vet
+
 workflows:
   build:
     jobs:
@@ -30,6 +50,14 @@ workflows:
           executor: golang
           persist-to-workspace: true
 
-      - build:
+      - test:
+          requires:
+            - go-module/download
+
+      - golint:
+          requires:
+            - go-module/download
+
+      - go-vet:
           requires:
             - go-module/download
