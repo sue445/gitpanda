@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  go-module: timakin/go-module@0.3.0
+
+executors:
+  golang:
+    docker:
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/sue445/gitpanda
+    environment:
+      GO111MODULE: "on"
+
+jobs:
+  build:
+    executor: golang
+
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/sue445/gitpanda
+      - restore_cache:
+          key: go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
+      - run:
+          command: go test
+
+workflows:
+  build:
+    jobs:
+      - go-module/download:
+          executor: golang
+          persist-to-workspace: true
+
+      - build:
+          requires:
+            - go-module/download
