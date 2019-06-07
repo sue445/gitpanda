@@ -39,9 +39,9 @@ func TestSlackWebhook_Request(t *testing.T) {
 
 	s := NewSlackWebhook(
 		"xxxxxxx",
-		&GitLabUrlParserParams{
-			ApiEndpoint:  "http://example.com/api/v4",
-			BaseUrl:      "http://example.com",
+		&GitLabURLParserParams{
+			APIEndpoint:  "http://example.com/api/v4",
+			BaseURL:      "http://example.com",
 			PrivateToken: "xxxxxxxxxx",
 		},
 	)

@@ -45,9 +45,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		httpmock.NewStringResponder(200, readTestData("gitlab/users.json")),
 	)
 
-	p, err := NewGitlabUrlParser(&GitLabUrlParserParams{
-		ApiEndpoint:  "http://example.com/api/v4",
-		BaseUrl:      "http://example.com",
+	p, err := NewGitlabURLParser(&GitLabURLParserParams{
+		APIEndpoint:  "http://example.com/api/v4",
+		BaseURL:      "http://example.com",
 		PrivateToken: "xxxxxxxxxx",
 	})
 
@@ -135,11 +135,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := p.FetchURL(tt.args.url)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GitlabUrlParser.FetchURL() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("GitlabURLParser.FetchURL() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GitlabUrlParser.FetchURL() = %v, want %v", got, tt.want)
+				t.Errorf("GitlabURLParser.FetchURL() = %v, want %v", got, tt.want)
 			}
 		})
 	}
