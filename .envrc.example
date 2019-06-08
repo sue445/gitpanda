@@ -1,5 +1,6 @@
 export GO111MODULE=on
+export PORT=8000
 export GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4
 export GITLAB_BASE_URL=https://your-gitlab.example.com
 export GITLAB_PRIVATE_TOKEN=xxxxxxxxxxxxxx
-export SLACK_OAUTH_ACCESS_TOKEN=xxxxxxxxxxxxxx
+export SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000
