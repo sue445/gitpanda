@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 )
 
 var port int
@@ -31,7 +32,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
-		body := buf.String()
+		body := strings.TrimSpace(buf.String())
 
 		s := NewSlackWebhook(
 			os.Getenv("SLACK_TOKEN"),
