@@ -44,7 +44,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		)
 		response, err := s.Request(
 			body,
-			true,
+			false,
 		)
 
 		if err != nil {
