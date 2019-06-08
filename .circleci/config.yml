@@ -53,6 +53,8 @@ jobs:
       - run:
           command: go get -u github.com/mitchellh/gox
       - run:
+          command: rm bin/.keep
+      - run:
           command: make gox
       - persist_to_workspace:
           root: /go/src/github.com/sue445/gitpanda
