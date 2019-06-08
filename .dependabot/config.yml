@@ -1,0 +1,17 @@
+# c.f. https://dependabot.com/docs/config-file/
+version: 1
+
+update_configs:
+  - package_manager: "go:modules"
+
+    directory: "/"
+
+    update_schedule: "weekly"
+
+    default_assignees:
+      - sue445
+
+    allowed_updates:
+      - match:
+          # Disable. Only top-level dependencies (and security patches for subdependencies)
+          update_type: "all"
