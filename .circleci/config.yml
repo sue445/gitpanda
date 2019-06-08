@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   go-module: timakin/go-module@0.3.0
+  heroku: circleci/heroku@0.0.8
 
 executors:
   golang:
@@ -44,7 +45,7 @@ jobs:
           command: go vet
 
 workflows:
-  build:
+  build-and-deploy:
     jobs:
       - go-module/download:
           executor: golang
@@ -61,3 +62,13 @@ workflows:
       - go-vet:
           requires:
             - go-module/download
+
+      - heroku/deploy-via-git:
+          context: Heroku
+          requires:
+            - test
+            - golint
+            - go-vet
+          filters:
+            branches:
+              only: master
