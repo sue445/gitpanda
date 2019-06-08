@@ -34,6 +34,14 @@ SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-000000000000000
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   * e.g. `xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000`
 
+## Arguments
+```bash
+$ ./gitpanda --help
+Usage of ./gitpanda:
+  -version
+    	Whether showing version
+```
+
 ## Development
 Recommend to use https://github.com/direnv/direnv
 

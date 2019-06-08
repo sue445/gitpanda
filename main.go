@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,9 +10,30 @@ import (
 	"strings"
 )
 
+var (
+	// Version represents app version (injected from ldflags)
+	Version string
+
+	// Revision represents app revision (injected from ldflags)
+	Revision string
+)
+
 var port int
 
+var isPrintVersion bool
+
+func init() {
+	flag.BoolVar(&isPrintVersion, "version", false, "Whether showing version")
+
+	flag.Parse()
+}
+
 func main() {
+	if isPrintVersion {
+		printVersion()
+		return
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
@@ -20,6 +42,10 @@ func main() {
 	fmt.Printf("gitpanda started: port=%s\n", port)
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":"+port, nil)
+}
+
+func printVersion() {
+	fmt.Printf("gitpanda v%s, build %s\n", Version, Revision)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
