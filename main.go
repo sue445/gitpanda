@@ -47,7 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		if err != nil {
-			log.Printf("[ERROR] body=%s, error=%v", body, err)
+			log.Printf("[ERROR] body=%s, response=%s, error=%v", body ,response, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
