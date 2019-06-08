@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -46,6 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		if err != nil {
+			log.Printf("[ERROR] body=%s, error=%v", body, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
