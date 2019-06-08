@@ -49,8 +49,9 @@ jobs:
     executor: golang
 
     steps:
-      - attach_workspace:
-          at: /go/src/github.com/sue445/gitpanda
+      - checkout
+      - run:
+          command: go get -u github.com/mitchellh/gox
       - run:
           command: make gox
       - persist_to_workspace:
