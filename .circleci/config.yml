@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   go-module: timakin/go-module@0.3.0
   heroku: circleci/heroku@0.0.8
+  github-release: izumin5210/github-release@0.0.1
 
 executors:
   golang:
@@ -44,6 +45,19 @@ jobs:
       - run:
           command: go vet
 
+  gox:
+    executor: golang
+
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/sue445/gitpanda
+      - run:
+          command: make gox
+      - persist_to_workspace:
+          root: /go/src/github.com/sue445/gitpanda
+          paths:
+            - .
+
 workflows:
   build-and-deploy:
     jobs:
@@ -72,3 +86,18 @@ workflows:
           filters:
             branches:
               only: master
+
+  release:
+    jobs:
+      - gox:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+
+      - github-release/create:
+          executor: golang
+          path: ./bin/
+          requires:
+            - gox
