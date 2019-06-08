@@ -9,20 +9,20 @@ import (
 
 // SlackWebhook represents Slack webhook
 type SlackWebhook struct {
-	slackToken            string
+	slackOAuthAccessToken string
 	gitLabURLParserParams *GitLabURLParserParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackToken string, gitLabURLParserParams *GitLabURLParserParams) *SlackWebhook {
-	return &SlackWebhook{slackToken: slackToken, gitLabURLParserParams: gitLabURLParserParams}
+func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *GitLabURLParserParams) *SlackWebhook {
+	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
 // Request handles Slack event
 func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 	option := slackevents.OptionNoVerifyToken()
 	if verifyToken {
-		option = slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: s.slackToken})
+		option = slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: s.slackOAuthAccessToken})
 	}
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), option)
 
@@ -76,7 +76,7 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 				return "do nothing", nil
 			}
 
-			api := slack.New(s.slackToken)
+			api := slack.New(s.slackOAuthAccessToken)
 			_, _, _, err := api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
 
 			if err != nil {

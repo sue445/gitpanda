@@ -35,7 +35,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		body := strings.TrimSpace(buf.String())
 
 		s := NewSlackWebhook(
-			os.Getenv("SLACK_TOKEN"),
+			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
 			&GitLabURLParserParams{
 				APIEndpoint:  os.Getenv("GITLAB_API_ENDPOINT"),
 				BaseURL:      os.Getenv("GITLAB_BASE_URL"),
