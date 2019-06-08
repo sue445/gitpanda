@@ -68,7 +68,7 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 					AuthorName: page.AuthorName,
 					AuthorIcon: page.AuthorAvatarURL,
 					Text:       page.Description,
-					Color:      "#e24329", // c.f. https://brandcolors.net/b/gitlab
+					Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				}
 			}
 
