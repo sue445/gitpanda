@@ -2,24 +2,22 @@ package main
 
 import (
 	"bytes"
-	"flag"
 	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 )
 
 var port int
 
-func init() {
-	flag.IntVar(&port, "port", 8000, "HTTP port")
-	flag.Parse()
-}
-
 func main() {
-	fmt.Printf("gitpanda started: port=%d\n", port)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+
+	fmt.Printf("gitpanda started: port=%s\n", port)
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":"+strconv.Itoa(port), nil)
+	http.ListenAndServe(":"+port, nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
