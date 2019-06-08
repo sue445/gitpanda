@@ -21,7 +21,7 @@ clean:
 
 .PHONY: tag
 tag:
-	git tag -a $(VERSION) -m "Release v$(VERSION)"
+	git tag -a $(VERSION) -m "Release $(VERSION)"
 	git push --tags
 
 .PHONY: release

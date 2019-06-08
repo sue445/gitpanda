@@ -45,7 +45,7 @@ func main() {
 }
 
 func printVersion() {
-	fmt.Printf("gitpanda v%s, build %s\n", Version, Revision)
+	fmt.Printf("gitpanda %s, build %s\n", Version, Revision)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
