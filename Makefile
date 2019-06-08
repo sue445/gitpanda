@@ -4,12 +4,16 @@ VERSION  := $(shell cat VERSION)
 REVISION := $(shell git rev-parse --short HEAD)
 
 SRCS    := $(shell find . -type f -name '*.go')
-LDFLAGS := -ldflags="-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -extldflags \"-static\""
+LDFLAGS := "-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\" -extldflags \"-static\""
 
 .DEFAULT_GOAL := bin/$(NAME)
 
 bin/$(NAME): $(SRCS)
-	GO111MODULE=on go build $(LDFLAGS) -o bin/$(NAME)
+	GO111MODULE=on go build -ldflags=$(LDFLAGS) -o bin/$(NAME)
+
+.PHONY: gox
+gox:
+	gox -ldflags=$(LDFLAGS) -output="bin/gitpanda_{{.OS}}_{{.Arch}}"
 
 .PHONY: clean
 clean:
