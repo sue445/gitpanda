@@ -34,6 +34,11 @@ func main() {
 		return
 	}
 
+	checkEnv("GITLAB_API_ENDPOINT")
+	checkEnv("GITLAB_BASE_URL")
+	checkEnv("GITLAB_PRIVATE_TOKEN")
+	checkEnv("SLACK_OAUTH_ACCESS_TOKEN")
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000"
@@ -44,8 +49,29 @@ func main() {
 	http.ListenAndServe(":"+port, nil)
 }
 
+func checkEnv(name string) {
+	if os.Getenv(name) != "" {
+		return
+	}
+
+	log.Printf("[ERROR] %s is required\n", name)
+	fmt.Println("")
+	printUsage()
+	os.Exit(1)
+}
+
 func printVersion() {
 	fmt.Printf("gitpanda %s, build %s\n", Version, Revision)
+}
+
+func printUsage() {
+	fmt.Println("[Usage]")
+	fmt.Println("  PORT=8000 \\")
+	fmt.Println("  GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4 \\")
+	fmt.Println("  GITLAB_BASE_URL=https://your-gitlab.example.com \\")
+	fmt.Println("  GITLAB_PRIVATE_TOKEN=xxxxxxxxxx \\")
+	fmt.Println("  SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000 \\")
+	fmt.Println("  ./gitpanda")
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
