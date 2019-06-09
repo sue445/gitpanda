@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"github.com/aws/aws-lambda-go/lambda"
 	"flag"
 	"fmt"
 	"log"
