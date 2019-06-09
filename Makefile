@@ -11,6 +11,10 @@ LDFLAGS := "-s -w -X \"main.Version=$(VERSION)\" -X \"main.Revision=$(REVISION)\
 bin/$(NAME): $(SRCS)
 	GO111MODULE=on go build -ldflags=$(LDFLAGS) -o bin/$(NAME)
 
+.PHONY: linux_amd64
+linux_amd64: $(SRCS)
+	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -ldflags=$(LDFLAGS) -o bin/$(NAME)_liunx_amd64
+
 .PHONY: gox
 gox:
 	gox -ldflags=$(LDFLAGS) -output="bin/gitpanda_{{.OS}}_{{.Arch}}"
