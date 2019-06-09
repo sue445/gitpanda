@@ -13,6 +13,7 @@ GitLab URL expander for Slack
 ## Running
 Download latest binary from https://github.com/sue445/gitpanda/releases
 
+### Standalone
 ```bash
 PORT=8000 \
 GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4 \
@@ -21,6 +22,9 @@ GITLAB_PRIVATE_TOKEN=xxxxxxxxxx \
 SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000 \
 ./gitpanda
 ```
+
+### AWS (Lambda + API Gateway)
+Use `gitpanda_linux_amd64`
 
 ## Environment variables
 * `PORT`

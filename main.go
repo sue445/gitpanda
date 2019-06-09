@@ -28,27 +28,6 @@ func init() {
 	flag.Parse()
 }
 
-func main() {
-	if isPrintVersion {
-		printVersion()
-		return
-	}
-
-	checkEnv("GITLAB_API_ENDPOINT")
-	checkEnv("GITLAB_BASE_URL")
-	checkEnv("GITLAB_PRIVATE_TOKEN")
-	checkEnv("SLACK_OAUTH_ACCESS_TOKEN")
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000"
-	}
-
-	fmt.Printf("gitpanda started: port=%s\n", port)
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":"+port, nil)
-}
-
 func checkEnv(name string) {
 	if os.Getenv(name) != "" {
 		return
@@ -74,7 +53,7 @@ func printUsage() {
 	fmt.Println("  ./gitpanda")
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func normalHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text")
 
 	switch r.Method {
