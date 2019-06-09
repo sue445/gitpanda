@@ -15,6 +15,16 @@ bin/$(NAME): $(SRCS)
 gox:
 	gox -ldflags=$(LDFLAGS) -output="bin/gitpanda_{{.OS}}_{{.Arch}}"
 
+.PHONY: zip
+zip:
+	cd bin ; \
+	for file in *; do \
+		zip $${file}.zip $${file} ; \
+	done
+
+.PHONY: gox_with_zip
+gox_with_zip: clean gox zip
+
 .PHONY: clean
 clean:
 	rm -rf bin/*
