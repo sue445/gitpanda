@@ -121,4 +121,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d+\.\d+\.\d+\.[a-z]+[0-9]+?$/
+              only: /^v\d+\.\d+\.\d+\.[a-z]+[0-9]*$/
