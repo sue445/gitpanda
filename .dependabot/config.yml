@@ -10,8 +10,3 @@ update_configs:
 
     default_assignees:
       - sue445
-
-    allowed_updates:
-      - match:
-          # Disable. Only top-level dependencies (and security patches for subdependencies)
-          update_type: "all"
