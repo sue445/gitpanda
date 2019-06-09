@@ -97,11 +97,14 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only:
+                - /^v\d+\.\d+\.\d+$/
+                - /^v\d+\.\d+\.\d+\.[a-z]+[0-9]+?$/
 
       - github-release/create:
           executor: golang
           path: ./bin/
+          prerelease: false
           requires:
             - gox
           filters:
@@ -109,3 +112,15 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v\d+\.\d+\.\d+$/
+
+      - github-release/create:
+          executor: golang
+          path: ./bin/
+          prerelease: true
+          requires:
+            - gox
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+\.[a-z]+[0-9]+?$/
