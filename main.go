@@ -45,7 +45,7 @@ func main() {
 	}
 
 	fmt.Printf("gitpanda started: port=%s\n", port)
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", normalHandler)
 	http.ListenAndServe(":"+port, nil)
 }
 
@@ -74,7 +74,7 @@ func printUsage() {
 	fmt.Println("  ./gitpanda")
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func normalHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text")
 
 	switch r.Method {
