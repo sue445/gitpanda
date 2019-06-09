@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	"context"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"flag"
 	"fmt"
@@ -39,6 +41,12 @@ func main() {
 	checkEnv("GITLAB_BASE_URL")
 	checkEnv("GITLAB_PRIVATE_TOKEN")
 	checkEnv("SLACK_OAUTH_ACCESS_TOKEN")
+
+	if os.Getenv("LAMBDA_TASK_ROOT") != "" && os.Getenv("LAMBDA_RUNTIME_DIR") != "" {
+		// for AWS Lambda
+		lambda.Start(lambdaHandler)
+		return
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -109,4 +117,34 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 
 		w.Write([]byte(response))
 	}
+}
+
+func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	body := strings.TrimSpace(request.Body)
+
+	s := NewSlackWebhook(
+		os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
+		&GitLabURLParserParams{
+			APIEndpoint:  os.Getenv("GITLAB_API_ENDPOINT"),
+			BaseURL:      os.Getenv("GITLAB_BASE_URL"),
+			PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),
+		},
+	)
+	response, err := s.Request(
+		body,
+		false,
+	)
+
+	if err != nil {
+		log.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body: response,
+		}, err
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body: response,
+	}, nil
 }
