@@ -64,12 +64,12 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 		}, err
 	}
 
-	gitlabPrivateToken, err := d.Decrypt(os.Getenv("GITLAB_API_ENDPOINT_KEY"))
+	gitlabPrivateToken, err := d.Decrypt(os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_API_ENDPOINT_KEY, error=%v\n", err)
+		fmt.Printf("Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY, error=%v\n", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_API_ENDPOINT_KEY",
+			Body:       "Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY",
 		}, err
 	}
 
