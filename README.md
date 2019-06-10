@@ -11,10 +11,9 @@ GitLab URL expander for Slack
 * Slack app and OAuth Access Token
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   
-## Running
+## Running standalone
 Download latest binary from https://github.com/sue445/gitpanda/releases
 
-### Standalone
 ```bash
 PORT=8000 \
 GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4 \
@@ -24,10 +23,7 @@ SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-000000000000000
 ./gitpanda
 ```
 
-### AWS (Lambda + API Gateway)
-Use `gitpanda_linux_amd64`
-
-## Environment variables
+### Environment variables
 * `PORT`
   * default is `8000`
 * `GITLAB_API_ENDPOINT`
@@ -38,6 +34,19 @@ Use `gitpanda_linux_amd64`
 * `SLACK_OAUTH_ACCESS_TOKEN`
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   * e.g. `xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000`
+
+## Running with AWS (Lambda + API Gateway + Parameter Store)
+Use latest `gitpanda_linux_amd64` on https://github.com/sue445/gitpanda/releases
+
+### Environment variables
+These are all key of Parameter Store. Please store to Parameter Store as `SecureString`
+
+* `GITLAB_API_ENDPOINT_KEY`
+* `GITLAB_BASE_URL_KEY`
+* `GITLAB_PRIVATE_TOKEN_KEY`
+* `SLACK_OAUTH_ACCESS_TOKEN_KEY`
+
+![aws parameter_store](img/aws-parameter_store.png)
 
 ## Arguments
 ```bash
