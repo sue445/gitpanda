@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -39,7 +38,7 @@ func checkEnv(name string) {
 		return
 	}
 
-	log.Printf("[ERROR] %s is required\n", name)
+	fmt.Printf("[ERROR] %s is required\n", name)
 	fmt.Println("")
 	printUsage()
 	os.Exit(1)
@@ -89,7 +88,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		if err != nil {
-			log.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
+			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
