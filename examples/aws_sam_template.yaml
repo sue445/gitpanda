@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  gitpanda-sam
+
+  Sample SAM Template for gitpanda-sam
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  GitpandaFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: gitpanda/
+      Handler: gitpanda
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /
+            Method: POST
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          # DEBUG_LOGGING:       "1"
+          GITLAB_API_ENDPOINT:          https://gitlab.example.com/api/v4
+          GITLAB_BASE_URL:              https://gitlab.example.com
+          GITLAB_PRIVATE_TOKEN_KEY:     GITPANDA_GITLAB_PRIVATE_TOKEN
+          SLACK_OAUTH_ACCESS_TOKEN_KEY: GITPANDA_SLACK_OAUTH_ACCESS_TOKEN
+      Policies:
+        - AWSLambdaExecute # Managed Policy
+        - Version: '2012-10-17' # Policy Document
+          Statement:
+            - Effect: Allow
+              Action:
+                - ssm:DescribeParameters
+                - ssm:GetParameter
+                - ssm:GetParameters
+                - sts:AssumeRole
+                - ec2:CreateNetworkInterface
+                - ec2:DescribeNetworkInterfaces
+                - ec2:DeleteNetworkInterface
+              Resource: '*'
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-xxxxxxxxxxxxxxxxx
+        SubnetIds:
+          - subnet-xxxxxxxxxxxxxxxxx
+          - subnet-xxxxxxxxxxxxxxxxx
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  GitpandaAPI:
+    Description: "API Gateway endpoint URL for Prod environment for Gitpanda Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  GitpandaFunction:
+    Description: "Gitpanda Lambda Function ARN"
+    Value: !GetAtt GitpandaFunction.Arn
+  GitpandaFunctionIamRole:
+    Description: "Implicit IAM Role created for Gitpanda function"
+    Value: !GetAtt GitpandaFunctionRole.Arn

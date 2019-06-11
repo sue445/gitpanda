@@ -52,6 +52,9 @@ When you want to store to Parameter Store, please store as `SecureString`
 
 ![aws parameter_store](img/aws-parameter_store.png)
 
+### Example
+* [Example template for AWS SAM](examples/aws_sam_template.yaml)
+
 ## Arguments
 ```bash
 $ ./gitpanda --help
