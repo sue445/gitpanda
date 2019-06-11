@@ -9,7 +9,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -26,6 +25,10 @@ func startLambda() {
 
 func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	body := strings.TrimSpace(request.Body)
+
+	if isDebugLogging {
+		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
+	}
 
 	d, err := NewSsmDecrypter()
 
@@ -87,7 +90,7 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 	)
 
 	if err != nil {
-		log.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
+		fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Body:       response,

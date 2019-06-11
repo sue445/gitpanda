@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -22,10 +21,16 @@ var port int
 
 var isPrintVersion bool
 
+var isDebugLogging bool
+
 func init() {
 	flag.BoolVar(&isPrintVersion, "version", false, "Whether showing version")
 
 	flag.Parse()
+
+	if os.Getenv("DEBUG_LOGGING") != "" {
+		isDebugLogging = true
+	}
 }
 
 func checkEnv(name string) {
@@ -33,7 +38,7 @@ func checkEnv(name string) {
 		return
 	}
 
-	log.Printf("[ERROR] %s is required\n", name)
+	fmt.Printf("[ERROR] %s is required\n", name)
 	fmt.Println("")
 	printUsage()
 	os.Exit(1)
@@ -65,6 +70,10 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		buf.ReadFrom(r.Body)
 		body := strings.TrimSpace(buf.String())
 
+		if isDebugLogging {
+			fmt.Printf("[DEBUG] normalHandler: body=%s\n", body)
+		}
+
 		s := NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
 			&GitLabURLParserParams{
@@ -79,7 +88,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		)
 
 		if err != nil {
-			log.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
+			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
