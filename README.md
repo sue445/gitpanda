@@ -78,3 +78,6 @@ cp .envrc.example .envrc
 vi .envrc
 direnv allow
 ```
+
+## Heroku deploy
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
