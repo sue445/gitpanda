@@ -62,7 +62,7 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 					continue
 				}
 
-				unfurls[link.URL] = slack.Attachment{
+				attachment := slack.Attachment{
 					Title:      page.Title,
 					TitleLink:  link.URL,
 					AuthorName: page.AuthorName,
@@ -70,6 +70,12 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 					Text:       page.Description,
 					Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				}
+
+				if page.AvatarURL != "" {
+					attachment.ThumbURL = page.AvatarURL
+				}
+
+				unfurls[link.URL] = attachment
 			}
 
 			if len(unfurls) == 0 {
