@@ -84,20 +84,14 @@ func lambdaMain(body string) (string, error) {
 
 // GetParameterStoreOrEnv returns Environment variable or Parameter Store variable
 func GetParameterStoreOrEnv(envKey string, parameterStoreKey string) (string, error) {
-	d, err := NewSsmDecrypter()
-
-	if err != nil {
-		return "", err
-	}
-
-	ret, err := d.ExistsKey(parameterStoreKey)
-
-	if err != nil {
-		return "", err
-	}
-
-	if ret {
+	if parameterStoreKey != "" {
 		// Get from Parameter Store
+		d, err := NewSsmDecrypter()
+
+		if err != nil {
+			return "", err
+		}
+
 		decryptedValue, err := d.Decrypt(parameterStoreKey)
 		if err != nil {
 			return fmt.Sprintf("Failed: Decrypt %s", parameterStoreKey), err
@@ -143,26 +137,4 @@ func (d *SsmDecrypter) Decrypt(encrypted string) (string, error) {
 		return "", err
 	}
 	return *resp.Parameter.Value, nil
-}
-
-// ExistsKey returns whether key is exists in Parameter Store
-func (d *SsmDecrypter) ExistsKey(key string) (bool, error) {
-	params := &ssm.DescribeParametersInput{
-		Filters: []*ssm.ParametersFilter{
-			{
-				Key:    aws.String("Name"),
-				Values: []*string{aws.String(key)},
-			},
-		},
-	}
-	resp, err := d.svc.DescribeParameters(params)
-	if err != nil {
-		return false, err
-	}
-
-	if len(resp.Parameters) > 0 {
-		return true, nil
-	}
-
-	return false, nil
 }
