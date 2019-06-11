@@ -15,11 +15,6 @@ import (
 )
 
 func startLambda() {
-	checkEnv("GITLAB_API_ENDPOINT_KEY")
-	checkEnv("GITLAB_BASE_URL_KEY")
-	checkEnv("GITLAB_PRIVATE_TOKEN_KEY")
-	checkEnv("SLACK_OAUTH_ACCESS_TOKEN_KEY")
-
 	lambda.Start(lambdaHandler)
 }
 
@@ -30,50 +25,41 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
 	}
 
-	d, err := NewSsmDecrypter()
+	response, err := lambdaMain(body)
 
 	if err != nil {
-		fmt.Printf("Failed: NewSsmDecrypter, error=%v\n", err)
+		fmt.Printf("[ERROR] %s, error=%v\n", response, err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: NewSsmDecrypter",
+			Body:       response,
 		}, err
 	}
 
-	slackOAuthAccessToken, err := d.Decrypt(os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"))
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body:       response,
+	}, nil
+}
+
+func lambdaMain(body string) (string, error) {
+	slackOAuthAccessToken, err := GetParameterStoreOrEnv("SLACK_OAUTH_ACCESS_TOKEN", os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt SLACK_OAUTH_ACCESS_TOKEN_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt SLACK_OAUTH_ACCESS_TOKEN_KEY",
-		}, err
+		return "Failed: slackOAuthAccessToken", err
 	}
 
-	gitlabAPIEndpoint, err := d.Decrypt(os.Getenv("GITLAB_API_ENDPOINT_KEY"))
+	gitlabAPIEndpoint, err := GetParameterStoreOrEnv("GITLAB_API_ENDPOINT", os.Getenv("GITLAB_API_ENDPOINT_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_API_ENDPOINT_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_API_ENDPOINT_KEY",
-		}, err
+		return "Failed: gitlabAPIEndpoint", err
 	}
 
-	gitlabBaseURL, err := d.Decrypt(os.Getenv("GITLAB_BASE_URL_KEY"))
+	gitlabBaseURL, err := GetParameterStoreOrEnv("GITLAB_BASE_URL", os.Getenv("GITLAB_BASE_URL_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_BASE_URL_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_BASE_URL_KEY",
-		}, err
+		return "Failed: gitlabBaseURL", err
 	}
 
-	gitlabPrivateToken, err := d.Decrypt(os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"))
+	gitlabPrivateToken, err := GetParameterStoreOrEnv("GITLAB_PRIVATE_TOKEN", os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY",
-		}, err
+		return "Failed: gitlabPrivateToken", err
 	}
 
 	s := NewSlackWebhook(
@@ -90,17 +76,42 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 	)
 
 	if err != nil {
-		fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       response,
-		}, err
+		return response, err
 	}
 
-	return events.APIGatewayProxyResponse{
-		StatusCode: http.StatusOK,
-		Body:       response,
-	}, nil
+	return response, nil
+}
+
+// GetParameterStoreOrEnv returns Environment variable or Parameter Store variable
+func GetParameterStoreOrEnv(envKey string, parameterStoreKey string) (string, error) {
+	d, err := NewSsmDecrypter()
+
+	if err != nil {
+		return "", err
+	}
+
+	ret, err := d.ExistsKey(parameterStoreKey)
+
+	if err != nil {
+		return "", err
+	}
+
+	if ret {
+		// Get from Parameter Store
+		decryptedValue, err := d.Decrypt(parameterStoreKey)
+		if err != nil {
+			return fmt.Sprintf("Failed: Decrypt %s", parameterStoreKey), err
+		}
+
+		return decryptedValue, nil
+	}
+
+	// Get from env
+	if os.Getenv(envKey) != "" {
+		return os.Getenv(envKey), nil
+	}
+
+	return "", fmt.Errorf("Either %s or %s is required", envKey, parameterStoreKey)
 }
 
 // SsmDecrypter stores the AWS Session used for SSM decrypter.
@@ -132,4 +143,26 @@ func (d *SsmDecrypter) Decrypt(encrypted string) (string, error) {
 		return "", err
 	}
 	return *resp.Parameter.Value, nil
+}
+
+// ExistsKey returns whether key is exists in Parameter Store
+func (d *SsmDecrypter) ExistsKey(key string) (bool, error) {
+	params := &ssm.DescribeParametersInput{
+		Filters: []*ssm.ParametersFilter{
+			{
+				Key:    aws.String("Name"),
+				Values: []*string{aws.String(key)},
+			},
+		},
+	}
+	resp, err := d.svc.DescribeParameters(params)
+	if err != nil {
+		return false, err
+	}
+
+	if len(resp.Parameters) > 0 {
+		return true, nil
+	}
+
+	return false, nil
 }
