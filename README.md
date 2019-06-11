@@ -39,12 +39,16 @@ SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-000000000000000
 Use latest `gitpanda_linux_amd64` on https://github.com/sue445/gitpanda/releases
 
 ### Environment variables
-These are all key of Parameter Store. Please store to Parameter Store as `SecureString`
+One of the following is required
 
-* `GITLAB_API_ENDPOINT_KEY`
-* `GITLAB_BASE_URL_KEY`
-* `GITLAB_PRIVATE_TOKEN_KEY`
-* `SLACK_OAUTH_ACCESS_TOKEN_KEY`
+| Environment                | Key of Parameter Store         |
+| -------------------------- | ------------------------------ |
+| `GITLAB_API_ENDPOINT`      | `GITLAB_API_ENDPOINT_KEY`      |
+| `GITLAB_BASE_URL`          | `GITLAB_BASE_URL_KEY`          |
+| `GITLAB_PRIVATE_TOKEN`     | `GITLAB_PRIVATE_TOKEN_KEY`     |
+| `SLACK_OAUTH_ACCESS_TOKEN` | `SLACK_OAUTH_ACCESS_TOKEN_KEY` |
+
+When you want to store to Parameter Store, please store as `SecureString`
 
 ![aws parameter_store](img/aws-parameter_store.png)
 
