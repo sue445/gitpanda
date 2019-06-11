@@ -27,6 +27,10 @@ func startLambda() {
 func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	body := strings.TrimSpace(request.Body)
 
+	if isDebugLogging {
+		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
+	}
+
 	d, err := NewSsmDecrypter()
 
 	if err != nil {

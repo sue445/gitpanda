@@ -22,10 +22,16 @@ var port int
 
 var isPrintVersion bool
 
+var isDebugLogging bool
+
 func init() {
 	flag.BoolVar(&isPrintVersion, "version", false, "Whether showing version")
 
 	flag.Parse()
+
+	if os.Getenv("DEBUG_LOGGING") != "" {
+		isDebugLogging = true
+	}
 }
 
 func checkEnv(name string) {
@@ -64,6 +70,10 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(r.Body)
 		body := strings.TrimSpace(buf.String())
+
+		if isDebugLogging {
+			fmt.Printf("[DEBUG] normalHandler: body=%s\n", body)
+		}
 
 		s := NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
