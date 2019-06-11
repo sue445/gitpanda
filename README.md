@@ -10,7 +10,13 @@ GitLab URL expander for Slack
 * GitLab API v4
 * Slack app and OAuth Access Token
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
-  
+
+## Supported URL format
+* User URL (`${GITLAB_BASE_URL}/:username`)
+* Project URL (`${GITLAB_BASE_URL}/:namespace/:reponame`)
+* Issue URL (`${GITLAB_BASE_URL}/:namespace/:reponame/issues/:iid`)
+* MergeRequest URL (`${GITLAB_BASE_URL}/:namespace/:reponame/merge_requests/:iid`)
+
 ## Running standalone
 Download latest binary from https://github.com/sue445/gitpanda/releases
 
