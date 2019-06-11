@@ -37,7 +37,6 @@ Resources:
           Statement:
             - Effect: Allow
               Action:
-                - ssm:DescribeParameters
                 - ssm:GetParameter
                 - ssm:GetParameters
                 - sts:AssumeRole
