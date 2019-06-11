@@ -30,50 +30,47 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
 	}
 
+	response, err := lambdaMain(body)
+
+	if err != nil {
+		fmt.Printf("[ERROR] %s, error=%v\n", response, err)
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       response,
+		}, err
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body:       response,
+	}, nil
+}
+
+func lambdaMain(body string) (string, error) {
 	d, err := NewSsmDecrypter()
 
 	if err != nil {
-		fmt.Printf("Failed: NewSsmDecrypter, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: NewSsmDecrypter",
-		}, err
+		return "Failed: NewSsmDecrypter", err
 	}
 
 	slackOAuthAccessToken, err := d.Decrypt(os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt SLACK_OAUTH_ACCESS_TOKEN_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt SLACK_OAUTH_ACCESS_TOKEN_KEY",
-		}, err
+		return "Failed: Decrypt SLACK_OAUTH_ACCESS_TOKEN_KEY", err
 	}
 
 	gitlabAPIEndpoint, err := d.Decrypt(os.Getenv("GITLAB_API_ENDPOINT_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_API_ENDPOINT_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_API_ENDPOINT_KEY",
-		}, err
+		return "Failed: Decrypt GITLAB_API_ENDPOINT_KEY", err
 	}
 
 	gitlabBaseURL, err := d.Decrypt(os.Getenv("GITLAB_BASE_URL_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_BASE_URL_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_BASE_URL_KEY",
-		}, err
+		return "Failed: Decrypt GITLAB_BASE_URL_KEY", err
 	}
 
 	gitlabPrivateToken, err := d.Decrypt(os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"))
 	if err != nil {
-		fmt.Printf("Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY, error=%v\n", err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY",
-		}, err
+		return "Failed: Decrypt GITLAB_PRIVATE_TOKEN_KEY", err
 	}
 
 	s := NewSlackWebhook(
@@ -90,17 +87,10 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 	)
 
 	if err != nil {
-		fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       response,
-		}, err
+		return response, err
 	}
 
-	return events.APIGatewayProxyResponse{
-		StatusCode: http.StatusOK,
-		Body:       response,
-	}, nil
+	return response, nil
 }
 
 // SsmDecrypter stores the AWS Session used for SSM decrypter.
