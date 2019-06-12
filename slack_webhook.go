@@ -62,6 +62,10 @@ func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
 					continue
 				}
 
+				if isDebugLogging {
+					fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
+				}
+
 				attachment := slack.Attachment{
 					Title:      page.Title,
 					TitleLink:  link.URL,
