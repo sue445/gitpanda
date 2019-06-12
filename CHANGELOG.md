@@ -13,7 +13,7 @@
 * Add debug log in response
   * https://github.com/sue445/gitpanda/pull/26
 * Update dependencies
-  * https://github.com/sue445/gitpanda/pull/23
+  * https://github.com/sue445/gitpanda/pull/23``
 
 ## v0.1.1
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.1.0...v0.1.1)
