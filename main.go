@@ -17,8 +17,6 @@ var (
 	Revision string
 )
 
-var port int
-
 var isPrintVersion bool
 
 var isDebugLogging bool
