@@ -19,12 +19,8 @@ func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *GitLab
 }
 
 // Request handles Slack event
-func (s *SlackWebhook) Request(body string, verifyToken bool) (string, error) {
-	option := slackevents.OptionNoVerifyToken()
-	if verifyToken {
-		option = slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: s.slackOAuthAccessToken})
-	}
-	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), option)
+func (s *SlackWebhook) Request(body string) (string, error) {
+	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
 		return "Failed: slackevents.ParseEvent", err
