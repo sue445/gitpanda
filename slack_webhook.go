@@ -19,7 +19,7 @@ func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *GitLab
 }
 
 // Request handles Slack event
-func (s *SlackWebhook) Request(body string) (string, error) {
+func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
@@ -67,7 +67,7 @@ func (s *SlackWebhook) Request(body string) (string, error) {
 					TitleLink:  link.URL,
 					AuthorName: page.AuthorName,
 					AuthorIcon: page.AuthorAvatarURL,
-					Text:       page.Description,
+					Text:       TruncateWithLine(page.Description, truncateLines),
 					Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				}
 

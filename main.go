@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -21,6 +22,8 @@ var isPrintVersion bool
 
 var isDebugLogging bool
 
+var truncateLines = 0
+
 func init() {
 	flag.BoolVar(&isPrintVersion, "version", false, "Whether showing version")
 
@@ -28,6 +31,19 @@ func init() {
 
 	if os.Getenv("DEBUG_LOGGING") != "" {
 		isDebugLogging = true
+	}
+
+	if s := os.Getenv("TRUNCATE_LINES"); s != "" {
+		lines, err := strconv.Atoi(s)
+
+		if err != nil {
+			fmt.Printf("%s is invalid number, error=%v", s, err)
+			os.Exit(1)
+		}
+
+		if lines > 0 {
+			truncateLines = lines
+		}
 	}
 }
 
@@ -80,7 +96,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 				PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),
 			},
 		)
-		response, err := s.Request(body)
+		response, err := s.Request(body, truncateLines)
 
 		if err != nil {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
