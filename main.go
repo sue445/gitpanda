@@ -82,10 +82,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 				PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),
 			},
 		)
-		response, err := s.Request(
-			body,
-			false,
-		)
+		response, err := s.Request(body)
 
 		if err != nil {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
