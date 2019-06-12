@@ -70,7 +70,7 @@ func lambdaMain(body string) (string, error) {
 			PrivateToken: gitlabPrivateToken,
 		},
 	)
-	response, err := s.Request(body)
+	response, err := s.Request(body, truncateLines)
 
 	if err != nil {
 		return response, err

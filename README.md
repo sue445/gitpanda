@@ -42,6 +42,8 @@ SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-000000000000000
 * `SLACK_OAUTH_ACCESS_TOKEN`
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   * e.g. `xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000`
+* `TRUNCATE_LINES`
+  * Line count to truncate the text (default. no truncate)
 
 ## Running with AWS (Lambda + API Gateway + Parameter Store)
 Use latest `gitpanda_linux_amd64` on https://github.com/sue445/gitpanda/releases
@@ -55,6 +57,7 @@ One of the following is required
 | `GITLAB_BASE_URL`          | `GITLAB_BASE_URL_KEY`          |
 | `GITLAB_PRIVATE_TOKEN`     | `GITLAB_PRIVATE_TOKEN_KEY`     |
 | `SLACK_OAUTH_ACCESS_TOKEN` | `SLACK_OAUTH_ACCESS_TOKEN_KEY` |
+| `TRUNCATE_LINES`           |                                |
 
 When you want to store to Parameter Store, please store as `SecureString`
 
