@@ -157,6 +157,7 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 		AuthorName:      authorName,
 		AuthorAvatarURL: authorAvatarURL,
 		AvatarURL:       project.AvatarURL,
+		canTruncateDescription: true,
 	}
 
 	return page, nil
@@ -210,6 +211,7 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 		AuthorName:      authorName,
 		AuthorAvatarURL: authorAvatarURL,
 		AvatarURL:       project.AvatarURL,
+		canTruncateDescription: true,
 	}
 
 	return page, nil
@@ -235,6 +237,7 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 		AuthorName:      project.Owner.Name,
 		AuthorAvatarURL: project.Owner.AvatarURL,
 		AvatarURL:       project.AvatarURL,
+		canTruncateDescription: true,
 	}
 
 	return page, nil
@@ -267,6 +270,7 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 		AuthorName:      user.Name,
 		AuthorAvatarURL: user.AvatarURL,
 		AvatarURL:       user.AvatarURL,
+		canTruncateDescription: true,
 	}
 
 	return page, nil
@@ -322,6 +326,7 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 		AuthorName:      "",
 		AuthorAvatarURL: "",
 		AvatarURL:       project.AvatarURL,
+		canTruncateDescription: false,
 	}
 
 	return page, nil

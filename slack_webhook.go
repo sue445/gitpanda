@@ -62,12 +62,17 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 					fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
 				}
 
+				description := page.Description
+				if page.canTruncateDescription {
+					description = TruncateWithLine(description, truncateLines)
+				}
+
 				attachment := slack.Attachment{
 					Title:      page.Title,
 					TitleLink:  link.URL,
 					AuthorName: page.AuthorName,
 					AuthorIcon: page.AuthorAvatarURL,
-					Text:       TruncateWithLine(page.Description, truncateLines),
+					Text:       description,
 					Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				}
 
