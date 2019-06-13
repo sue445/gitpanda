@@ -36,8 +36,18 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1/notes/302",
+		httpmock.NewStringResponder(200, readTestData("gitlab/issue_note.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
 		httpmock.NewStringResponder(200, readTestData("gitlab/merge_request.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1/notes/301",
+		httpmock.NewStringResponder(200, readTestData("gitlab/merge_request_note.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
@@ -105,6 +115,19 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Issue comment URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/issues/1#note_302",
+			},
+			want: &GitLabPage{
+				Title:           "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:     "closed",
+				AuthorName:      "Pip",
+				AuthorAvatarURL: "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+			},
+		},
+		{
 			name: "MergeRequest URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1",
@@ -114,6 +137,19 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				Description:     "fixed login page css paddings",
 				AuthorName:      "Administrator",
 				AuthorAvatarURL: "https://gitlab.example.com/images/admin.png",
+				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+			},
+		},
+		{
+			name: "MergeRequest comment URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1#note_301",
+			},
+			want: &GitLabPage{
+				Title:           "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
+				Description:     "Comment for MR",
+				AuthorName:      "Pip",
+				AuthorAvatarURL: "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 			},
 		},

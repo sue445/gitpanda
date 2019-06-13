@@ -8,6 +8,7 @@
     "email": "admin@example.com",
     "name": "Pip",
     "state": "active",
+    "avatar_url": "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
     "created_at": "2013-09-30T13:46:01Z"
   },
   "created_at": "2013-10-02T09:22:45Z",
