@@ -1,6 +1,8 @@
 package main
 
-import "strings"
+import (
+	"strings"
+)
 
 // TruncateWithLine truncate string with line
 func TruncateWithLine(str string, maxLines int) string {
@@ -25,6 +27,20 @@ func SelectLine(str string, line int) string {
 	line = clipNumber(line, 1, len(lines))
 
 	return lines[line-1]
+}
+
+// SelectLines returns a specific lines in the text
+func SelectLines(str string, startLine int, endLine int) string {
+	lines := strings.Split(str, "\n")
+
+	startLine = clipNumber(startLine, 1, len(lines))
+	endLine = clipNumber(endLine, 1, len(lines))
+
+	if startLine > endLine {
+		startLine, endLine = endLine, startLine
+	}
+
+	return strings.Join(lines[startLine-1:endLine], "\n")
 }
 
 func clipNumber(number int, lower int, upper int) int {

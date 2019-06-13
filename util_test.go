@@ -65,7 +65,7 @@ func TestSelectLine(t *testing.T) {
 		{
 			name: "Select 2nd line",
 			args: args{
-				str: str,
+				str:  str,
 				line: 2,
 			},
 			want: "222",
@@ -75,6 +75,43 @@ func TestSelectLine(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := SelectLine(tt.args.str, tt.args.line); got != tt.want {
 				t.Errorf("SelectLine() = %+v, want %+v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSelectLines(t *testing.T) {
+	str := `111
+222
+333
+444
+555
+`
+
+	type args struct {
+		str       string
+		startLine int
+		endLine   int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "Select lines",
+			args: args{
+				str:       str,
+				startLine: 2,
+				endLine:   4,
+			},
+			want: "222\n333\n444",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SelectLines(tt.args.str, tt.args.startLine, tt.args.endLine); got != tt.want {
+				t.Errorf("SelectLines() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
