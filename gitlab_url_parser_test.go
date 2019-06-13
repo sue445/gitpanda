@@ -54,6 +54,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		"http://example.com/api/v4/users?username=john_smith",
 		httpmock.NewStringResponder(200, readTestData("gitlab/users.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update.yml/raw?ref=master",
+		httpmock.NewStringResponder(200, readTestData("gitlab/gitlabci-templates/continuous_bundle_update.yml")),
+	)
 
 	p, err := NewGitlabURLParser(&GitLabURLParserParams{
 		APIEndpoint:  "http://example.com/api/v4",
@@ -99,6 +104,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "Diaspora",
 				AuthorAvatarURL: "http://example.com/images/diaspora.png",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: true,
 			},
 		},
 		{
@@ -112,6 +118,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "Administrator",
 				AuthorAvatarURL: "https://gitlab.example.com/images/root.png",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: true,
 			},
 		},
 		{
@@ -125,6 +132,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "Pip",
 				AuthorAvatarURL: "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: true,
 			},
 		},
 		{
@@ -138,6 +146,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "Administrator",
 				AuthorAvatarURL: "https://gitlab.example.com/images/admin.png",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: true,
 			},
 		},
 		{
@@ -151,6 +160,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "Pip",
 				AuthorAvatarURL: "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: true,
 			},
 		},
 		{
@@ -164,6 +174,35 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:      "John Smith",
 				AuthorAvatarURL: "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 				AvatarURL:       "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				canTruncateDescription: true,
+			},
+		},
+		{
+			name: "Blob URL (single line)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4",
+			},
+			want: &GitLabPage{
+				Title:           "gitlabci-templates/continuous_bundle_update.yml:4",
+				Description:     "```\n  variables:\n```",
+				AuthorName:      "",
+				AuthorAvatarURL: "",
+				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: false,
+			},
+		},
+		{
+			name: "Blob URL (multiple line)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4-9",
+			},
+			want: &GitLabPage{
+				Title:           "gitlabci-templates/continuous_bundle_update.yml:4-9",
+				Description:     "```\n  variables:\n    CACHE_VERSION: \"v1\"\n    GIT_EMAIL:     \"gitlabci@example.com\"\n    GIT_USER:      \"GitLab CI\"\n    LABELS:        \"bundle update\"\n    OPTIONS:       \"\"\n```",
+				AuthorName:      "",
+				AuthorAvatarURL: "",
+				AvatarURL:       "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				canTruncateDescription: false,
 			},
 		},
 	}
