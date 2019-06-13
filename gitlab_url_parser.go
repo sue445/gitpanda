@@ -73,6 +73,17 @@ func (p *GitlabURLParser) FetchURL(url string) (*GitLabPage, error) {
 		return page, nil
 	}
 
+	// Blob URL
+	page, err = p.fetchBlobURL(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if page != nil {
+		return page, nil
+	}
+
 	// Project URL
 	page, err = p.fetchProjectURL(path)
 
@@ -256,6 +267,61 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 		AuthorName:      user.Name,
 		AuthorAvatarURL: user.AvatarURL,
 		AvatarURL:       user.AvatarURL,
+	}
+
+	return page, nil
+}
+
+func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
+	re := regexp.MustCompile("^([^/]+)/([^/]+)/blob/([^/]+)/(.+)#L([0-9-]+)$")
+	matched := re.FindStringSubmatch(path)
+
+	if matched == nil {
+		return nil, nil
+	}
+
+	projectName := matched[1] + "/" + matched[2]
+	sha1 := matched[3]
+	fileName := matched[4]
+	rawFile, _, err := p.client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
+
+	if err != nil {
+		return nil, err
+	}
+
+	fileBody := string(rawFile)
+
+	lineHash := matched[5]
+	lines := strings.Split(lineHash, "-")
+
+	selectedFile := ""
+	lineRange := ""
+	switch len(lines) {
+	case 1:
+		line, _ := strconv.Atoi(lines[0])
+		lineRange = lines[0]
+		selectedFile = SelectLine(fileBody, line)
+	case 2:
+		startLine, _ := strconv.Atoi(lines[0])
+		endLine, _ := strconv.Atoi(lines[1])
+		lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
+		selectedFile = SelectLines(fileBody, startLine, endLine)
+	default:
+		return nil, fmt.Errorf("Invalid line: L%s", lineHash)
+	}
+
+	project, _, err := p.client.Projects.GetProject(projectName, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	page := &GitLabPage{
+		Title:           fmt.Sprintf("%s:%s", fileName, lineRange),
+		Description:     fmt.Sprintf("```\n%s\n```", selectedFile),
+		AuthorName:      "",
+		AuthorAvatarURL: "",
+		AvatarURL:       project.AvatarURL,
 	}
 
 	return page, nil
