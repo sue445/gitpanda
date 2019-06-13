@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+const titleSeparator = " · "
+
 // GitlabURLParser represents GitLab URL parser
 type GitlabURLParser struct {
 	baseURL string
@@ -119,7 +121,7 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:           issue.Title,
+		Title:           strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:     issue.Description,
 		AuthorName:      issue.Author.Name,
 		AuthorAvatarURL: issue.Author.AvatarURL,
@@ -152,7 +154,7 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 	}
 
 	page := &GitLabPage{
-		Title:           mr.Title,
+		Title:           strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:     mr.Description,
 		AuthorName:      mr.Author.Name,
 		AuthorAvatarURL: mr.Author.AvatarURL,
@@ -177,7 +179,7 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:           project.NameWithNamespace,
+		Title:           strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:     project.Description,
 		AuthorName:      project.Owner.Name,
 		AuthorAvatarURL: project.Owner.AvatarURL,
@@ -209,7 +211,7 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 	user := users[0]
 
 	page := &GitLabPage{
-		Title:           user.Name,
+		Title:           strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
 		Description:     user.Name,
 		AuthorName:      user.Name,
 		AuthorAvatarURL: user.AvatarURL,

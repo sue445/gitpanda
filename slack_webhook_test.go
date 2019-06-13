@@ -64,11 +64,11 @@ func TestSlackWebhook_Request(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := s.Request(tt.args.body, tt.args.truncateLines)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("SlackWebhook.Request() error = %v and got = %s, wantErr %v", err, got, tt.wantErr)
+				t.Errorf("SlackWebhook.Request() error = %+v and got = %s, wantErr %+v", err, got, tt.wantErr)
 				return
 			}
 			if got != tt.want {
-				t.Errorf("SlackWebhook.Request() = %v, want %v", got, tt.want)
+				t.Errorf("SlackWebhook.Request() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}
