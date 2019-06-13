@@ -152,11 +152,11 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:           strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:     description,
-		AuthorName:      authorName,
-		AuthorAvatarURL: authorAvatarURL,
-		AvatarURL:       project.AvatarURL,
+		Title:                  strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
+		Description:            description,
+		AuthorName:             authorName,
+		AuthorAvatarURL:        authorAvatarURL,
+		AvatarURL:              project.AvatarURL,
 		canTruncateDescription: true,
 	}
 
@@ -206,11 +206,11 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 	}
 
 	page := &GitLabPage{
-		Title:           strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:     description,
-		AuthorName:      authorName,
-		AuthorAvatarURL: authorAvatarURL,
-		AvatarURL:       project.AvatarURL,
+		Title:                  strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
+		Description:            description,
+		AuthorName:             authorName,
+		AuthorAvatarURL:        authorAvatarURL,
+		AvatarURL:              project.AvatarURL,
 		canTruncateDescription: true,
 	}
 
@@ -232,11 +232,11 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:           strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:     project.Description,
-		AuthorName:      project.Owner.Name,
-		AuthorAvatarURL: project.Owner.AvatarURL,
-		AvatarURL:       project.AvatarURL,
+		Title:                  strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
+		Description:            project.Description,
+		AuthorName:             project.Owner.Name,
+		AuthorAvatarURL:        project.Owner.AvatarURL,
+		AvatarURL:              project.AvatarURL,
 		canTruncateDescription: true,
 	}
 
@@ -265,11 +265,11 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 	user := users[0]
 
 	page := &GitLabPage{
-		Title:           strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
-		Description:     user.Name,
-		AuthorName:      user.Name,
-		AuthorAvatarURL: user.AvatarURL,
-		AvatarURL:       user.AvatarURL,
+		Title:                  strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
+		Description:            user.Name,
+		AuthorName:             user.Name,
+		AuthorAvatarURL:        user.AvatarURL,
+		AvatarURL:              user.AvatarURL,
 		canTruncateDescription: true,
 	}
 
@@ -321,11 +321,11 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 	}
 
 	page := &GitLabPage{
-		Title:           fmt.Sprintf("%s:%s", fileName, lineRange),
-		Description:     fmt.Sprintf("```\n%s\n```", selectedFile),
-		AuthorName:      "",
-		AuthorAvatarURL: "",
-		AvatarURL:       project.AvatarURL,
+		Title:                  fmt.Sprintf("%s:%s", fileName, lineRange),
+		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
+		AuthorName:             "",
+		AuthorAvatarURL:        "",
+		AvatarURL:              project.AvatarURL,
 		canTruncateDescription: false,
 	}
 
