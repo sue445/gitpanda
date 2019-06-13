@@ -17,3 +17,24 @@ func TruncateWithLine(str string, maxLines int) string {
 
 	return str
 }
+
+// SelectLine returns a specific line in the text
+func SelectLine(str string, line int) string {
+	lines := strings.Split(str, "\n")
+
+	line = clipNumber(line, 1, len(lines))
+
+	return lines[line-1]
+}
+
+func clipNumber(number int, lower int, upper int) int {
+	if number < lower {
+		return lower
+	}
+
+	if number > upper {
+		return upper
+	}
+
+	return number
+}
