@@ -120,11 +120,31 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 		return nil, err
 	}
 
+	description := issue.Description
+	authorName := issue.Author.Name
+	authorAvatarURL := issue.Author.AvatarURL
+
+	re2 := regexp.MustCompile("#note_(\\d+)$")
+	matched2 := re2.FindStringSubmatch(path)
+
+	if matched2 != nil {
+		noteID, _ := strconv.Atoi(matched2[1])
+		note, _, err := p.client.Notes.GetIssueNote(projectName, issueID, noteID)
+
+		if err != nil {
+			return nil, err
+		}
+
+		description = note.Body
+		authorName = note.Author.Name
+		authorAvatarURL = note.Author.AvatarURL
+	}
+
 	page := &GitLabPage{
 		Title:           strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:     issue.Description,
-		AuthorName:      issue.Author.Name,
-		AuthorAvatarURL: issue.Author.AvatarURL,
+		Description:     description,
+		AuthorName:      authorName,
+		AuthorAvatarURL: authorAvatarURL,
 		AvatarURL:       project.AvatarURL,
 	}
 
@@ -153,11 +173,31 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 		return nil, err
 	}
 
+	description := mr.Description
+	authorName := mr.Author.Name
+	authorAvatarURL := mr.Author.AvatarURL
+
+	re2 := regexp.MustCompile("#note_(\\d+)$")
+	matched2 := re2.FindStringSubmatch(path)
+
+	if matched2 != nil {
+		noteID, _ := strconv.Atoi(matched2[1])
+		note, _, err := p.client.Notes.GetMergeRequestNote(projectName, mrID, noteID)
+
+		if err != nil {
+			return nil, err
+		}
+
+		description = note.Body
+		authorName = note.Author.Name
+		authorAvatarURL = note.Author.AvatarURL
+	}
+
 	page := &GitLabPage{
 		Title:           strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:     mr.Description,
-		AuthorName:      mr.Author.Name,
-		AuthorAvatarURL: mr.Author.AvatarURL,
+		Description:     description,
+		AuthorName:      authorName,
+		AuthorAvatarURL: authorAvatarURL,
 		AvatarURL:       project.AvatarURL,
 	}
 
