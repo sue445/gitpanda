@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.2.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.0...master)
+
+## v0.3.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.2.0...v0.3.0)
+
+* Support blob URL
+  * https://github.com/sue445/gitpanda/pull/35
 
 ## v0.2.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.1.3...v0.2.0)
