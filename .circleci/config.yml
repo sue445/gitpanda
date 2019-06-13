@@ -47,6 +47,15 @@ jobs:
       - run:
           command: go vet
 
+  gofmt:
+    executor: golang
+
+    steps:
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          command: "! gofmt -d . | grep '^'"
+
   gox:
     executor: golang
 
@@ -82,12 +91,17 @@ workflows:
           requires:
             - go-module/download
 
+      - gofmt:
+          requires:
+            - go-module/download
+
       - heroku/deploy-via-git:
           context: Heroku
           requires:
             - test
             - golint
             - go-vet
+            - gofmt
           filters:
             branches:
               only: master
