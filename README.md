@@ -13,11 +13,16 @@
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
 
 ## Supported URL format
-* User URL (`${GITLAB_BASE_URL}/:username`)
-* Project URL (`${GITLAB_BASE_URL}/:namespace/:reponame`)
-* Issue URL (`${GITLAB_BASE_URL}/:namespace/:reponame/issues/:iid`)
-* MergeRequest URL (`${GITLAB_BASE_URL}/:namespace/:reponame/merge_requests/:iid`)
-* Blob URL (`${GITLAB_BASE_URL}/:namespace/:reponame/blob/:sha1/:filename`)
+* User URL
+  * e.g. `${GITLAB_BASE_URL}/:username`
+* Project URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame`
+* Issue URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/issues/:iid`
+* MergeRequest URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/merge_requests/:iid`
+* Blob URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/blob/:sha1/:filename`
 
 ## Running standalone
 Download latest binary from https://github.com/sue445/gitpanda/releases
