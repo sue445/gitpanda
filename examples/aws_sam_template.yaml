@@ -27,6 +27,7 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           # DEBUG_LOGGING:       "1"
+          # TRUNCATE_LINES:      "5"
           GITLAB_API_ENDPOINT:          https://gitlab.example.com/api/v4
           GITLAB_BASE_URL:              https://gitlab.example.com
           GITLAB_PRIVATE_TOKEN_KEY:     GITPANDA_GITLAB_PRIVATE_TOKEN
@@ -36,20 +37,29 @@ Resources:
         - Version: '2012-10-17' # Policy Document
           Statement:
             - Effect: Allow
+              Resource: '*'
               Action:
                 - ssm:GetParameter
                 - ssm:GetParameters
                 - sts:AssumeRole
-                - ec2:CreateNetworkInterface
-                - ec2:DescribeNetworkInterfaces
-                - ec2:DeleteNetworkInterface
-              Resource: '*'
-      VpcConfig:
-        SecurityGroupIds:
-          - sg-xxxxxxxxxxxxxxxxx
-        SubnetIds:
-          - subnet-xxxxxxxxxxxxxxxxx
-          - subnet-xxxxxxxxxxxxxxxxx
+
+      # followings are required when you want to run lambda in VPC
+      # c.f. https://docs.aws.amazon.com/lambda/latest/dg/vpc.html
+      #       - Effect: Allow
+      #         Resource: '*'
+      #         Action:
+      #           - ec2:CreateNetworkInterface
+      #           - ec2:DescribeNetworkInterfaces
+      #           - ec2:DeleteNetworkInterface
+      #
+      # VpcConfig:
+      #   SecurityGroupIds:
+      #     - sg-xxxxxxxxxxxxxxxxx
+      #   SubnetIds:
+      #     # Requires NAT Gateway
+      #     # c.f. https://aws.amazon.com/premiumsupport/knowledge-center/internet-access-lambda-function/
+      #     - subnet-xxxxxxxxxxxxxxxxx
+      #     - subnet-xxxxxxxxxxxxxxxxx
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
