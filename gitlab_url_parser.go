@@ -36,6 +36,8 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 		return nil, err
 	}
 
+	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version)
+
 	return p, nil
 }
 
