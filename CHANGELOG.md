@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.3...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.4...master)
+
+## v0.3.4
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.3...v0.3.4)
+
+* Fixed SEGV when non-user's project
+  * https://github.com/sue445/gitpanda/pull/46
 
 ## v0.3.3
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.2...v0.3.3)
