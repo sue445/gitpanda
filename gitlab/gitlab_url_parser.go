@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/sue445/gitpanda"
+	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strconv"
@@ -307,12 +308,12 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 	case 1:
 		line, _ := strconv.Atoi(lines[0])
 		lineRange = lines[0]
-		selectedFile = main.SelectLine(fileBody, line)
+		selectedFile = util.SelectLine(fileBody, line)
 	case 2:
 		startLine, _ := strconv.Atoi(lines[0])
 		endLine, _ := strconv.Atoi(lines[1])
 		lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
-		selectedFile = main.SelectLines(fileBody, startLine, endLine)
+		selectedFile = util.SelectLines(fileBody, startLine, endLine)
 	default:
 		return nil, fmt.Errorf("Invalid line: L%s", lineHash)
 	}

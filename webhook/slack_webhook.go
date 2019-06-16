@@ -7,6 +7,7 @@ import (
 	"github.com/nlopes/slack/slackevents"
 	"github.com/sue445/gitpanda"
 	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/util"
 )
 
 // SlackWebhook represents Slack webhook
@@ -66,7 +67,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 
 				description := page.Description
 				if page.canTruncateDescription {
-					description = main.TruncateWithLine(description, truncateLines)
+					description = util.TruncateWithLine(description, truncateLines)
 				}
 
 				attachment := slack.Attachment{
