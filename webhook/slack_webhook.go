@@ -1,10 +1,11 @@
-package main
+package webhook
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
+	"github.com/sue445/gitpanda"
 	"github.com/sue445/gitpanda/gitlab"
 )
 
@@ -59,13 +60,13 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 					continue
 				}
 
-				if isDebugLogging {
+				if main.isDebugLogging {
 					fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
 				}
 
 				description := page.Description
 				if page.canTruncateDescription {
-					description = TruncateWithLine(description, truncateLines)
+					description = main.TruncateWithLine(description, truncateLines)
 				}
 
 				attachment := slack.Attachment{
