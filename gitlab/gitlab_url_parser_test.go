@@ -66,7 +66,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    *GitLabPage
+		want    *Page
 		wantErr bool
 	}{
 		{
@@ -88,7 +88,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "Diaspora / Diaspora Project Site · GitLab",
 				Description:            "Diaspora Project",
 				AuthorName:             "Diaspora",
@@ -102,7 +102,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "Omnis vero earum sunt corporis dolor et placeat.",
 				AuthorName:             "Administrator",
@@ -116,7 +116,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1#note_302",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "closed",
 				AuthorName:             "Pip",
@@ -130,7 +130,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "fixed login page css paddings",
 				AuthorName:             "Administrator",
@@ -144,7 +144,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1#note_301",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "Comment for MR",
 				AuthorName:             "Pip",
@@ -158,7 +158,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/john_smith",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "John Smith · GitLab",
 				Description:            "John Smith",
 				AuthorName:             "John Smith",
@@ -172,7 +172,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "gitlabci-templates/continuous_bundle_update.yml:4",
 				Description:            "```\n  variables:\n```",
 				AuthorName:             "",
@@ -186,7 +186,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4-9",
 			},
-			want: &GitLabPage{
+			want: &Page{
 				Title:                  "gitlabci-templates/continuous_bundle_update.yml:4-9",
 				Description:            "```\n  variables:\n    CACHE_VERSION: \"v1\"\n    GIT_EMAIL:     \"gitlabci@example.com\"\n    GIT_USER:      \"GitLab CI\"\n    LABELS:        \"bundle update\"\n    OPTIONS:       \"\"\n```",
 				AuthorName:             "",

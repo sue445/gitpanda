@@ -44,7 +44,7 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 }
 
 // FetchURL fetch GitLab url
-func (p *GitlabURLParser) FetchURL(url string) (*GitLabPage, error) {
+func (p *GitlabURLParser) FetchURL(url string) (*Page, error) {
 	if !strings.HasPrefix(url, p.baseURL) {
 		return nil, nil
 	}
@@ -113,7 +113,7 @@ func (p *GitlabURLParser) FetchURL(url string) (*GitLabPage, error) {
 	return nil, nil
 }
 
-func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
+func (p *GitlabURLParser) fetchIssueURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/issues/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -155,7 +155,7 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 		authorAvatarURL = note.Author.AvatarURL
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            description,
 		AuthorName:             authorName,
@@ -167,7 +167,7 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error) {
+func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -209,7 +209,7 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 		authorAvatarURL = note.Author.AvatarURL
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            description,
 		AuthorName:             authorName,
@@ -221,7 +221,7 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
+func (p *GitlabURLParser) fetchProjectURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -235,7 +235,7 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 		return nil, err
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            project.Description,
 		AuthorName:             project.Owner.Name,
@@ -247,7 +247,7 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
+func (p *GitlabURLParser) fetchUserURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -268,7 +268,7 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 
 	user := users[0]
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
 		Description:            user.Name,
 		AuthorName:             user.Name,
@@ -280,7 +280,7 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
+func (p *GitlabURLParser) fetchBlobURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/blob/([^/]+)/(.+)#L([0-9-]+)$")
 	matched := re.FindStringSubmatch(path)
 
@@ -324,7 +324,7 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 		return nil, err
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  fmt.Sprintf("%s:%s", fileName, lineRange),
 		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
 		AuthorName:             "",

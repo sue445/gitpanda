@@ -1,7 +1,7 @@
 package gitlab
 
-// GitLabPage represents info of GitLab page
-type GitLabPage struct {
+// Page represents info of GitLab page
+type Page struct {
 	Title                  string
 	Description            string
 	AuthorName             string
