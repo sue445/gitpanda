@@ -23,6 +23,7 @@ type URLParserParams struct {
 	BaseURL         string
 	PrivateToken    string
 	GitPandaVersion string
+	IsDebugLogging  bool
 }
 
 // NewGitlabURLParser create new URLParser instance
