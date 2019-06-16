@@ -17,8 +17,8 @@ type URLParser struct {
 	client  *gitlab.Client
 }
 
-// GitLabURLParserParams represents parameters of NewGitlabURLParser
-type GitLabURLParserParams struct {
+// URLParserParams represents parameters of NewGitlabURLParser
+type URLParserParams struct {
 	APIEndpoint     string
 	BaseURL         string
 	PrivateToken    string
@@ -26,7 +26,7 @@ type GitLabURLParserParams struct {
 }
 
 // NewGitlabURLParser create new URLParser instance
-func NewGitlabURLParser(params *GitLabURLParserParams) (*URLParser, error) {
+func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 	p := &URLParser{
 		baseURL: params.BaseURL,
 	}

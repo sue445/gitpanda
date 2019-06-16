@@ -49,7 +49,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlabci-templates/continuous_bundle_update.yml")),
 	)
 
-	p, err := NewGitlabURLParser(&GitLabURLParserParams{
+	p, err := NewGitlabURLParser(&URLParserParams{
 		APIEndpoint:     "http://example.com/api/v4",
 		BaseURL:         "http://example.com",
 		PrivateToken:    "xxxxxxxxxx",

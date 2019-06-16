@@ -12,11 +12,11 @@ import (
 // SlackWebhook represents Slack webhook
 type SlackWebhook struct {
 	slackOAuthAccessToken string
-	gitLabURLParserParams *gitlab.GitLabURLParserParams
+	gitLabURLParserParams *gitlab.URLParserParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab.GitLabURLParserParams) *SlackWebhook {
+func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab.URLParserParams) *SlackWebhook {
 	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
