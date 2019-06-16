@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 )
 
+// ReadTestData returns testdata
 func ReadTestData(filename string) string {
 	buf, err := ioutil.ReadFile(filename)
 
