@@ -279,13 +279,16 @@ func (p *URLParser) fetchProjectURL(path string) (*Page, error) {
 	page := &Page{
 		Title:                  strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            project.Description,
-		AuthorName:             project.Owner.Name,
-		AuthorAvatarURL:        project.Owner.AvatarURL,
 		AvatarURL:              project.AvatarURL,
 		CanTruncateDescription: true,
 		FooterTitle:            project.PathWithNamespace,
 		FooterURL:              project.WebURL,
 		FooterTime:             project.CreatedAt,
+	}
+
+	if project.Owner != nil {
+		page.AuthorName = project.Owner.Name
+		page.AuthorAvatarURL = project.Owner.AvatarURL
 	}
 
 	return page, nil

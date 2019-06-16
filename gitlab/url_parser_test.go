@@ -21,6 +21,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
+		"http://example.com/api/v4/projects/gitlab-org%2Fdiaspora-project-site",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project_without_owner.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/issue.json")),
 	)
@@ -106,6 +111,23 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &projectCreatedAt,
+			},
+		},
+		{
+			name: "Project (without owner) URL",
+			args: args{
+				url: "http://example.com/gitlab-org/diaspora-project-site",
+			},
+			want: &Page{
+				Title:                  "GitLab.org / Diaspora Project Site · GitLab",
+				Description:            "Diaspora Project",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "gitlab-org/diaspora-project-site",
+				FooterURL:              "http://example.com/gitlab-org/diaspora-project-site",
 				FooterTime:             &projectCreatedAt,
 			},
 		},
