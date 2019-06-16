@@ -1,5 +1,16 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.1...master)
+
+## v0.3.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.0...v0.3.1)
+
+* Set User-Agent for GitLab API
+  * https://github.com/sue445/gitpanda/pull/41
+* Performance tuning for multiple links
+  * https://github.com/sue445/gitpanda/pull/43
+* Refactor: split to sub packages
+  * https://github.com/sue445/gitpanda/pull/42
+* and other refactorings
 
 ## v0.3.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.2.0...v0.3.0)
