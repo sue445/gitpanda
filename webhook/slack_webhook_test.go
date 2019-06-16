@@ -57,15 +57,16 @@ func TestSlackWebhook_Request(t *testing.T) {
 		{
 			name: "Successful",
 			args: args{
-				body:          testutil.ReadTestData("testdata/event_callback_link_shared.json"),
-				truncateLines: 0,
+				body:           testutil.ReadTestData("testdata/event_callback_link_shared.json"),
+				truncateLines:  0,
+				isDebugLogging: false,
 			},
 			want: "ok",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := s.Request(tt.args.body, tt.args.truncateLines, true)
+			got, err := s.Request(tt.args.body, tt.args.truncateLines, tt.args.isDebugLogging)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("SlackWebhook.Request() error = %+v and got = %s, wantErr %+v", err, got, tt.wantErr)
 				return

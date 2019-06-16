@@ -46,6 +46,10 @@ release: tag
 test:
 	go test -count=1 ./...
 
+.PHONY: testrace
+testrace:
+	go test -count=1 -race ./...
+
 .PHONY: fmt
 fmt:
 	go fmt ./...
