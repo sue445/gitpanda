@@ -41,3 +41,11 @@ tag:
 .PHONY: release
 release: tag
 	git push origin master
+
+.PHONY: test
+test:
+	go test -count=1 ./...
+
+.PHONY: fmt
+fmt:
+	go fmt ./...
