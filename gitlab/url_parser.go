@@ -1,7 +1,8 @@
-package main
+package gitlab
 
 import (
 	"fmt"
+	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strconv"
@@ -10,22 +11,23 @@ import (
 
 const titleSeparator = " · "
 
-// GitlabURLParser represents GitLab URL parser
-type GitlabURLParser struct {
+// URLParser represents GitLab URL parser
+type URLParser struct {
 	baseURL string
 	client  *gitlab.Client
 }
 
-// GitLabURLParserParams represents parameters of NewGitlabURLParser
-type GitLabURLParserParams struct {
-	APIEndpoint  string
-	BaseURL      string
-	PrivateToken string
+// URLParserParams represents parameters of NewGitlabURLParser
+type URLParserParams struct {
+	APIEndpoint     string
+	BaseURL         string
+	PrivateToken    string
+	GitPandaVersion string
 }
 
-// NewGitlabURLParser create new GitlabURLParser instance
-func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error) {
-	p := &GitlabURLParser{
+// NewGitlabURLParser create new URLParser instance
+func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
+	p := &URLParser{
 		baseURL: params.BaseURL,
 	}
 
@@ -36,13 +38,13 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 		return nil, err
 	}
 
-	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version)
+	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", params.GitPandaVersion)
 
 	return p, nil
 }
 
 // FetchURL fetch GitLab url
-func (p *GitlabURLParser) FetchURL(url string) (*GitLabPage, error) {
+func (p *URLParser) FetchURL(url string) (*Page, error) {
 	if !strings.HasPrefix(url, p.baseURL) {
 		return nil, nil
 	}
@@ -111,7 +113,7 @@ func (p *GitlabURLParser) FetchURL(url string) (*GitLabPage, error) {
 	return nil, nil
 }
 
-func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
+func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/issues/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -153,19 +155,19 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*GitLabPage, error) {
 		authorAvatarURL = note.Author.AvatarURL
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            description,
 		AuthorName:             authorName,
 		AuthorAvatarURL:        authorAvatarURL,
 		AvatarURL:              project.AvatarURL,
-		canTruncateDescription: true,
+		CanTruncateDescription: true,
 	}
 
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error) {
+func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -207,19 +209,19 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*GitLabPage, error)
 		authorAvatarURL = note.Author.AvatarURL
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{mr.Title, "Merge Requests", project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            description,
 		AuthorName:             authorName,
 		AuthorAvatarURL:        authorAvatarURL,
 		AvatarURL:              project.AvatarURL,
-		canTruncateDescription: true,
+		CanTruncateDescription: true,
 	}
 
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
+func (p *URLParser) fetchProjectURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -233,19 +235,19 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*GitLabPage, error) {
 		return nil, err
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            project.Description,
 		AuthorName:             project.Owner.Name,
 		AuthorAvatarURL:        project.Owner.AvatarURL,
 		AvatarURL:              project.AvatarURL,
-		canTruncateDescription: true,
+		CanTruncateDescription: true,
 	}
 
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
+func (p *URLParser) fetchUserURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -266,19 +268,19 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*GitLabPage, error) {
 
 	user := users[0]
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
 		Description:            user.Name,
 		AuthorName:             user.Name,
 		AuthorAvatarURL:        user.AvatarURL,
 		AvatarURL:              user.AvatarURL,
-		canTruncateDescription: true,
+		CanTruncateDescription: true,
 	}
 
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
+func (p *URLParser) fetchBlobURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/blob/([^/]+)/(.+)#L([0-9-]+)$")
 	matched := re.FindStringSubmatch(path)
 
@@ -306,12 +308,12 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 	case 1:
 		line, _ := strconv.Atoi(lines[0])
 		lineRange = lines[0]
-		selectedFile = SelectLine(fileBody, line)
+		selectedFile = util.SelectLine(fileBody, line)
 	case 2:
 		startLine, _ := strconv.Atoi(lines[0])
 		endLine, _ := strconv.Atoi(lines[1])
 		lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
-		selectedFile = SelectLines(fileBody, startLine, endLine)
+		selectedFile = util.SelectLines(fileBody, startLine, endLine)
 	default:
 		return nil, fmt.Errorf("Invalid line: L%s", lineHash)
 	}
@@ -322,13 +324,13 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 		return nil, err
 	}
 
-	page := &GitLabPage{
+	page := &Page{
 		Title:                  fmt.Sprintf("%s:%s", fileName, lineRange),
 		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
 		AuthorName:             "",
 		AuthorAvatarURL:        "",
 		AvatarURL:              project.AvatarURL,
-		canTruncateDescription: false,
+		CanTruncateDescription: false,
 	}
 
 	return page, nil

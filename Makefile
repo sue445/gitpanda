@@ -41,3 +41,19 @@ tag:
 .PHONY: release
 release: tag
 	git push origin master
+
+.PHONY: test
+test:
+	go test -count=1 ./...
+
+.PHONY: fmt
+fmt:
+	go fmt ./...
+
+.PHONY: lint
+lint:
+	golint -set_exit_status ./...
+
+.PHONY: vet
+vet:
+	go vet ./...

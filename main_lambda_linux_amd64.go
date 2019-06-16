@@ -9,6 +9,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/webhook"
 	"net/http"
 	"os"
 	"strings"
@@ -62,15 +64,16 @@ func lambdaMain(body string) (string, error) {
 		return "Failed: gitlabPrivateToken", err
 	}
 
-	s := NewSlackWebhook(
+	s := webhook.NewSlackWebhook(
 		slackOAuthAccessToken,
-		&GitLabURLParserParams{
-			APIEndpoint:  gitlabAPIEndpoint,
-			BaseURL:      gitlabBaseURL,
-			PrivateToken: gitlabPrivateToken,
+		&gitlab.URLParserParams{
+			APIEndpoint:     gitlabAPIEndpoint,
+			BaseURL:         gitlabBaseURL,
+			PrivateToken:    gitlabPrivateToken,
+			GitPandaVersion: Version,
 		},
 	)
-	response, err := s.Request(body, truncateLines)
+	response, err := s.Request(body, truncateLines, isDebugLogging)
 
 	if err != nil {
 		return response, err

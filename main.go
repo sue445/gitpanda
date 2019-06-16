@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/webhook"
 	"net/http"
 	"os"
 	"strconv"
@@ -88,15 +90,16 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("[DEBUG] normalHandler: body=%s\n", body)
 		}
 
-		s := NewSlackWebhook(
+		s := webhook.NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
-			&GitLabURLParserParams{
-				APIEndpoint:  os.Getenv("GITLAB_API_ENDPOINT"),
-				BaseURL:      os.Getenv("GITLAB_BASE_URL"),
-				PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),
+			&gitlab.URLParserParams{
+				APIEndpoint:     os.Getenv("GITLAB_API_ENDPOINT"),
+				BaseURL:         os.Getenv("GITLAB_BASE_URL"),
+				PrivateToken:    os.Getenv("GITLAB_PRIVATE_TOKEN"),
+				GitPandaVersion: Version,
 			},
 		)
-		response, err := s.Request(body, truncateLines)
+		response, err := s.Request(body, truncateLines, isDebugLogging)
 
 		if err != nil {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)

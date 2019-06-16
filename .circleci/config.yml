@@ -25,7 +25,7 @@ jobs:
         restore_cache:
           key: go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
       - run:
-          command: go test
+          command: make test
 
   golint:
     executor: golang
@@ -36,7 +36,7 @@ jobs:
       - run:
           command: go get -u golang.org/x/lint/golint
       - run:
-          command: golint -set_exit_status
+          command: make lint
 
   go-vet:
     executor: golang
@@ -45,7 +45,7 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - run:
-          command: go vet
+          command: make vet
 
   gofmt:
     executor: golang

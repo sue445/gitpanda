@@ -1,25 +1,27 @@
-package main
+package webhook
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
+	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/util"
 )
 
 // SlackWebhook represents Slack webhook
 type SlackWebhook struct {
 	slackOAuthAccessToken string
-	gitLabURLParserParams *GitLabURLParserParams
+	gitLabURLParserParams *gitlab.URLParserParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *GitLabURLParserParams) *SlackWebhook {
+func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab.URLParserParams) *SlackWebhook {
 	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
 // Request handles Slack event
-func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
+func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bool) (string, error) {
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
@@ -36,7 +38,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 		return r.Challenge, nil
 
 	case slackevents.CallbackEvent:
-		p, err := NewGitlabURLParser(s.gitLabURLParserParams)
+		p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
 
 		if err != nil {
 			return "Failed: NewGitlabURLParser", err
@@ -63,8 +65,8 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 				}
 
 				description := page.Description
-				if page.canTruncateDescription {
-					description = TruncateWithLine(description, truncateLines)
+				if page.CanTruncateDescription {
+					description = util.TruncateWithLine(description, truncateLines)
 				}
 
 				attachment := slack.Attachment{
