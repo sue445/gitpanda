@@ -4,6 +4,7 @@ import (
 	"github.com/sue445/gitpanda/testutil"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/jarcoal/httpmock"
 )
@@ -63,6 +64,14 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	type args struct {
 		url string
 	}
+
+	issueCreatedAt := time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)
+	issueNoteCreatedAt := time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)
+	mrCreatedAt := time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)
+	mrNoteCreatedAt := time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)
+	projectCreatedAt := time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)
+	userCreatedAt := time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)
+
 	tests := []struct {
 		name    string
 		args    args
@@ -95,6 +104,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "http://example.com/images/diaspora.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &projectCreatedAt,
 			},
 		},
 		{
@@ -109,6 +121,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &issueCreatedAt,
 			},
 		},
 		{
@@ -123,6 +138,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &issueNoteCreatedAt,
 			},
 		},
 		{
@@ -137,6 +155,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "https://gitlab.example.com/images/admin.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &mrCreatedAt,
 			},
 		},
 		{
@@ -151,6 +172,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &mrNoteCreatedAt,
 			},
 		},
 		{
@@ -165,6 +189,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 				AvatarURL:              "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 				CanTruncateDescription: true,
+				FooterTitle:            "@john_smith",
+				FooterURL:              "http://example.com/john_smith",
+				FooterTime:             &userCreatedAt,
 			},
 		},
 		{
@@ -179,6 +206,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             nil,
 			},
 		},
 		{
@@ -193,6 +223,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorAvatarURL:        "",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
 				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             nil,
 			},
 		},
 	}
