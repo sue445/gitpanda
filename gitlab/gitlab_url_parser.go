@@ -1,7 +1,8 @@
-package main
+package gitlab
 
 import (
 	"fmt"
+	"github.com/sue445/gitpanda"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strconv"
@@ -36,7 +37,7 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 		return nil, err
 	}
 
-	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version)
+	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", main.Version)
 
 	return p, nil
 }
@@ -306,12 +307,12 @@ func (p *GitlabURLParser) fetchBlobURL(path string) (*GitLabPage, error) {
 	case 1:
 		line, _ := strconv.Atoi(lines[0])
 		lineRange = lines[0]
-		selectedFile = SelectLine(fileBody, line)
+		selectedFile = main.SelectLine(fileBody, line)
 	case 2:
 		startLine, _ := strconv.Atoi(lines[0])
 		endLine, _ := strconv.Atoi(lines[1])
 		lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
-		selectedFile = SelectLines(fileBody, startLine, endLine)
+		selectedFile = main.SelectLines(fileBody, startLine, endLine)
 	default:
 		return nil, fmt.Errorf("Invalid line: L%s", lineHash)
 	}

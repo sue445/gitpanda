@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/sue445/gitpanda/gitlab"
 	"net/http"
 	"os"
 	"strings"
@@ -64,7 +65,7 @@ func lambdaMain(body string) (string, error) {
 
 	s := NewSlackWebhook(
 		slackOAuthAccessToken,
-		&GitLabURLParserParams{
+		&gitlab.GitLabURLParserParams{
 			APIEndpoint:  gitlabAPIEndpoint,
 			BaseURL:      gitlabBaseURL,
 			PrivateToken: gitlabPrivateToken,

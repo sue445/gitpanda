@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"github.com/sue445/gitpanda/gitlab"
 	"net/http"
 	"os"
 	"strconv"
@@ -90,7 +91,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 
 		s := NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
-			&GitLabURLParserParams{
+			&gitlab.GitLabURLParserParams{
 				APIEndpoint:  os.Getenv("GITLAB_API_ENDPOINT"),
 				BaseURL:      os.Getenv("GITLAB_BASE_URL"),
 				PrivateToken: os.Getenv("GITLAB_PRIVATE_TOKEN"),

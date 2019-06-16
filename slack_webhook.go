@@ -5,16 +5,17 @@ import (
 	"fmt"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
+	"github.com/sue445/gitpanda/gitlab"
 )
 
 // SlackWebhook represents Slack webhook
 type SlackWebhook struct {
 	slackOAuthAccessToken string
-	gitLabURLParserParams *GitLabURLParserParams
+	gitLabURLParserParams *gitlab.GitLabURLParserParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *GitLabURLParserParams) *SlackWebhook {
+func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab.GitLabURLParserParams) *SlackWebhook {
 	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
@@ -36,7 +37,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 		return r.Challenge, nil
 
 	case slackevents.CallbackEvent:
-		p, err := NewGitlabURLParser(s.gitLabURLParserParams)
+		p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
 
 		if err != nil {
 			return "Failed: NewGitlabURLParser", err

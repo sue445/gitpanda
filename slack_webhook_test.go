@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/jarcoal/httpmock"
+	"github.com/sue445/gitpanda/gitlab"
 	"testing"
 )
 
@@ -13,17 +14,17 @@ func TestSlackWebhook_Request(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, readTestData("gitlab/project.json")),
+		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, readTestData("gitlab/merge_request.json")),
+		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, readTestData("gitlab/users.json")),
+		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/users.json")),
 	)
 
 	httpmock.RegisterResponder(
@@ -39,7 +40,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 
 	s := NewSlackWebhook(
 		"xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000",
-		&GitLabURLParserParams{
+		&gitlab.GitLabURLParserParams{
 			APIEndpoint:  "http://example.com/api/v4",
 			BaseURL:      "http://example.com",
 			PrivateToken: "xxxxxxxxxx",
@@ -54,7 +55,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 		{
 			name: "Successful",
 			args: args{
-				body:          readTestData("slack/event_callback_link_shared.json"),
+				body:          gitlab.readTestData("slack/event_callback_link_shared.json"),
 				truncateLines: 0,
 			},
 			want: "ok",

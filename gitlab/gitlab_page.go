@@ -1,4 +1,4 @@
-package main
+package gitlab
 
 // GitLabPage represents info of GitLab page
 type GitLabPage struct {
