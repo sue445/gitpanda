@@ -7,6 +7,7 @@ import (
 	"github.com/nlopes/slack/slackevents"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
+	"golang.org/x/sync/errgroup"
 )
 
 // SlackWebhook represents Slack webhook
@@ -49,40 +50,50 @@ func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bo
 		case *slackevents.LinkSharedEvent:
 			unfurls := map[string]slack.Attachment{}
 
+			var eg errgroup.Group
 			for _, link := range ev.Links {
-				page, err := p.FetchURL(link.URL)
+				url := link.URL
+				eg.Go(func() error {
+					page, err := p.FetchURL(url)
 
-				if err != nil {
-					return "Failed: FetchURL", err
-				}
+					if err != nil {
+						return err
+					}
 
-				if page == nil {
-					continue
-				}
+					if page == nil {
+						return nil
+					}
 
-				if isDebugLogging {
-					fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
-				}
+					if isDebugLogging {
+						fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
+					}
 
-				description := page.Description
-				if page.CanTruncateDescription {
-					description = util.TruncateWithLine(description, truncateLines)
-				}
+					description := page.Description
+					if page.CanTruncateDescription {
+						description = util.TruncateWithLine(description, truncateLines)
+					}
 
-				attachment := slack.Attachment{
-					Title:      page.Title,
-					TitleLink:  link.URL,
-					AuthorName: page.AuthorName,
-					AuthorIcon: page.AuthorAvatarURL,
-					Text:       description,
-					Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
-				}
+					attachment := slack.Attachment{
+						Title:      page.Title,
+						TitleLink:  url,
+						AuthorName: page.AuthorName,
+						AuthorIcon: page.AuthorAvatarURL,
+						Text:       description,
+						Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
+					}
 
-				if page.AvatarURL != "" {
-					attachment.ThumbURL = page.AvatarURL
-				}
+					if page.AvatarURL != "" {
+						attachment.ThumbURL = page.AvatarURL
+					}
 
-				unfurls[link.URL] = attachment
+					unfurls[url] = attachment
+
+					return nil
+				})
+			}
+
+			if err := eg.Wait(); err != nil {
+				return "Failed: FetchURL", err
 			}
 
 			if len(unfurls) == 0 {
