@@ -7,5 +7,5 @@ type GitLabPage struct {
 	AuthorName             string
 	AuthorAvatarURL        string
 	AvatarURL              string
-	canTruncateDescription bool
+	CanTruncateDescription bool
 }

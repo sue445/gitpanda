@@ -93,7 +93,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "Diaspora",
 				AuthorAvatarURL:        "http://example.com/images/diaspora.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -107,7 +107,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "Administrator",
 				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -121,7 +121,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "Pip",
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -135,7 +135,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "Administrator",
 				AuthorAvatarURL:        "https://gitlab.example.com/images/admin.png",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -149,7 +149,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "Pip",
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -163,7 +163,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "John Smith",
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
 				AvatarURL:              "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
-				canTruncateDescription: true,
+				CanTruncateDescription: true,
 			},
 		},
 		{
@@ -177,7 +177,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "",
 				AuthorAvatarURL:        "",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: false,
+				CanTruncateDescription: false,
 			},
 		},
 		{
@@ -191,7 +191,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				AuthorName:             "",
 				AuthorAvatarURL:        "",
 				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
-				canTruncateDescription: false,
+				CanTruncateDescription: false,
 			},
 		},
 	}

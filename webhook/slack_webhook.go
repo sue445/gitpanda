@@ -66,7 +66,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 				}
 
 				description := page.Description
-				if page.canTruncateDescription {
+				if page.CanTruncateDescription {
 					description = util.TruncateWithLine(description, truncateLines)
 				}
 
