@@ -35,8 +35,8 @@ func TestSlackWebhook_Request(t *testing.T) {
 	)
 
 	type args struct {
-		body          string
-		truncateLines int
+		body           string
+		truncateLines  int
 		isDebugLogging bool
 	}
 

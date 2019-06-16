@@ -67,9 +67,9 @@ func lambdaMain(body string) (string, error) {
 	s := webhook.NewSlackWebhook(
 		slackOAuthAccessToken,
 		&gitlab.GitLabURLParserParams{
-			APIEndpoint:  gitlabAPIEndpoint,
-			BaseURL:      gitlabBaseURL,
-			PrivateToken: gitlabPrivateToken,
+			APIEndpoint:     gitlabAPIEndpoint,
+			BaseURL:         gitlabBaseURL,
+			PrivateToken:    gitlabPrivateToken,
 			GitPandaVersion: Version,
 		},
 	)

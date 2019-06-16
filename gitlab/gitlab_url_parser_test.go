@@ -50,9 +50,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 
 	p, err := NewGitlabURLParser(&GitLabURLParserParams{
-		APIEndpoint:  "http://example.com/api/v4",
-		BaseURL:      "http://example.com",
-		PrivateToken: "xxxxxxxxxx",
+		APIEndpoint:     "http://example.com/api/v4",
+		BaseURL:         "http://example.com",
+		PrivateToken:    "xxxxxxxxxx",
 		GitPandaVersion: "v0.0.0",
 	})
 

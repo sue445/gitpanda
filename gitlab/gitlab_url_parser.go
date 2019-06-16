@@ -19,9 +19,9 @@ type GitlabURLParser struct {
 
 // GitLabURLParserParams represents parameters of NewGitlabURLParser
 type GitLabURLParserParams struct {
-	APIEndpoint  string
-	BaseURL      string
-	PrivateToken string
+	APIEndpoint     string
+	BaseURL         string
+	PrivateToken    string
 	GitPandaVersion string
 }
 
