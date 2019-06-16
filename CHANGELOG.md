@@ -10,7 +10,7 @@
 ## v0.3.3
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.2...v0.3.3)
 
-* Add debug log in gitlab/user_parser
+* Add debug log in gitlab/url_parser
   * https://github.com/sue445/gitpanda/pull/45
 
 ## v0.3.2
