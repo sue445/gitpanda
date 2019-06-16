@@ -27,6 +27,15 @@ jobs:
       - run:
           command: make test
 
+  testrace:
+    executor: golang
+
+    steps:
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          command: make testrace
+
   golint:
     executor: golang
 
@@ -83,6 +92,10 @@ workflows:
           requires:
             - go-module/download
 
+      - testrace:
+          requires:
+            - go-module/download
+
       - golint:
           requires:
             - go-module/download
@@ -99,6 +112,7 @@ workflows:
           context: Heroku
           requires:
             - test
+            - testrace
             - golint
             - go-vet
             - gofmt
