@@ -14,6 +14,16 @@
     },
     "SLACK_OAUTH_ACCESS_TOKEN": {
       "description": "see. https://github.com/sue445/gitpanda/blob/master/CREATE_SLACK_APP.md"
+    },
+    "TRUNCATE_LINES": {
+      "required": false,
+      "value": "5",
+      "description": "Line count to truncate the text (default. no truncate)"
+    },
+    "DEBUG_LOGGING": {
+      "required": false,
+      "value": "",
+      "description": "Whether print debug log"
     }
   },
   "addons": [
