@@ -200,11 +200,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := p.FetchURL(tt.args.url)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GitlabURLParser.FetchURL() error = %+v, wantErr %+v", err, tt.wantErr)
+				t.Errorf("URLParser.FetchURL() error = %+v, wantErr %+v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GitlabURLParser.FetchURL() = %+v, want %+v", got, tt.want)
+				t.Errorf("URLParser.FetchURL() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}

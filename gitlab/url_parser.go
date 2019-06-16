@@ -11,8 +11,8 @@ import (
 
 const titleSeparator = " · "
 
-// GitlabURLParser represents GitLab URL parser
-type GitlabURLParser struct {
+// URLParser represents GitLab URL parser
+type URLParser struct {
 	baseURL string
 	client  *gitlab.Client
 }
@@ -25,9 +25,9 @@ type GitLabURLParserParams struct {
 	GitPandaVersion string
 }
 
-// NewGitlabURLParser create new GitlabURLParser instance
-func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error) {
-	p := &GitlabURLParser{
+// NewGitlabURLParser create new URLParser instance
+func NewGitlabURLParser(params *GitLabURLParserParams) (*URLParser, error) {
+	p := &URLParser{
 		baseURL: params.BaseURL,
 	}
 
@@ -44,7 +44,7 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 }
 
 // FetchURL fetch GitLab url
-func (p *GitlabURLParser) FetchURL(url string) (*Page, error) {
+func (p *URLParser) FetchURL(url string) (*Page, error) {
 	if !strings.HasPrefix(url, p.baseURL) {
 		return nil, nil
 	}
@@ -113,7 +113,7 @@ func (p *GitlabURLParser) FetchURL(url string) (*Page, error) {
 	return nil, nil
 }
 
-func (p *GitlabURLParser) fetchIssueURL(path string) (*Page, error) {
+func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/issues/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -167,7 +167,7 @@ func (p *GitlabURLParser) fetchIssueURL(path string) (*Page, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*Page, error) {
+func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
@@ -221,7 +221,7 @@ func (p *GitlabURLParser) fetchMergeRequestURL(path string) (*Page, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchProjectURL(path string) (*Page, error) {
+func (p *URLParser) fetchProjectURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -247,7 +247,7 @@ func (p *GitlabURLParser) fetchProjectURL(path string) (*Page, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchUserURL(path string) (*Page, error) {
+func (p *URLParser) fetchUserURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -280,7 +280,7 @@ func (p *GitlabURLParser) fetchUserURL(path string) (*Page, error) {
 	return page, nil
 }
 
-func (p *GitlabURLParser) fetchBlobURL(path string) (*Page, error) {
+func (p *URLParser) fetchBlobURL(path string) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/([^/]+)/blob/([^/]+)/(.+)#L([0-9-]+)$")
 	matched := re.FindStringSubmatch(path)
 
