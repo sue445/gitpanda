@@ -8,6 +8,7 @@ import (
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 	"golang.org/x/sync/errgroup"
+	"strconv"
 	"sync"
 )
 
@@ -82,10 +83,15 @@ func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bo
 						AuthorIcon: page.AuthorAvatarURL,
 						Text:       description,
 						Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
+						Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
 					}
 
 					if page.AvatarURL != "" {
 						attachment.ThumbURL = page.AvatarURL
+					}
+
+					if page.FooterTime != nil {
+						attachment.Ts = json.Number(strconv.FormatInt(page.FooterTime.Unix(), 10))
 					}
 
 					mu.Lock()

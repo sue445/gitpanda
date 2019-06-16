@@ -141,6 +141,7 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 
 	re2 := regexp.MustCompile("#note_(\\d+)$")
 	matched2 := re2.FindStringSubmatch(path)
+	footerTime := issue.CreatedAt
 
 	if matched2 != nil {
 		noteID, _ := strconv.Atoi(matched2[1])
@@ -153,6 +154,7 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 		description = note.Body
 		authorName = note.Author.Name
 		authorAvatarURL = note.Author.AvatarURL
+		footerTime = note.CreatedAt
 	}
 
 	page := &Page{
@@ -162,6 +164,9 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 		AuthorAvatarURL:        authorAvatarURL,
 		AvatarURL:              project.AvatarURL,
 		CanTruncateDescription: true,
+		FooterTitle:            project.PathWithNamespace,
+		FooterURL:              project.WebURL,
+		FooterTime:             footerTime,
 	}
 
 	return page, nil
@@ -192,6 +197,7 @@ func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 	description := mr.Description
 	authorName := mr.Author.Name
 	authorAvatarURL := mr.Author.AvatarURL
+	footerTime := mr.CreatedAt
 
 	re2 := regexp.MustCompile("#note_(\\d+)$")
 	matched2 := re2.FindStringSubmatch(path)
@@ -207,6 +213,7 @@ func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 		description = note.Body
 		authorName = note.Author.Name
 		authorAvatarURL = note.Author.AvatarURL
+		footerTime = note.CreatedAt
 	}
 
 	page := &Page{
@@ -216,6 +223,9 @@ func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 		AuthorAvatarURL:        authorAvatarURL,
 		AvatarURL:              project.AvatarURL,
 		CanTruncateDescription: true,
+		FooterTitle:            project.PathWithNamespace,
+		FooterURL:              project.WebURL,
+		FooterTime:             footerTime,
 	}
 
 	return page, nil
@@ -242,6 +252,9 @@ func (p *URLParser) fetchProjectURL(path string) (*Page, error) {
 		AuthorAvatarURL:        project.Owner.AvatarURL,
 		AvatarURL:              project.AvatarURL,
 		CanTruncateDescription: true,
+		FooterTitle:            project.PathWithNamespace,
+		FooterURL:              project.WebURL,
+		FooterTime:             project.CreatedAt,
 	}
 
 	return page, nil
@@ -275,6 +288,9 @@ func (p *URLParser) fetchUserURL(path string) (*Page, error) {
 		AuthorAvatarURL:        user.AvatarURL,
 		AvatarURL:              user.AvatarURL,
 		CanTruncateDescription: true,
+		FooterTitle:            fmt.Sprintf("@%s", user.Username),
+		FooterURL:              fmt.Sprintf("%s/%s", p.baseURL, user.Username),
+		FooterTime:             user.CreatedAt,
 	}
 
 	return page, nil
@@ -331,6 +347,9 @@ func (p *URLParser) fetchBlobURL(path string) (*Page, error) {
 		AuthorAvatarURL:        "",
 		AvatarURL:              project.AvatarURL,
 		CanTruncateDescription: false,
+		FooterTitle:            project.PathWithNamespace,
+		FooterURL:              project.WebURL,
+		FooterTime:             nil,
 	}
 
 	return page, nil
