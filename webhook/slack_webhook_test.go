@@ -3,6 +3,7 @@ package webhook
 import (
 	"github.com/jarcoal/httpmock"
 	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/testutil"
 	"testing"
 )
 
@@ -14,17 +15,17 @@ func TestSlackWebhook_Request(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/project.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/merge_request.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, gitlab.readTestData("gitlab/users.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/users.json")),
 	)
 
 	httpmock.RegisterResponder(
@@ -55,7 +56,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 		{
 			name: "Successful",
 			args: args{
-				body:          gitlab.readTestData("slack/event_callback_link_shared.json"),
+				body:          testutil.ReadTestData("slack/event_callback_link_shared.json"),
 				truncateLines: 0,
 			},
 			want: "ok",
