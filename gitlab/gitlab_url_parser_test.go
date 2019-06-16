@@ -16,43 +16,44 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/project.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/issue.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/issue.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1/notes/302",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/issue_note.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/issue_note.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/merge_request.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1/notes/301",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/merge_request_note.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/merge_request_note.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/users.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/users.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update.yml/raw?ref=master",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("gitlab/gitlabci-templates/continuous_bundle_update.yml")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlabci-templates/continuous_bundle_update.yml")),
 	)
 
 	p, err := NewGitlabURLParser(&GitLabURLParserParams{
 		APIEndpoint:  "http://example.com/api/v4",
 		BaseURL:      "http://example.com",
 		PrivateToken: "xxxxxxxxxx",
+		GitPandaVersion: "v0.0.0",
 	})
 
 	if err != nil {

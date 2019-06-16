@@ -2,11 +2,10 @@ package testutil
 
 import (
 	"io/ioutil"
-	"path"
 )
 
 func ReadTestData(filename string) string {
-	buf, err := ioutil.ReadFile(path.Join("test", filename))
+	buf, err := ioutil.ReadFile(filename)
 
 	if err != nil {
 		panic(err)

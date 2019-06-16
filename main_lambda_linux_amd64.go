@@ -70,9 +70,10 @@ func lambdaMain(body string) (string, error) {
 			APIEndpoint:  gitlabAPIEndpoint,
 			BaseURL:      gitlabBaseURL,
 			PrivateToken: gitlabPrivateToken,
+			GitPandaVersion: Version,
 		},
 	)
-	response, err := s.Request(body, truncateLines)
+	response, err := s.Request(body, truncateLines, isDebugLogging)
 
 	if err != nil {
 		return response, err

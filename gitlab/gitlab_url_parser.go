@@ -2,7 +2,6 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/sue445/gitpanda"
 	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
@@ -23,6 +22,7 @@ type GitLabURLParserParams struct {
 	APIEndpoint  string
 	BaseURL      string
 	PrivateToken string
+	GitPandaVersion string
 }
 
 // NewGitlabURLParser create new GitlabURLParser instance
@@ -38,7 +38,7 @@ func NewGitlabURLParser(params *GitLabURLParserParams) (*GitlabURLParser, error)
 		return nil, err
 	}
 
-	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", main.Version)
+	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", params.GitPandaVersion)
 
 	return p, nil
 }

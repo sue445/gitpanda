@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
-	"github.com/sue445/gitpanda"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 )
@@ -22,7 +21,7 @@ func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab
 }
 
 // Request handles Slack event
-func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
+func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bool) (string, error) {
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
@@ -61,7 +60,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 					continue
 				}
 
-				if main.isDebugLogging {
+				if isDebugLogging {
 					fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
 				}
 
