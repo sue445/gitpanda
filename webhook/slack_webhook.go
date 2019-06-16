@@ -24,7 +24,7 @@ func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab
 }
 
 // Request handles Slack event
-func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bool) (string, error) {
+func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
@@ -67,7 +67,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bo
 						return nil
 					}
 
-					if isDebugLogging {
+					if s.gitLabURLParserParams.IsDebugLogging {
 						fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
 					}
 

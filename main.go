@@ -97,9 +97,10 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 				BaseURL:         os.Getenv("GITLAB_BASE_URL"),
 				PrivateToken:    os.Getenv("GITLAB_PRIVATE_TOKEN"),
 				GitPandaVersion: Version,
+				IsDebugLogging:  isDebugLogging,
 			},
 		)
-		response, err := s.Request(body, truncateLines, isDebugLogging)
+		response, err := s.Request(body, truncateLines)
 
 		if err != nil {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
