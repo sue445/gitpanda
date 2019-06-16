@@ -61,6 +61,12 @@ Resources:
       #     - subnet-xxxxxxxxxxxxxxxxx
       #     - subnet-xxxxxxxxxxxxxxxxx
 
+  GitpandaFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${GitpandaFunction}
+      RetentionInDays: 7
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
