@@ -8,6 +8,7 @@ import (
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 	"golang.org/x/sync/errgroup"
+	"sync"
 )
 
 // SlackWebhook represents Slack webhook
@@ -50,6 +51,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bo
 		case *slackevents.LinkSharedEvent:
 			unfurls := map[string]slack.Attachment{}
 
+			var mu sync.Mutex
 			var eg errgroup.Group
 			for _, link := range ev.Links {
 				url := link.URL
@@ -86,6 +88,8 @@ func (s *SlackWebhook) Request(body string, truncateLines int, isDebugLogging bo
 						attachment.ThumbURL = page.AvatarURL
 					}
 
+					mu.Lock()
+					defer mu.Unlock()
 					unfurls[url] = attachment
 
 					return nil
