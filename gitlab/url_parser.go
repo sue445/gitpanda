@@ -13,8 +13,9 @@ const titleSeparator = " · "
 
 // URLParser represents GitLab URL parser
 type URLParser struct {
-	baseURL string
-	client  *gitlab.Client
+	baseURL        string
+	client         *gitlab.Client
+	isDebugLogging bool
 }
 
 // URLParserParams represents parameters of NewGitlabURLParser
@@ -29,7 +30,8 @@ type URLParserParams struct {
 // NewGitlabURLParser create new URLParser instance
 func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 	p := &URLParser{
-		baseURL: params.BaseURL,
+		baseURL:        params.BaseURL,
+		isDebugLogging: params.IsDebugLogging,
 	}
 
 	p.client = gitlab.NewClient(nil, params.PrivateToken)
@@ -130,10 +132,18 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 		return nil, err
 	}
 
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchIssueURL: issue=%+v\n", issue)
+	}
+
 	project, _, err := p.client.Projects.GetProject(projectName, nil)
 
 	if err != nil {
 		return nil, err
+	}
+
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchIssueURL: project=%+v\n", project)
 	}
 
 	description := issue.Description
@@ -150,6 +160,10 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 
 		if err != nil {
 			return nil, err
+		}
+
+		if p.isDebugLogging {
+			fmt.Printf("[DEBUG] fetchIssueURL: note=%+v\n", note)
 		}
 
 		description = note.Body
@@ -189,10 +203,18 @@ func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 		return nil, err
 	}
 
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchMergeRequestURL: mr=%+v\n", mr)
+	}
+
 	project, _, err := p.client.Projects.GetProject(projectName, nil)
 
 	if err != nil {
 		return nil, err
+	}
+
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchMergeRequestURL: project=%+v\n", project)
 	}
 
 	description := mr.Description
@@ -209,6 +231,10 @@ func (p *URLParser) fetchMergeRequestURL(path string) (*Page, error) {
 
 		if err != nil {
 			return nil, err
+		}
+
+		if p.isDebugLogging {
+			fmt.Printf("[DEBUG] fetchMergeRequestURL: note=%+v\n", note)
 		}
 
 		description = note.Body
@@ -246,6 +272,10 @@ func (p *URLParser) fetchProjectURL(path string) (*Page, error) {
 		return nil, err
 	}
 
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchProjectURL: project=%+v\n", project)
+	}
+
 	page := &Page{
 		Title:                  strings.Join([]string{project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            project.Description,
@@ -274,6 +304,10 @@ func (p *URLParser) fetchUserURL(path string) (*Page, error) {
 
 	if err != nil {
 		return nil, err
+	}
+
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchUserURL: users=%+v\n", users)
 	}
 
 	if len(users) < 1 {
@@ -315,6 +349,10 @@ func (p *URLParser) fetchBlobURL(path string) (*Page, error) {
 	}
 
 	fileBody := string(rawFile)
+
+	if p.isDebugLogging {
+		fmt.Printf("[DEBUG] fetchBlobURL: fileBody=%s\n", fileBody)
+	}
 
 	lineHash := matched[5]
 	lines := strings.Split(lineHash, "-")
