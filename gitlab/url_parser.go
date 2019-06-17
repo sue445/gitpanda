@@ -149,10 +149,10 @@ func (p *URLParser) fetchIssueURL(path string) (*Page, error) {
 	description := issue.Description
 	authorName := issue.Author.Name
 	authorAvatarURL := issue.Author.AvatarURL
+	footerTime := issue.CreatedAt
 
 	re2 := regexp.MustCompile("#note_(\\d+)$")
 	matched2 := re2.FindStringSubmatch(path)
-	footerTime := issue.CreatedAt
 
 	if matched2 != nil {
 		noteID, _ := strconv.Atoi(matched2[1])
