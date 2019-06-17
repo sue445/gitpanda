@@ -92,10 +92,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 				Text:       description,
 				Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
-			}
-
-			if page.AvatarURL != "" {
-				attachment.ThumbURL = page.AvatarURL
+				ThumbURL:   page.AvatarURL,
 			}
 
 			if page.FooterTime != nil {
