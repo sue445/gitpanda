@@ -41,85 +41,89 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 		return r.Challenge, nil
 
 	case slackevents.CallbackEvent:
-		p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
-
-		if err != nil {
-			return "Failed: NewGitlabURLParser", err
-		}
-
 		innerEvent := eventsAPIEvent.InnerEvent
 		switch ev := innerEvent.Data.(type) {
 		case *slackevents.LinkSharedEvent:
-			unfurls := map[string]slack.Attachment{}
-
-			var mu sync.Mutex
-			var eg errgroup.Group
-			for _, link := range ev.Links {
-				url := link.URL
-				eg.Go(func() error {
-					page, err := p.FetchURL(url)
-
-					if err != nil {
-						return err
-					}
-
-					if page == nil {
-						return nil
-					}
-
-					if s.gitLabURLParserParams.IsDebugLogging {
-						fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
-					}
-
-					description := page.Description
-					if page.CanTruncateDescription {
-						description = util.TruncateWithLine(description, truncateLines)
-					}
-
-					attachment := slack.Attachment{
-						Title:      page.Title,
-						TitleLink:  url,
-						AuthorName: page.AuthorName,
-						AuthorIcon: page.AuthorAvatarURL,
-						Text:       description,
-						Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
-						Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
-					}
-
-					if page.AvatarURL != "" {
-						attachment.ThumbURL = page.AvatarURL
-					}
-
-					if page.FooterTime != nil {
-						attachment.Ts = json.Number(strconv.FormatInt(page.FooterTime.Unix(), 10))
-					}
-
-					mu.Lock()
-					defer mu.Unlock()
-					unfurls[url] = attachment
-
-					return nil
-				})
-			}
-
-			if err := eg.Wait(); err != nil {
-				return "Failed: FetchURL", err
-			}
-
-			if len(unfurls) == 0 {
-				return "do nothing", nil
-			}
-
-			api := slack.New(s.slackOAuthAccessToken)
-			_, _, _, err := api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
-
-			if err != nil {
-				return "Failed: UnfurlMessage", err
-			}
-
-			return "ok", nil
+			return s.requestLinkSharedEvent(ev, truncateLines)
 		}
 	}
 
 	return "", fmt.Errorf("Unknown event type: %s", eventsAPIEvent.Type)
+}
+
+func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, truncateLines int) (string, error) {
+	p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
+
+	if err != nil {
+		return "Failed: NewGitlabURLParser", err
+	}
+
+	unfurls := map[string]slack.Attachment{}
+
+	var mu sync.Mutex
+	var eg errgroup.Group
+	for _, link := range ev.Links {
+		url := link.URL
+		eg.Go(func() error {
+			page, err := p.FetchURL(url)
+
+			if err != nil {
+				return err
+			}
+
+			if page == nil {
+				return nil
+			}
+
+			if s.gitLabURLParserParams.IsDebugLogging {
+				fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
+			}
+
+			description := page.Description
+			if page.CanTruncateDescription {
+				description = util.TruncateWithLine(description, truncateLines)
+			}
+
+			attachment := slack.Attachment{
+				Title:      page.Title,
+				TitleLink:  url,
+				AuthorName: page.AuthorName,
+				AuthorIcon: page.AuthorAvatarURL,
+				Text:       description,
+				Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
+				Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
+			}
+
+			if page.AvatarURL != "" {
+				attachment.ThumbURL = page.AvatarURL
+			}
+
+			if page.FooterTime != nil {
+				attachment.Ts = json.Number(strconv.FormatInt(page.FooterTime.Unix(), 10))
+			}
+
+			mu.Lock()
+			defer mu.Unlock()
+			unfurls[url] = attachment
+
+			return nil
+		})
+	}
+
+	if err := eg.Wait(); err != nil {
+		return "Failed: FetchURL", err
+	}
+
+	if len(unfurls) == 0 {
+		return "do nothing", nil
+	}
+
+	api := slack.New(s.slackOAuthAccessToken)
+	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
+
+	if err != nil {
+		return "Failed: UnfurlMessage", err
+	}
+
+	return "ok", nil
 }
