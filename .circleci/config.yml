@@ -60,10 +60,8 @@ jobs:
     steps:
       - *attach_workspace
       - *restore_cache
-      - run:
-          command: go get -u golang.org/x/lint/golint
-      - run:
-          command: make lint
+      - run: go get -u golang.org/x/lint/golint
+      - run: make lint
 
   go-vet:
     executor: golang
@@ -71,8 +69,7 @@ jobs:
     steps:
       - *attach_workspace
       - *restore_cache
-      - run:
-          command: make vet
+      - run: make vet
 
   gofmt:
     executor: golang
@@ -80,20 +77,16 @@ jobs:
     steps:
       - *attach_workspace
       - *restore_cache
-      - run:
-          command: "! gofmt -d . | grep '^'"
+      - run: "! gofmt -d . | grep '^'"
 
   gox:
     executor: golang
 
     steps:
       - checkout
-      - run:
-          command: go get -u github.com/mitchellh/gox
-      - run:
-          command: rm bin/.keep
-      - run:
-          command: make gox_with_zip
+      - run: go get -u github.com/mitchellh/gox
+      - run: rm bin/.keep
+      - run: make gox_with_zip
       - persist_to_workspace:
           root: /go/src/github.com/sue445/gitpanda
           paths:
