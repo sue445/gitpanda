@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  codeclimate:    sue445/codeclimate@volatile
   github-release: izumin5210/github-release@0.1.1
   go-module:      timakin/go-module@0.3.0
   heroku:         circleci/heroku@0.0.8
@@ -12,27 +13,6 @@ executors:
     working_directory: /go/src/github.com/sue445/gitpanda
     environment:
       GO111MODULE: "on"
-
-commands:
-  with-cc-test-reporter:
-    description: "Run test with cc-test-reporter"
-    parameters:
-      steps:
-        type: steps
-        default: []
-        description: "Run steps between `before-build` and `after-build`"
-    steps:
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-      - run: ./cc-test-reporter before-build
-      - steps: << parameters.steps >>
-      - run:
-          command: ./cc-test-reporter after-build --exit-code $?
-          when: always
 
 jobs:
   test:
@@ -49,7 +29,7 @@ jobs:
       - &restore_cache
         restore_cache:
           key: go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
-      - with-cc-test-reporter:
+      - codeclimate/with-cc-test-reporter:
           steps:
             - run: make test
             - run: make testrace
