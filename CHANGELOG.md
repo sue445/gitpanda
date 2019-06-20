@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.4...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.5...master)
+
+## v0.3.5
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.4...v0.3.5)
+
+* Bugfixed. couldn't be expanded url which ends with `/`
+  * https://github.com/sue445/gitpanda/pull/54
 
 ## v0.3.4
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.3...v0.3.4)
