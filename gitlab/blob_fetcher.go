@@ -1,0 +1,76 @@
+package gitlab
+
+import (
+	"fmt"
+	"github.com/sue445/gitpanda/util"
+	"github.com/xanzy/go-gitlab"
+	"regexp"
+	"strconv"
+	"strings"
+)
+
+type blobFetcher struct {
+}
+
+func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
+	re := regexp.MustCompile("^([^/]+)/([^/]+)/blob/([^/]+)/(.+)#L([0-9-]+)$")
+	matched := re.FindStringSubmatch(path)
+
+	if matched == nil {
+		return nil, nil
+	}
+
+	projectName := matched[1] + "/" + matched[2]
+	sha1 := matched[3]
+	fileName := matched[4]
+	rawFile, _, err := client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
+
+	if err != nil {
+		return nil, err
+	}
+
+	fileBody := string(rawFile)
+
+	if isDebugLogging {
+		fmt.Printf("[DEBUG] fetchBlobURL: fileBody=%s\n", fileBody)
+	}
+
+	lineHash := matched[5]
+	lines := strings.Split(lineHash, "-")
+
+	selectedFile := ""
+	lineRange := ""
+	switch len(lines) {
+	case 1:
+		line, _ := strconv.Atoi(lines[0])
+		lineRange = lines[0]
+		selectedFile = util.SelectLine(fileBody, line)
+	case 2:
+		startLine, _ := strconv.Atoi(lines[0])
+		endLine, _ := strconv.Atoi(lines[1])
+		lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
+		selectedFile = util.SelectLines(fileBody, startLine, endLine)
+	default:
+		return nil, fmt.Errorf("Invalid line: L%s", lineHash)
+	}
+
+	project, _, err := client.Projects.GetProject(projectName, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	page := &Page{
+		Title:                  fmt.Sprintf("%s:%s", fileName, lineRange),
+		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
+		AuthorName:             "",
+		AuthorAvatarURL:        "",
+		AvatarURL:              project.AvatarURL,
+		CanTruncateDescription: false,
+		FooterTitle:            project.PathWithNamespace,
+		FooterURL:              project.WebURL,
+		FooterTime:             nil,
+	}
+
+	return page, nil
+}
