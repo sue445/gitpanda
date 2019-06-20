@@ -115,6 +115,23 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Project URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/",
+			},
+			want: &Page{
+				Title:                  "Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Diaspora Project",
+				AuthorName:             "Diaspora",
+				AuthorAvatarURL:        "http://example.com/images/diaspora.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &projectCreatedAt,
+			},
+		},
+		{
 			name: "Project (without owner) URL",
 			args: args{
 				url: "http://example.com/gitlab-org/diaspora-project-site",
@@ -149,9 +166,43 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Issue URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/issues/1/",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Omnis vero earum sunt corporis dolor et placeat.",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &issueCreatedAt,
+			},
+		},
+		{
 			name: "Issue comment URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1#note_302",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "closed",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &issueNoteCreatedAt,
+			},
+		},
+		{
+			name: "Issue comment URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/issues/1/#note_302",
 			},
 			want: &Page{
 				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
@@ -183,6 +234,23 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "MergeRequest URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1/",
+			},
+			want: &Page{
+				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "fixed login page css paddings",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/admin.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &mrCreatedAt,
+			},
+		},
+		{
 			name: "MergeRequest comment URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1#note_301",
@@ -200,9 +268,43 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "MergeRequest comment URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1/#note_301",
+			},
+			want: &Page{
+				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Comment for MR",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             &mrNoteCreatedAt,
+			},
+		},
+		{
 			name: "User URL",
 			args: args{
 				url: "http://example.com/john_smith",
+			},
+			want: &Page{
+				Title:                  "John Smith · GitLab",
+				Description:            "John Smith",
+				AuthorName:             "John Smith",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				AvatarURL:              "http://localhost:3000/uploads/user/avatar/1/cd8.jpeg",
+				CanTruncateDescription: true,
+				FooterTitle:            "@john_smith",
+				FooterURL:              "http://example.com/john_smith",
+				FooterTime:             &userCreatedAt,
+			},
+		},
+		{
+			name: "User URL (ends with slash)",
+			args: args{
+				url: "http://example.com/john_smith/",
 			},
 			want: &Page{
 				Title:                  "John Smith · GitLab",

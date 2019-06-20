@@ -53,7 +53,7 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 	}
 
 	pos := len(p.baseURL)
-	if !strings.HasSuffix(url, "/") {
+	if !strings.HasSuffix(p.baseURL, "/") {
 		pos++
 	}
 	path := url[pos:]
