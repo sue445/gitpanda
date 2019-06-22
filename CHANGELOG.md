@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.5...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.6...master)
+
+## v0.3.6
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.5...v0.3.6)
+
+* Sanitize embed image in description
+  * https://github.com/sue445/gitpanda/pull/56
 
 ## v0.3.5
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.4...v0.3.5)
