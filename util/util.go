@@ -1,6 +1,7 @@
 package util
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -53,4 +54,11 @@ func clipNumber(number int, lower int, upper int) int {
 	}
 
 	return number
+}
+
+// SanitizeMarkdown returns sanitized markdown
+func SanitizeMarkdown(str string) string {
+	// ![text](url) -> text
+	re := regexp.MustCompile("\\!\\[(.*?)\\]\\(.*?\\)")
+	return re.ReplaceAllString(str, "$1")
 }
