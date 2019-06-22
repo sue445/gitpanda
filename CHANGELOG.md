@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.6...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.7...master)
+
+## v0.3.7
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.6...v0.3.7)
+
+* Performance tuning when call multiple APIs
+  * https://github.com/sue445/gitpanda/pull/57
 
 ## v0.3.6
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.5...v0.3.6)
