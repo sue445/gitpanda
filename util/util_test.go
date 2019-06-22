@@ -116,3 +116,57 @@ func TestSelectLines(t *testing.T) {
 		})
 	}
 }
+
+func TestSanitizeMarkdown(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "no markdown",
+			args: args{
+				str: "aaa",
+			},
+			want: "aaa",
+		},
+		{
+			name: "include 1 image",
+			args: args{
+				str: "aaa ![img1](/foo/img1.png) bbb",
+			},
+			want: "aaa img1 bbb",
+		},
+		{
+			name: "include 2 images",
+			args: args{
+				str: "aaa ![img1](/foo/img1.png) bbb ![img2](/foo/img2.png) ccc",
+			},
+			want: "aaa img1 bbb img2 ccc",
+		},
+		{
+			name: "empty text",
+			args: args{
+				str: "![](/foo/img1.png)",
+			},
+			want: "",
+		},
+		{
+			name: "normal link",
+			args: args{
+				str: "[github](https://github.com/)",
+			},
+			want: "[github](https://github.com/)",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SanitizeMarkdown(tt.args.str); got != tt.want {
+				t.Errorf("SanitizeMarkdown() = %+v, want %+v", got, tt.want)
+			}
+		})
+	}
+}
