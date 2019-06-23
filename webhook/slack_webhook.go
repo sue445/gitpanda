@@ -79,7 +79,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 				fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
 			}
 
-			description := util.SanitizeMarkdown(page.Description)
+			description := util.FormatMarkdownForSlack(page.Description)
 
 			if page.CanTruncateDescription {
 				description = util.TruncateWithLine(description, truncateLines)
