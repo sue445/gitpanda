@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.8...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.9...master)
+
+## v0.3.9
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.8...v0.3.9)
+
+* Bugfix. debug logging
+  * https://github.com/sue445/gitpanda/pull/59
 
 ## v0.3.8
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.7...v0.3.8)
