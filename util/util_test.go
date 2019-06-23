@@ -117,7 +117,7 @@ func TestSelectLines(t *testing.T) {
 	}
 }
 
-func TestSanitizeMarkdown(t *testing.T) {
+func TestFormatMarkdownForSlack(t *testing.T) {
 	type args struct {
 		str string
 	}
@@ -159,13 +159,34 @@ func TestSanitizeMarkdown(t *testing.T) {
 			args: args{
 				str: "[github](https://github.com/)",
 			},
-			want: "[github](https://github.com/)",
+			want: "<https://github.com/|github>",
+		},
+		{
+			name: "2 links",
+			args: args{
+				str: "aaa [github](https://github.com/) bbb [twitter](https://twitter.com/) ccc",
+			},
+			want: "aaa <https://github.com/|github> bbb <https://twitter.com/|twitter> ccc",
+		},
+		{
+			name: "embed image and link",
+			args: args{
+				str: "aaa ![img1](/foo/img1.png) bbb [github](https://github.com/) ccc",
+			},
+			want: "aaa img1 bbb <https://github.com/|github> ccc",
+		},
+		{
+			name: "link with checkbox",
+			args: args{
+				str: "* [ ] [hashdiff](https://github.com/liufengyun/hashdiff): [`0.3.9...0.4.0`](https://github.com/liufengyun/hashdiff/compare/v0.3.9...v0.4.0)",
+			},
+			want: "* [ ] <https://github.com/liufengyun/hashdiff|hashdiff>: <https://github.com/liufengyun/hashdiff/compare/v0.3.9...v0.4.0|`0.3.9...0.4.0`>",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SanitizeMarkdown(tt.args.str); got != tt.want {
-				t.Errorf("SanitizeMarkdown() = %+v, want %+v", got, tt.want)
+			if got := FormatMarkdownForSlack(tt.args.str); got != tt.want {
+				t.Errorf("FormatMarkdownForSlack() = %+v, want %+v", got, tt.want)
 			}
 		})
 	}

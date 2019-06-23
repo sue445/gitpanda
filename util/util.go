@@ -56,9 +56,21 @@ func clipNumber(number int, lower int, upper int) int {
 	return number
 }
 
-// SanitizeMarkdown returns sanitized markdown
-func SanitizeMarkdown(str string) string {
-	// ![text](url) -> text
+// FormatMarkdownForSlack returns the formatted text of markdown for slack
+func FormatMarkdownForSlack(str string) string {
+	str = sanitizeEmbedImage(str)
+	str = toSlackLink(str)
+	return str
+}
+
+// ![text](url) -> text
+func sanitizeEmbedImage(str string) string {
 	re := regexp.MustCompile("\\!\\[(.*?)\\]\\(.*?\\)")
 	return re.ReplaceAllString(str, "$1")
+}
+
+// [text](url) -> <url|text>
+func toSlackLink(str string) string {
+	re := regexp.MustCompile("\\[(\\S*?)\\]\\((.*?)\\)")
+	return re.ReplaceAllString(str, "<$2|$1>")
 }
