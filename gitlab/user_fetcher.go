@@ -27,7 +27,7 @@ func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	}
 
 	if isDebugLogging {
-		fmt.Printf("[DEBUG] fetchUserURL: users=%+v\n", users)
+		fmt.Printf("[DEBUG] projectFetcher: users=%+v\n", users)
 	}
 
 	if len(users) < 1 {

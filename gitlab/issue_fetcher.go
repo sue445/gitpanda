@@ -42,7 +42,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		issue = _issue
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] fetchIssueURL: issue=%+v\n", issue)
+			fmt.Printf("[DEBUG] issueFetcher: issue=%+v\n", issue)
 		}
 
 		description = issue.Description
@@ -62,7 +62,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 			}
 
 			if isDebugLogging {
-				fmt.Printf("[DEBUG] fetchIssueURL: note=%+v\n", note)
+				fmt.Printf("[DEBUG] issueFetcher: note=%+v\n", note)
 			}
 
 			description = note.Body
@@ -82,11 +82,11 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 			return err
 		}
 
-		if isDebugLogging {
-			fmt.Printf("[DEBUG] fetchIssueURL: project=%+v\n", project)
-		}
-
 		project = _project
+
+		if isDebugLogging {
+			fmt.Printf("[DEBUG] issueFetcher: project=%+v\n", project)
+		}
 
 		return nil
 	})
