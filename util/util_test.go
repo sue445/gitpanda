@@ -155,6 +155,20 @@ func TestFormatMarkdownForSlack(t *testing.T) {
 			want: "",
 		},
 		{
+			name: "space text",
+			args: args{
+				str: "![ ](/foo/img1.png)",
+			},
+			want: " ",
+		},
+		{
+			name: "image with checkbox",
+			args: args{
+				str: "* [ ] ![img1](/foo/img1.png)",
+			},
+			want: "* [ ] img1",
+		},
+		{
 			name: "normal link",
 			args: args{
 				str: "[github](https://github.com/)",
