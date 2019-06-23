@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.7...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.8...master)
+
+## v0.3.8
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.7...v0.3.8)
+
+* Convert markdown link to Slack link
+  * https://github.com/sue445/gitpanda/pull/58
 
 ## v0.3.7
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.6...v0.3.7)
