@@ -39,7 +39,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		fileBody := string(rawFile)
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] fetchBlobURL: fileBody=%s\n", fileBody)
+			fmt.Printf("[DEBUG] blobFetcher: fileBody=%s\n", fileBody)
 		}
 
 		lineHash := matched[5]
@@ -71,6 +71,11 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		}
 
 		project = _project
+
+		if isDebugLogging {
+			fmt.Printf("[DEBUG] blobFetcher: project=%+v\n", project)
+		}
+
 		return nil
 	})
 

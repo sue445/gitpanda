@@ -40,7 +40,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 		mr = _mr
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] fetchMergeRequestURL: mr=%+v\n", mr)
+			fmt.Printf("[DEBUG] mergeRequestFetcher: mr=%+v\n", mr)
 		}
 
 		description = mr.Description
@@ -60,7 +60,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 			}
 
 			if isDebugLogging {
-				fmt.Printf("[DEBUG] fetchMergeRequestURL: note=%+v\n", note)
+				fmt.Printf("[DEBUG] mergeRequestFetcher: note=%+v\n", note)
 			}
 
 			description = note.Body
@@ -82,7 +82,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 		project = _project
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] fetchMergeRequestURL: project=%+v\n", project)
+			fmt.Printf("[DEBUG] mergeRequestFetcher: project=%+v\n", project)
 		}
 
 		return nil

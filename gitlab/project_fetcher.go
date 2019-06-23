@@ -25,7 +25,7 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	}
 
 	if isDebugLogging {
-		fmt.Printf("[DEBUG] fetchProjectURL: project=%+v\n", project)
+		fmt.Printf("[DEBUG] projectFetcher: project=%+v\n", project)
 	}
 
 	page := &Page{
