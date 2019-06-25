@@ -5,6 +5,7 @@ import (
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type userFetcher struct {
@@ -20,6 +21,7 @@ func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	}
 
 	username := matched[1]
+	start := time.Now()
 	users, _, err := client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &username})
 
 	if err != nil {
@@ -27,7 +29,8 @@ func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	}
 
 	if isDebugLogging {
-		fmt.Printf("[DEBUG] projectFetcher: users=%+v\n", users)
+		duration := time.Now().Sub(start)
+		fmt.Printf("[DEBUG] projectFetcher (%s): users=%+v\n", duration, users)
 	}
 
 	if len(users) < 1 {

@@ -45,7 +45,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 			APIEndpoint:    "http://example.com/api/v4",
 			BaseURL:        "http://example.com",
 			PrivateToken:   "xxxxxxxxxx",
-			IsDebugLogging: false,
+			IsDebugLogging: true,
 		},
 	)
 	tests := []struct {

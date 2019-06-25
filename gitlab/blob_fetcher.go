@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type blobFetcher struct {
@@ -30,6 +31,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	selectedFile := ""
 	lineRange := ""
 	eg.Go(func() error {
+		start := time.Now()
 		rawFile, _, err := client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
 
 		if err != nil {
@@ -39,7 +41,8 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		fileBody := string(rawFile)
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] blobFetcher: fileBody=%s\n", fileBody)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] blobFetcher (%s): fileBody=%s\n", duration, fileBody)
 		}
 
 		lineHash := matched[5]
@@ -64,6 +67,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		start := time.Now()
 		_project, _, err := client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
@@ -73,7 +77,8 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		project = _project
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] blobFetcher: project=%+v\n", project)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] blobFetcher (%s): project=%+v\n", duration, project)
 		}
 
 		return nil

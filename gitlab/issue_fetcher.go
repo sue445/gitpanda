@@ -33,6 +33,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 	eg.Go(func() error {
 		issueID, _ := strconv.Atoi(matched[3])
+		start := time.Now()
 		_issue, _, err := client.Issues.GetIssue(projectName, issueID)
 
 		if err != nil {
@@ -42,7 +43,8 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		issue = _issue
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] issueFetcher: issue=%+v\n", issue)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] issueFetcher (%s): issue=%+v\n", duration, issue)
 		}
 
 		description = issue.Description
@@ -55,6 +57,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
+			start := time.Now()
 			note, _, err := client.Notes.GetIssueNote(projectName, issueID, noteID)
 
 			if err != nil {
@@ -62,7 +65,8 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 			}
 
 			if isDebugLogging {
-				fmt.Printf("[DEBUG] issueFetcher: note=%+v\n", note)
+				duration := time.Now().Sub(start)
+				fmt.Printf("[DEBUG] issueFetcher (%s): note=%+v\n", duration, note)
 			}
 
 			description = note.Body
@@ -76,6 +80,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		start := time.Now()
 		_project, _, err := client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
@@ -85,7 +90,8 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		project = _project
 
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] issueFetcher: project=%+v\n", project)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] issueFetcher (%s): project=%+v\n", duration, project)
 		}
 
 		return nil

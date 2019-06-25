@@ -5,6 +5,7 @@ import (
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type projectFetcher struct {
@@ -18,6 +19,7 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		return nil, nil
 	}
 
+	start := time.Now()
 	project, _, err := client.Projects.GetProject(matched[1]+"/"+matched[2], nil)
 
 	if err != nil {
@@ -25,7 +27,8 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	}
 
 	if isDebugLogging {
-		fmt.Printf("[DEBUG] projectFetcher: project=%+v\n", project)
+		duration := time.Now().Sub(start)
+		fmt.Printf("[DEBUG] projectFetcher (%s): project=%+v\n", duration, project)
 	}
 
 	page := &Page{

@@ -32,6 +32,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 	var footerTime *time.Time
 	eg.Go(func() error {
 		mrID, _ := strconv.Atoi(matched[3])
+		start := time.Now()
 		_mr, _, err := client.MergeRequests.GetMergeRequest(projectName, mrID, nil)
 
 		if err != nil {
@@ -40,7 +41,8 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 		mr = _mr
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] mergeRequestFetcher: mr=%+v\n", mr)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): mr=%+v\n", duration, mr)
 		}
 
 		description = mr.Description
@@ -53,6 +55,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
+			start := time.Now()
 			note, _, err := client.Notes.GetMergeRequestNote(projectName, mrID, noteID)
 
 			if err != nil {
@@ -60,7 +63,8 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 			}
 
 			if isDebugLogging {
-				fmt.Printf("[DEBUG] mergeRequestFetcher: note=%+v\n", note)
+				duration := time.Now().Sub(start)
+				fmt.Printf("[DEBUG] mergeRequestFetcher (%s): note=%+v\n", duration, note)
 			}
 
 			description = note.Body
@@ -74,6 +78,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		start := time.Now()
 		_project, _, err := client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
@@ -82,7 +87,8 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 		project = _project
 		if isDebugLogging {
-			fmt.Printf("[DEBUG] mergeRequestFetcher: project=%+v\n", project)
+			duration := time.Now().Sub(start)
+			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): project=%+v\n", duration, project)
 		}
 
 		return nil
