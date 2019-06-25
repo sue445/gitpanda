@@ -67,14 +67,13 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		var err error
 		start := time.Now()
-		_project, _, err := client.Projects.GetProject(projectName, nil)
+		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
 			return err
 		}
-
-		project = _project
 
 		if isDebugLogging {
 			duration := time.Now().Sub(start)

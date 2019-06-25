@@ -32,15 +32,14 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 	var footerTime *time.Time
 
 	eg.Go(func() error {
+		var err error
 		issueID, _ := strconv.Atoi(matched[3])
 		start := time.Now()
-		_issue, _, err := client.Issues.GetIssue(projectName, issueID)
+		issue, _, err = client.Issues.GetIssue(projectName, issueID)
 
 		if err != nil {
 			return err
 		}
-
-		issue = _issue
 
 		if isDebugLogging {
 			duration := time.Now().Sub(start)
@@ -80,14 +79,13 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		var err error
 		start := time.Now()
-		_project, _, err := client.Projects.GetProject(projectName, nil)
+		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
 			return err
 		}
-
-		project = _project
 
 		if isDebugLogging {
 			duration := time.Now().Sub(start)
