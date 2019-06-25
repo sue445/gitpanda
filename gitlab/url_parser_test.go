@@ -60,6 +60,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		BaseURL:         "http://example.com",
 		PrivateToken:    "xxxxxxxxxx",
 		GitPandaVersion: "v0.0.0",
+		IsDebugLogging:  true,
 	})
 
 	if err != nil {
