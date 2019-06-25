@@ -10,6 +10,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	"strconv"
 	"sync"
+	"time"
 )
 
 // SlackWebhook represents Slack webhook
@@ -65,6 +66,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	for _, link := range ev.Links {
 		url := link.URL
 		eg.Go(func() error {
+			start := time.Now()
 			page, err := p.FetchURL(url)
 
 			if err != nil {
@@ -76,7 +78,8 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			}
 
 			if s.gitLabURLParserParams.IsDebugLogging {
-				fmt.Printf("[DEBUG] FetchURL: page=%v\n", page)
+				duration := time.Now().Sub(start)
+				fmt.Printf("[DEBUG] FetchURL (%s): page=%v\n", duration, page)
 			}
 
 			description := util.FormatMarkdownForSlack(page.Description)
@@ -116,11 +119,17 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 		return "do nothing", nil
 	}
 
+	start := time.Now()
 	api := slack.New(s.slackOAuthAccessToken)
 	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
 
 	if err != nil {
 		return "Failed: UnfurlMessage", err
+	}
+
+	if s.gitLabURLParserParams.IsDebugLogging {
+		duration := time.Now().Sub(start)
+		fmt.Printf("[DEBUG] UnfurlMessage (%s)\n", duration)
 	}
 
 	return "ok", nil
