@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.9...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.10...master)
+
+## v0.3.10
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.9...v0.3.10)
+
+* Add duration in debug log
+  * https://github.com/sue445/gitpanda/pull/61
 
 ## v0.3.9
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.8...v0.3.9)
