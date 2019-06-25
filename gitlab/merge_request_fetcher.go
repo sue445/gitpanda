@@ -31,15 +31,15 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 	authorAvatarURL := ""
 	var footerTime *time.Time
 	eg.Go(func() error {
+		var err error
 		mrID, _ := strconv.Atoi(matched[3])
 		start := time.Now()
-		_mr, _, err := client.MergeRequests.GetMergeRequest(projectName, mrID, nil)
+		mr, _, err = client.MergeRequests.GetMergeRequest(projectName, mrID, nil)
 
 		if err != nil {
 			return err
 		}
 
-		mr = _mr
 		if isDebugLogging {
 			duration := time.Now().Sub(start)
 			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): mr=%+v\n", duration, mr)
@@ -78,14 +78,14 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 
 	var project *gitlab.Project
 	eg.Go(func() error {
+		var err error
 		start := time.Now()
-		_project, _, err := client.Projects.GetProject(projectName, nil)
+		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
 			return err
 		}
 
-		project = _project
 		if isDebugLogging {
 			duration := time.Now().Sub(start)
 			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): project=%+v\n", duration, project)
