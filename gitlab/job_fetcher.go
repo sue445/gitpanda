@@ -78,6 +78,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 		FooterTitle:            project.PathWithNamespace,
 		FooterURL:              project.WebURL,
 		FooterTime:             job.CreatedAt,
+		Color:                  ciStatusColor(job.Status),
 	}
 
 	return page, nil

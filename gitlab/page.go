@@ -13,4 +13,5 @@ type Page struct {
 	FooterTitle            string
 	FooterURL              string
 	FooterTime             *time.Time
+	Color                  string
 }

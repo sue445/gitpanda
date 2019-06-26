@@ -78,6 +78,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 		FooterTitle:            project.PathWithNamespace,
 		FooterURL:              project.WebURL,
 		FooterTime:             pipeline.CreatedAt,
+		Color:                  ciStatusColor(pipeline.Status),
 	}
 
 	return page, nil

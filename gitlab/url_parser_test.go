@@ -120,6 +120,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -137,6 +138,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -154,6 +156,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "gitlab-org/diaspora-project-site",
 				FooterURL:              "http://example.com/gitlab-org/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -171,6 +174,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -188,6 +192,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -205,6 +210,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -222,6 +228,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -239,6 +246,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -256,6 +264,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -273,6 +282,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -290,6 +300,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -307,6 +318,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "@john_smith",
 				FooterURL:              "http://example.com/john_smith",
 				FooterTime:             tp(time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -324,6 +336,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "@john_smith",
 				FooterURL:              "http://example.com/john_smith",
 				FooterTime:             tp(time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 		{
@@ -341,6 +354,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             nil,
+				Color:                  "",
 			},
 		},
 		{
@@ -358,6 +372,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             nil,
+				Color:                  "",
 			},
 		},
 		{
@@ -375,6 +390,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2015, 12, 24, 15, 51, 21, 0, time.UTC)),
+				Color:                  "#db3b21",
 			},
 		},
 		{
@@ -392,6 +408,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2016, 8, 11, 11, 28, 34, 0, time.UTC)),
+				Color:                  "#1aaa55",
 			},
 		},
 	}
