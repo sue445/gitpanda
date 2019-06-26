@@ -58,6 +58,8 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 	fetchers := []fetcher{
 		&issueFetcher{},
 		&mergeRequestFetcher{},
+		&jobFetcher{},
+		&pipelineFetcher{},
 		&blobFetcher{},
 		&projectFetcher{},
 		&userFetcher{baseURL: p.baseURL},

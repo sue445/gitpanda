@@ -58,6 +58,16 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update.yml/raw?ref=master",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlabci-templates/continuous_bundle_update.yml")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/jobs/8",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/job.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/pipelines/46",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/pipeline.json")),
+	)
 
 	p, err := NewGitlabURLParser(&URLParserParams{
 		APIEndpoint:     "http://example.com/api/v4",
@@ -348,6 +358,40 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             nil,
+			},
+		},
+		{
+			name: "Job URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/jobs/8",
+			},
+			want: &Page{
+				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2015, 12, 24, 15, 51, 21, 0, time.UTC)),
+			},
+		},
+		{
+			name: "Pipeline URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/pipelines/46",
+			},
+			want: &Page{
+				Title:                  "Pipeline · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2016, 8, 11, 11, 28, 34, 0, time.UTC)),
 			},
 		},
 	}

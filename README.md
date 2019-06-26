@@ -23,6 +23,10 @@
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/issues/:iid`
 * MergeRequest URL
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/merge_requests/:iid`
+* Job URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/-/jobs/:id`
+* Pipeline URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/pipelines/:id`
 * Blob URL
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/blob/:sha1/:filename`
 
