@@ -55,12 +55,20 @@ func TestSlackWebhook_Request(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Successful",
+			name: "Successful event_callback",
 			args: args{
 				body:          testutil.ReadTestData("testdata/event_callback_link_shared.json"),
 				truncateLines: 0,
 			},
 			want: "ok",
+		},
+		{
+			name: "Successful url_verification",
+			args: args{
+				body:          testutil.ReadTestData("testdata/url_verification.json"),
+				truncateLines: 0,
+			},
+			want: "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P",
 		},
 	}
 	for _, tt := range tests {
