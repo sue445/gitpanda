@@ -9,6 +9,10 @@ import (
 	"github.com/jarcoal/httpmock"
 )
 
+func tp(t time.Time) *time.Time {
+	return &t
+}
+
 func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -71,13 +75,6 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		url string
 	}
 
-	issueCreatedAt := time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)
-	issueNoteCreatedAt := time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)
-	mrCreatedAt := time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)
-	mrNoteCreatedAt := time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)
-	projectCreatedAt := time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)
-	userCreatedAt := time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)
-
 	tests := []struct {
 		name    string
 		args    args
@@ -112,7 +109,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &projectCreatedAt,
+				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
 			},
 		},
 		{
@@ -129,7 +126,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &projectCreatedAt,
+				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
 			},
 		},
 		{
@@ -146,7 +143,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "gitlab-org/diaspora-project-site",
 				FooterURL:              "http://example.com/gitlab-org/diaspora-project-site",
-				FooterTime:             &projectCreatedAt,
+				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
 			},
 		},
 		{
@@ -163,7 +160,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &issueCreatedAt,
+				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
 			},
 		},
 		{
@@ -180,7 +177,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &issueCreatedAt,
+				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
 			},
 		},
 		{
@@ -197,7 +194,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &issueNoteCreatedAt,
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
 			},
 		},
 		{
@@ -214,7 +211,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &issueNoteCreatedAt,
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
 			},
 		},
 		{
@@ -231,7 +228,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &mrCreatedAt,
+				FooterTime:             tp(time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)),
 			},
 		},
 		{
@@ -248,7 +245,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &mrCreatedAt,
+				FooterTime:             tp(time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)),
 			},
 		},
 		{
@@ -265,7 +262,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &mrNoteCreatedAt,
+				FooterTime:             tp(time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)),
 			},
 		},
 		{
@@ -282,7 +279,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
-				FooterTime:             &mrNoteCreatedAt,
+				FooterTime:             tp(time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)),
 			},
 		},
 		{
@@ -299,7 +296,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "@john_smith",
 				FooterURL:              "http://example.com/john_smith",
-				FooterTime:             &userCreatedAt,
+				FooterTime:             tp(time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)),
 			},
 		},
 		{
@@ -316,7 +313,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "@john_smith",
 				FooterURL:              "http://example.com/john_smith",
-				FooterTime:             &userCreatedAt,
+				FooterTime:             tp(time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)),
 			},
 		},
 		{
