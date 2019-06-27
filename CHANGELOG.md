@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.10...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.4.0...master)
+
+## v0.4.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.3.10...v0.4.0)
+
+* Support Job URL and Pipeline URL
+  * https://github.com/sue445/gitpanda/pull/64
 
 ## v0.3.10
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.9...v0.3.10)
