@@ -103,7 +103,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			}
 
 			if page.Color == "" {
-				attachment.Color = gitlab.ColorGitlab
+				attachment.Color = gitlab.BrandColor
 			} else {
 				attachment.Color = page.Color
 			}

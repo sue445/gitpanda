@@ -1,7 +1,7 @@
 package gitlab
 
-// ColorGitlab represents GitLab color
-const ColorGitlab = "#fc6d26" // https://brandcolors.net/b/gitlab
+// BrandColor represents GitLab color
+const BrandColor = "#fc6d26" // https://brandcolors.net/b/gitlab
 
 func ciStatusColor(status string) string {
 	// https://gitlab.com/gitlab-org/gitlab-ce/blob/v11.11.4/app/assets/stylesheets/pages/status.scss
@@ -19,6 +19,6 @@ func ciStatusColor(status string) string {
 	case "created", "skipped":
 		return "#707070"
 	default:
-		return ColorGitlab
+		return BrandColor
 	}
 }
