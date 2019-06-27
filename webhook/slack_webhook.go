@@ -94,13 +94,18 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 				AuthorName: page.AuthorName,
 				AuthorIcon: page.AuthorAvatarURL,
 				Text:       description,
-				Color:      "#fc6d26", // c.f. https://brandcolors.net/b/gitlab
 				Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
 				ThumbURL:   page.AvatarURL,
 			}
 
 			if page.FooterTime != nil {
 				attachment.Ts = json.Number(strconv.FormatInt(page.FooterTime.Unix(), 10))
+			}
+
+			if page.Color == "" {
+				attachment.Color = gitlab.BrandColor
+			} else {
+				attachment.Color = page.Color
 			}
 
 			mu.Lock()

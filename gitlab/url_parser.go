@@ -2,7 +2,7 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/xanzy/go-gitlab"
+	"github.com/sue445/go-gitlab"
 	"strings"
 )
 
@@ -58,6 +58,8 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 	fetchers := []fetcher{
 		&issueFetcher{},
 		&mergeRequestFetcher{},
+		&jobFetcher{},
+		&pipelineFetcher{},
 		&blobFetcher{},
 		&projectFetcher{},
 		&userFetcher{baseURL: p.baseURL},

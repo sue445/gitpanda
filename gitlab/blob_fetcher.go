@@ -3,7 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/sue445/gitpanda/util"
-	"github.com/xanzy/go-gitlab"
+	"github.com/sue445/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
