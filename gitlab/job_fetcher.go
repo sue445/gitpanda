@@ -71,7 +71,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	duration := time.Duration(job.Duration) * time.Second
 	page := &Page{
 		Title:                  strings.Join([]string{fmt.Sprintf("%s (#%d)", job.Name, job.ID), "Jobs", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:            fmt.Sprintf("Job [#%d](%s) of branch %s by %s in %s", job.ID, job.WebURL, job.Ref, job.User.Username, duration),
+		Description:            fmt.Sprintf("[%s] Job [#%d](%s) of branch %s by %s in %s", job.Status, job.ID, job.WebURL, job.Ref, job.User.Username, duration),
 		AuthorName:             job.User.Name,
 		AuthorAvatarURL:        job.User.AvatarURL,
 		AvatarURL:              "",
