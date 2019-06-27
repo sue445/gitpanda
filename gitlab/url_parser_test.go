@@ -382,7 +382,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 			want: &Page{
 				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
-				Description:            "Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root",
+				Description:            "Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root in 1s",
 				AuthorName:             "Administrator",
 				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 				AvatarURL:              "",
