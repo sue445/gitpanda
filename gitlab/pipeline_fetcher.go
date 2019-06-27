@@ -68,9 +68,10 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 		return nil, err
 	}
 
+	duration := time.Duration(pipeline.Duration) * time.Second
 	page := &Page{
 		Title:                  strings.Join([]string{"Pipeline", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:            "",
+		Description:            fmt.Sprintf("Pipeline [#%d](%s) of branch %s by %s in %s", pipeline.ID, pipeline.WebURL, pipeline.Ref, pipeline.User.Username, duration),
 		AuthorName:             pipeline.User.Name,
 		AuthorAvatarURL:        pipeline.User.AvatarURL,
 		AvatarURL:              "",

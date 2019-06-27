@@ -70,7 +70,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 
 	page := &Page{
 		Title:                  strings.Join([]string{fmt.Sprintf("%s (#%d)", job.Name, job.ID), "Jobs", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:            "",
+		Description:            fmt.Sprintf("Job [#%d](%s) of branch %s by %s", job.ID, job.WebURL, job.Ref, job.User.Username),
 		AuthorName:             job.User.Name,
 		AuthorAvatarURL:        job.User.AvatarURL,
 		AvatarURL:              "",

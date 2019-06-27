@@ -13,7 +13,7 @@
   "created_at": "2015-12-24T15:51:21Z",
   "started_at": "2015-12-24T17:54:30Z",
   "finished_at": "2015-12-24T17:54:31Z",
-  "duration": 0.465,
+  "duration": 1.465,
   "artifacts_expire_at": "2016-01-23T17:54:31Z",
   "id": 8,
   "name": "rubocop",
@@ -29,7 +29,7 @@
   "stage": "test",
   "status": "failed",
   "tag": false,
-  "web_url": "https://example.com/foo/bar/-/jobs/8",
+  "web_url": "http://example.com/diaspora/diaspora-project-site/-/jobs/8",
   "user": {
     "id": 1,
     "name": "Administrator",
