@@ -176,6 +176,20 @@ func TestFormatMarkdownForSlack(t *testing.T) {
 			want: "<https://github.com/|github>",
 		},
 		{
+			name: "url is blank",
+			args: args{
+				str: "[github]()",
+			},
+			want: "github",
+		},
+		{
+			name: "text is blank",
+			args: args{
+				str: "[](https://github.com/)",
+			},
+			want: "https://github.com/",
+		},
+		{
 			name: "2 links",
 			args: args{
 				str: "aaa [github](https://github.com/) bbb [twitter](https://twitter.com/) ccc",
