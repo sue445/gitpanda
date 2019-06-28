@@ -2,7 +2,7 @@ module github.com/sue445/gitpanda
 
 go 1.12
 
-require github.com/xanzy/go-gitlab v0.18.1-0.20190605173401-f05516d07869
+require github.com/xanzy/go-gitlab v0.18.1-0.20190628060639-ddd10fba4fb3
 
 require (
 	github.com/aws/aws-lambda-go v1.11.1
