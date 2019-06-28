@@ -1,8 +1,6 @@
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/aws/aws-lambda-go v1.11.1 h1:wuOnhS5aqzPOWns71FO35PtbtBKHr4MYsPVt5qXLSfI=
 github.com/aws/aws-lambda-go v1.11.1/go.mod h1:Rr2SMTLeSMKgD45uep9V/NP8tnbCcySgu04cx0k/6cw=
-github.com/aws/aws-sdk-go v1.20.1 h1:p9ETyEP9iBPTLul2PHJblv5Iw0PKP10YK6DC5nMTzYM=
-github.com/aws/aws-sdk-go v1.20.1/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/aws/aws-sdk-go v1.20.6 h1:kmy4Gvdlyez1fV4kw5RYxZzWKVyuHZHgPWeU/YvRsV4=
 github.com/aws/aws-sdk-go v1.20.6/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
@@ -35,8 +33,6 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.1/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
-github.com/xanzy/go-gitlab v0.18.1-0.20190605173401-f05516d07869 h1:gF4HiMYL2qY+Wj+wLAk3Ow+y2ZXtCpgnZ/4/u9jEcNM=
-github.com/xanzy/go-gitlab v0.18.1-0.20190605173401-f05516d07869/go.mod h1:LSfUQ9OPDnwRqulJk2HcWaAiFfCzaknyeGvjQI67MbE=
 github.com/xanzy/go-gitlab v0.18.1-0.20190628060639-ddd10fba4fb3 h1:HhPMiF4qdGP3KGUYqhN/2TkhfcPrBNmmhMpzes3qfl4=
 github.com/xanzy/go-gitlab v0.18.1-0.20190628060639-ddd10fba4fb3/go.mod h1:LSfUQ9OPDnwRqulJk2HcWaAiFfCzaknyeGvjQI67MbE=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
