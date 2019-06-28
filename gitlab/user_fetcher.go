@@ -2,7 +2,7 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/sue445/go-gitlab"
+	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"
 	"time"

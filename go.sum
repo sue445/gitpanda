@@ -35,10 +35,6 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.1/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
-github.com/sue445/go-gitlab v0.18.1-0.20190627151950-bce32922ac5e h1:upEcGgcjhMDalkQ2/kGNnGByFRXJ6MNU9so+jUWQfgE=
-github.com/sue445/go-gitlab v0.18.1-0.20190627151950-bce32922ac5e/go.mod h1:Ajm0Eno+SpToyPE59V46KHMcglvyHwkmoEZFm7eN5FI=
-github.com/xanzy/go-gitlab v0.18.0 h1:LybNSWSIw8BK+GnxuETAhUXEzzh5rHsHjopqVkGJXRE=
-github.com/xanzy/go-gitlab v0.18.0/go.mod h1:LSfUQ9OPDnwRqulJk2HcWaAiFfCzaknyeGvjQI67MbE=
 github.com/xanzy/go-gitlab v0.18.1-0.20190605173401-f05516d07869 h1:gF4HiMYL2qY+Wj+wLAk3Ow+y2ZXtCpgnZ/4/u9jEcNM=
 github.com/xanzy/go-gitlab v0.18.1-0.20190605173401-f05516d07869/go.mod h1:LSfUQ9OPDnwRqulJk2HcWaAiFfCzaknyeGvjQI67MbE=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
