@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.4.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.4.1...master)
+
+## v0.4.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.4.0...v0.4.1)
+
+* Bugfixed. description is broken when text or url in markdown is blank
+  * https://github.com/sue445/gitpanda/pull/66
 
 ## v0.4.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.3.10...v0.4.0)
