@@ -6,7 +6,7 @@ require github.com/xanzy/go-gitlab v0.18.1-0.20190628060639-ddd10fba4fb3
 
 require (
 	github.com/aws/aws-lambda-go v1.11.1
-	github.com/aws/aws-sdk-go v1.20.6
+	github.com/aws/aws-sdk-go v1.20.12
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
