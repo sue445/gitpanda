@@ -1,0 +1,17 @@
+{
+  "id": 9970,
+  "web_url": "https://gitlab.com/groups/gitlab-org",
+  "name": "GitLab.org",
+  "path": "gitlab-org",
+  "description": "Open source software to collaborate on code",
+  "visibility": "public",
+  "lfs_enabled": true,
+  "avatar_url": "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+  "request_access_enabled": false,
+  "full_name": "GitLab.org",
+  "full_path": "gitlab-org",
+  "parent_id": null,
+  "ldap_cn": null,
+  "ldap_access": null,
+  "file_template_project_id": null
+}
