@@ -30,7 +30,7 @@ func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	if isDebugLogging {
 		duration := time.Now().Sub(start)
-		fmt.Printf("[DEBUG] projectFetcher (%s): users=%+v\n", duration, users)
+		fmt.Printf("[DEBUG] userFetcher (%s): users=%+v\n", duration, users)
 	}
 
 	if len(users) < 1 {
