@@ -17,6 +17,8 @@
 ## Supported URL format
 * User URL
   * e.g. `${GITLAB_BASE_URL}/:username`
+* Group URL
+  * e.g. `${GITLAB_BASE_URL}/:groupname`
 * Project URL
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame`
 * Issue URL
