@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-type userFetcher struct {
+type userOrGroupFetcher struct {
 	baseURL string
 }
 
-func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
+func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
 	re := regexp.MustCompile("^([^/]+)/?$")
 	matched := re.FindStringSubmatch(path)
 
@@ -30,7 +30,7 @@ func (f *userFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	if isDebugLogging {
 		duration := time.Now().Sub(start)
-		fmt.Printf("[DEBUG] userFetcher (%s): users=%+v\n", duration, users)
+		fmt.Printf("[DEBUG] userOrGroupFetcher (%s): users=%+v\n", duration, users)
 	}
 
 	if len(users) < 1 {
