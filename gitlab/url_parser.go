@@ -62,7 +62,7 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 		&pipelineFetcher{},
 		&blobFetcher{},
 		&projectFetcher{},
-		&userFetcher{baseURL: p.baseURL},
+		&userOrGroupFetcher{baseURL: p.baseURL},
 	}
 
 	for _, fetcher := range fetchers {

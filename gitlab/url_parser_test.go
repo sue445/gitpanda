@@ -55,6 +55,16 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
+		"http://example.com/api/v4/users?username=gitlab-org",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/users_by_group_name.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/groups/gitlab-org?with_projects=false",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/group.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update.yml/raw?ref=master",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlabci-templates/continuous_bundle_update.yml")),
 	)
@@ -336,6 +346,42 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "@john_smith",
 				FooterURL:              "http://example.com/john_smith",
 				FooterTime:             tp(time.Date(2012, 5, 23, 8, 0, 58, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Group URL",
+			args: args{
+				url: "http://example.com/gitlab-org",
+			},
+			want: &Page{
+				Title:                  "GitLab.org · GitLab",
+				Description:            "Open source software to collaborate on code",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "@gitlab-org",
+				FooterURL:              "https://gitlab.com/groups/gitlab-org",
+				FooterTime:             nil,
+				Color:                  "",
+			},
+		},
+		{
+			name: "Group URL (ends with slash)",
+			args: args{
+				url: "http://example.com/gitlab-org/",
+			},
+			want: &Page{
+				Title:                  "GitLab.org · GitLab",
+				Description:            "Open source software to collaborate on code",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "@gitlab-org",
+				FooterURL:              "https://gitlab.com/groups/gitlab-org",
+				FooterTime:             nil,
 				Color:                  "",
 			},
 		},
