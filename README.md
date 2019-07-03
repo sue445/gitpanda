@@ -9,6 +9,8 @@
 ## Example
 ![example1](img/example1.png)
 
+![example2](img/example2.png)
+
 ## Requirements
 * GitLab API v4
 * Slack app and OAuth Access Token
