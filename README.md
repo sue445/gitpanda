@@ -7,7 +7,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/sue445/gitpanda)](https://goreportcard.com/report/github.com/sue445/gitpanda)
 
 ## Example
-![example](img/example.png)
+![example1](img/example1.png)
 
 ## Requirements
 * GitLab API v4
