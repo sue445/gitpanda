@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.5.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.6.0...master)
+
+## v0.6.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.5.0...v0.6.0)
+
+* Support snippet URL
+  * https://github.com/sue445/gitpanda/pull/71
 
 ## v0.5.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.4.1...v0.5.0)
