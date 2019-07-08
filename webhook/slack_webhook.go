@@ -94,7 +94,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 				AuthorName: page.AuthorName,
 				AuthorIcon: page.AuthorAvatarURL,
 				Text:       description,
-				Footer:     fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle),
+				Footer:     page.FormatFooter(),
 				ThumbURL:   page.AvatarURL,
 			}
 
