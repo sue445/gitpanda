@@ -78,6 +78,31 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/pipelines/46",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/pipeline.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/snippets/1",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project_snippet.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/snippets/1/raw",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/snippet_code.rb")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/snippets/3",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project_snippet.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/snippets/1/notes/400",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project_snippet_note.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/snippets/3/raw",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/snippet_code.rb")),
+	)
 
 	p, err := NewGitlabURLParser(&URLParserParams{
 		APIEndpoint:     "http://example.com/api/v4",
@@ -455,6 +480,60 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2016, 8, 11, 11, 28, 34, 0, time.UTC)),
 				Color:                  "#1aaa55",
+			},
+		},
+		{
+			name: "Project Snippet URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/snippets/1",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "```\nputs 'Hello'\n```",
+				AuthorName:             "John Smith",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2012, 6, 28, 10, 52, 4, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Project Snippet comment URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/snippets/1#note_400",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "comment",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Snippet URL",
+			args: args{
+				url: "http://example.com/snippets/3",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "```\nputs 'Hello'\n```",
+				AuthorName:             "John Smith",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "",
+				CanTruncateDescription: false,
+				FooterTitle:            "",
+				FooterURL:              "",
+				FooterTime:             tp(time.Date(2012, 6, 28, 10, 52, 4, 0, time.UTC)),
+				Color:                  "",
 			},
 		},
 	}
