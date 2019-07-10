@@ -12,7 +12,7 @@ type projectFetcher struct {
 }
 
 func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/?$")
+	re := regexp.MustCompile(ReProjectName + "/?$")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
@@ -20,7 +20,7 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	}
 
 	start := time.Now()
-	project, _, err := client.Projects.GetProject(matched[1]+"/"+matched[2], nil)
+	project, _, err := client.Projects.GetProject(matched[1], nil)
 
 	if err != nil {
 		return nil, err

@@ -14,14 +14,14 @@ type jobFetcher struct {
 }
 
 func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/-/jobs/(\\d+)")
+	re := regexp.MustCompile(ReProjectName + "/-/jobs/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
 	}
 
-	projectName := matched[1] + "/" + matched[2]
+	projectName := matched[1]
 
 	var eg errgroup.Group
 
@@ -29,7 +29,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	eg.Go(func() error {
 		var err error
 
-		jobID, _ := strconv.Atoi(matched[3])
+		jobID, _ := strconv.Atoi(matched[2])
 
 		start := time.Now()
 		job, _, err = client.Jobs.GetJob(projectName, jobID)

@@ -14,14 +14,14 @@ type pipelineFetcher struct {
 }
 
 func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/pipelines/(\\d+)")
+	re := regexp.MustCompile(ReProjectName + "/pipelines/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
 	}
 
-	projectName := matched[1] + "/" + matched[2]
+	projectName := matched[1]
 
 	var eg errgroup.Group
 
@@ -29,7 +29,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 	eg.Go(func() error {
 		var err error
 
-		pipelineID, _ := strconv.Atoi(matched[3])
+		pipelineID, _ := strconv.Atoi(matched[2])
 
 		start := time.Now()
 		pipeline, _, err = client.Pipelines.GetPipeline(projectName, pipelineID)
