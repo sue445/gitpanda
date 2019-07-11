@@ -39,7 +39,7 @@ func init() {
 		lines, err := strconv.Atoi(s)
 
 		if err != nil {
-			fmt.Printf("%s is invalid number, error=%v", s, err)
+			fmt.Printf("%s is invalid number, error=%v\n", s, err)
 			os.Exit(1)
 		}
 
@@ -104,7 +104,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		response, err := s.Request(body, truncateLines)
 
 		if err != nil {
-			fmt.Printf("[ERROR] body=%s, response=%s, error=%v", body, response, err)
+			fmt.Printf("[ERROR] body=%s, response=%s, error=%v\n", body, response, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
