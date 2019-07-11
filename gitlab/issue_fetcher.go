@@ -14,14 +14,14 @@ type issueFetcher struct {
 }
 
 func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/issues/(\\d+)")
+	re := regexp.MustCompile(reProjectName + "/issues/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
 	}
 
-	projectName := matched[1] + "/" + matched[2]
+	projectName := matched[1]
 
 	var eg errgroup.Group
 
@@ -33,7 +33,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 	eg.Go(func() error {
 		var err error
-		issueID, _ := strconv.Atoi(matched[3])
+		issueID, _ := strconv.Atoi(matched[2])
 		start := time.Now()
 		issue, _, err = client.Issues.GetIssue(projectName, issueID)
 

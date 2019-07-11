@@ -14,14 +14,14 @@ type mergeRequestFetcher struct {
 }
 
 func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/merge_requests/(\\d+)")
+	re := regexp.MustCompile(reProjectName + "/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
 	}
 
-	projectName := matched[1] + "/" + matched[2]
+	projectName := matched[1]
 
 	var eg errgroup.Group
 
@@ -32,7 +32,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 	var footerTime *time.Time
 	eg.Go(func() error {
 		var err error
-		mrID, _ := strconv.Atoi(matched[3])
+		mrID, _ := strconv.Atoi(matched[2])
 		start := time.Now()
 		mr, _, err = client.MergeRequests.GetMergeRequest(projectName, mrID, nil)
 

@@ -14,14 +14,14 @@ type projectSnippetFetcher struct {
 }
 
 func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/([^/]+)/snippets/(\\d+)")
+	re := regexp.MustCompile(reProjectName + "/snippets/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
 	}
 
-	projectName := matched[1] + "/" + matched[2]
+	projectName := matched[1]
 
 	var eg errgroup.Group
 
@@ -31,7 +31,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 	var footerTime *time.Time
 	var note *gitlab.Note
 
-	snippetID, _ := strconv.Atoi(matched[3])
+	snippetID, _ := strconv.Atoi(matched[2])
 
 	eg.Go(func() error {
 		var err error
