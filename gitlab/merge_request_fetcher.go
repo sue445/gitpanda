@@ -14,7 +14,7 @@ type mergeRequestFetcher struct {
 }
 
 func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(ReProjectName + "/merge_requests/(\\d+)")
+	re := regexp.MustCompile(reProjectName + "/merge_requests/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {

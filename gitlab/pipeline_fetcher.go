@@ -14,7 +14,7 @@ type pipelineFetcher struct {
 }
 
 func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(ReProjectName + "/pipelines/(\\d+)")
+	re := regexp.MustCompile(reProjectName + "/pipelines/(\\d+)")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {

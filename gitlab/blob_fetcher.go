@@ -15,7 +15,7 @@ type blobFetcher struct {
 }
 
 func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(ReProjectName + "/blob/([^/]+)/(.+)#L([0-9-]+)$")
+	re := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)#L([0-9-]+)$")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
