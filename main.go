@@ -92,6 +92,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 
 		s := webhook.NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
+			os.Getenv("SLACK_VERIFICATION_TOKEN"),
 			&gitlab.URLParserParams{
 				APIEndpoint:     os.Getenv("GITLAB_API_ENDPOINT"),
 				BaseURL:         os.Getenv("GITLAB_BASE_URL"),

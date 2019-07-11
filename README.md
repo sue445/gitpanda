@@ -47,6 +47,7 @@ GITLAB_API_ENDPOINT=https://your-gitlab.example.com/api/v4 \
 GITLAB_BASE_URL=https://your-gitlab.example.com \
 GITLAB_PRIVATE_TOKEN=xxxxxxxxxx \
 SLACK_OAUTH_ACCESS_TOKEN=xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000 \
+SLACK_VERIFICATION_TOKEN=xxxxxxxxx \
 TRUNCATE_LINES=5 \
 ./gitpanda
 ```
@@ -63,6 +64,9 @@ TRUNCATE_LINES=5 \
 * `SLACK_OAUTH_ACCESS_TOKEN`
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   * e.g. `xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000`
+* `SLACK_VERIFICATION_TOKEN`
+  * Token for verify slack requests. This is optional, but **recommended**
+  * see. https://api.slack.com/docs/verifying-requests-from-slack#app_management_updates
 * `TRUNCATE_LINES`
   * Line count to truncate the text (default. no truncate)
 
@@ -78,6 +82,7 @@ One of the following is required
 | `GITLAB_BASE_URL`          | `GITLAB_BASE_URL_KEY`          |
 | `GITLAB_PRIVATE_TOKEN`     | `GITLAB_PRIVATE_TOKEN_KEY`     |
 | `SLACK_OAUTH_ACCESS_TOKEN` | `SLACK_OAUTH_ACCESS_TOKEN_KEY` |
+| `SLACK_VERIFICATION_TOKEN` | `SLACK_VERIFICATION_TOKEN_KEY` |
 | `TRUNCATE_LINES`           |                                |
 
 When you want to store to Parameter Store, please store as `SecureString`

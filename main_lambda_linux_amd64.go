@@ -44,28 +44,34 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 }
 
 func lambdaMain(body string) (string, error) {
-	slackOAuthAccessToken, err := GetParameterStoreOrEnv("SLACK_OAUTH_ACCESS_TOKEN", os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"))
+	slackOAuthAccessToken, err := GetParameterStoreOrEnv("SLACK_OAUTH_ACCESS_TOKEN", os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"), true)
 	if err != nil {
 		return "Failed: slackOAuthAccessToken", err
 	}
 
-	gitlabAPIEndpoint, err := GetParameterStoreOrEnv("GITLAB_API_ENDPOINT", os.Getenv("GITLAB_API_ENDPOINT_KEY"))
+	slackVerificationToken, err := GetParameterStoreOrEnv("SLACK_VERIFICATION_TOKEN", os.Getenv("SLACK_VERIFICATION_TOKEN_KEY"), false)
+	if err != nil {
+		return "Failed: slackVerificationToken", err
+	}
+
+	gitlabAPIEndpoint, err := GetParameterStoreOrEnv("GITLAB_API_ENDPOINT", os.Getenv("GITLAB_API_ENDPOINT_KEY"), true)
 	if err != nil {
 		return "Failed: gitlabAPIEndpoint", err
 	}
 
-	gitlabBaseURL, err := GetParameterStoreOrEnv("GITLAB_BASE_URL", os.Getenv("GITLAB_BASE_URL_KEY"))
+	gitlabBaseURL, err := GetParameterStoreOrEnv("GITLAB_BASE_URL", os.Getenv("GITLAB_BASE_URL_KEY"), true)
 	if err != nil {
 		return "Failed: gitlabBaseURL", err
 	}
 
-	gitlabPrivateToken, err := GetParameterStoreOrEnv("GITLAB_PRIVATE_TOKEN", os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"))
+	gitlabPrivateToken, err := GetParameterStoreOrEnv("GITLAB_PRIVATE_TOKEN", os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"), true)
 	if err != nil {
 		return "Failed: gitlabPrivateToken", err
 	}
 
 	s := webhook.NewSlackWebhook(
 		slackOAuthAccessToken,
+		slackVerificationToken,
 		&gitlab.URLParserParams{
 			APIEndpoint:     gitlabAPIEndpoint,
 			BaseURL:         gitlabBaseURL,
@@ -84,7 +90,7 @@ func lambdaMain(body string) (string, error) {
 }
 
 // GetParameterStoreOrEnv returns Environment variable or Parameter Store variable
-func GetParameterStoreOrEnv(envKey string, parameterStoreKey string) (string, error) {
+func GetParameterStoreOrEnv(envKey string, parameterStoreKey string, required bool) (string, error) {
 	if parameterStoreKey != "" {
 		// Get from Parameter Store
 		d, err := NewSsmDecrypter()
@@ -106,7 +112,11 @@ func GetParameterStoreOrEnv(envKey string, parameterStoreKey string) (string, er
 		return os.Getenv(envKey), nil
 	}
 
-	return "", fmt.Errorf("Either %s or %s is required", envKey, parameterStoreKey)
+	if required {
+		return "", fmt.Errorf("Either %s or %s is required", envKey, parameterStoreKey)
+	}
+
+	return "", nil
 }
 
 // SsmDecrypter stores the AWS Session used for SSM decrypter.
