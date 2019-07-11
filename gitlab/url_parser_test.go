@@ -30,6 +30,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
+		"http://example.com/api/v4/projects/my-group%2Fdiaspora%2Fdiaspora-project-site",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/project_with_subgroup.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/issue.json")),
 	)
@@ -190,6 +195,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				CanTruncateDescription: true,
 				FooterTitle:            "gitlab-org/diaspora-project-site",
 				FooterURL:              "http://example.com/gitlab-org/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Project (with subgroup) URL",
+			args: args{
+				url: "http://example.com/my-group/diaspora/diaspora-project-site",
+			},
+			want: &Page{
+				Title:                  "My Group / Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Diaspora Project",
+				AuthorName:             "Diaspora",
+				AuthorAvatarURL:        "http://example.com/images/diaspora.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "my-group/diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/my-group/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
 				Color:                  "",
 			},
