@@ -15,18 +15,25 @@ import (
 
 // SlackWebhook represents Slack webhook
 type SlackWebhook struct {
-	slackOAuthAccessToken string
-	gitLabURLParserParams *gitlab.URLParserParams
+	slackOAuthAccessToken  string
+	slackVerificationToken string
+	gitLabURLParserParams  *gitlab.URLParserParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackOAuthAccessToken string, gitLabURLParserParams *gitlab.URLParserParams) *SlackWebhook {
-	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, gitLabURLParserParams: gitLabURLParserParams}
+func NewSlackWebhook(slackOAuthAccessToken string, slackVerificationToken string, gitLabURLParserParams *gitlab.URLParserParams) *SlackWebhook {
+	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, slackVerificationToken: slackVerificationToken, gitLabURLParserParams: gitLabURLParserParams}
 }
 
 // Request handles Slack event
 func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
-	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
+	option := slackevents.OptionNoVerifyToken()
+
+	if s.slackVerificationToken != "" {
+		option = slackevents.OptionVerifyToken(&slackevents.TokenComparator{VerificationToken: s.slackVerificationToken})
+	}
+
+	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), option)
 
 	if err != nil {
 		return "Failed: slackevents.ParseEvent", err

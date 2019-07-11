@@ -49,6 +49,11 @@ func lambdaMain(body string) (string, error) {
 		return "Failed: slackOAuthAccessToken", err
 	}
 
+	slackVerificationToken, err := GetParameterStoreOrEnv("SLACK_VERIFICATION_TOKEN", os.Getenv("SLACK_VERIFICATION_TOKEN_KEY"))
+	if err != nil {
+		return "Failed: slackVerificationToken", err
+	}
+
 	gitlabAPIEndpoint, err := GetParameterStoreOrEnv("GITLAB_API_ENDPOINT", os.Getenv("GITLAB_API_ENDPOINT_KEY"))
 	if err != nil {
 		return "Failed: gitlabAPIEndpoint", err
@@ -66,6 +71,7 @@ func lambdaMain(body string) (string, error) {
 
 	s := webhook.NewSlackWebhook(
 		slackOAuthAccessToken,
+		slackVerificationToken,
 		&gitlab.URLParserParams{
 			APIEndpoint:     gitlabAPIEndpoint,
 			BaseURL:         gitlabBaseURL,
