@@ -13,7 +13,7 @@ bin/$(NAME): $(SRCS)
 
 .PHONY: linux_amd64
 linux_amd64: $(SRCS)
-	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -ldflags=$(LDFLAGS) -o bin/$(NAME)_liunx_amd64
+	GO111MODULE=on GOOS=linux GOARCH=amd64 go build -ldflags=$(LDFLAGS) -o bin/$(NAME)_linux_amd64
 
 .PHONY: gox
 gox:
