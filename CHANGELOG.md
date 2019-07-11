@@ -1,5 +1,13 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.1...master)
+
+## v0.7.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.0...v0.7.1)
+
+* Verify slack request with signature token
+  * https://github.com/sue445/gitpanda/pull/74
+* Add newline to log
+  * https://github.com/sue445/gitpanda/pull/75
 
 ## v0.7.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.6.0...v0.7.0)
