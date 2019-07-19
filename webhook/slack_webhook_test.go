@@ -27,6 +27,11 @@ func TestSlackWebhook_Request(t *testing.T) {
 		"http://example.com/api/v4/users?username=john_smith",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/users.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fmissing-repo",
+		httpmock.NewStringResponder(404, testutil.ReadTestData("../gitlab/testdata/project_not_found.json")),
+	)
 
 	httpmock.RegisterResponder(
 		"POST",
@@ -56,9 +61,26 @@ func TestSlackWebhook_Request(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "Successful event_callback",
+			name: "Successful event_callback (valid only)",
 			args: args{
 				body:          testutil.ReadTestData("testdata/event_callback_link_shared.json"),
+				truncateLines: 0,
+			},
+			want: "ok",
+		},
+		{
+			name: "Successful event_callback (invalid only)",
+			args: args{
+				body:          testutil.ReadTestData("testdata/event_callback_link_shared_invalid.json"),
+				truncateLines: 0,
+			},
+			want:    "Failed: FetchURL",
+			wantErr: true,
+		},
+		{
+			name: "Successful event_callback (valid and invalid)",
+			args: args{
+				body:          testutil.ReadTestData("testdata/event_callback_link_shared_valid_and_invalid.json"),
 				truncateLines: 0,
 			},
 			want: "ok",
