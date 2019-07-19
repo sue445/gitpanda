@@ -124,7 +124,12 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	}
 
 	if err := eg.Wait(); err != nil {
-		return "Failed: FetchURL", err
+		if len(unfurls) > 0 {
+			// NOTE: Don't returns error when contains 1 or more valid urls
+			fmt.Printf("[WARN] FetchURL error=%+v\n", err)
+		} else {
+			return "Failed: FetchURL", err
+		}
 	}
 
 	if len(unfurls) == 0 {

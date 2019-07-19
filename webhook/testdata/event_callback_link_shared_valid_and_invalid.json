@@ -1,0 +1,37 @@
+{
+  "token": "XXYYZZ",
+  "team_id": "TXXXXXXXX",
+  "api_app_id": "AXXXXXXXXX",
+  "event": {
+    "type": "link_shared",
+    "channel": "Cxxxxxx",
+    "user": "Uxxxxxxx",
+    "message_ts": "123452389.9875",
+    "thread_ts": "123456621.1855",
+    "links": [
+      {
+        "domain": "example.com",
+        "url": "http://example.com/john_smith"
+      },
+      {
+        "domain": "example.com",
+        "url": "http://example.com/diaspora/diaspora-project-site/merge_requests/1"
+      },
+      {
+        "domain": "example.com",
+        "url": "http://example.com/diaspora/missing-repo"
+      },
+      {
+        "domain": "another-example.com",
+        "url": "https://yet.another-example.com/v/abcde"
+      }
+    ]
+  },
+  "type": "event_callback",
+  "authed_users": [
+    "UXXXXXXX1",
+    "UXXXXXXX2"
+  ],
+  "event_id": "Ev08MFMKH6",
+  "event_time": 123456789
+}
