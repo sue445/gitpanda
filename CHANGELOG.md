@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.1...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.2...master)
+
+## v0.7.2
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.1...v0.7.2)
+
+* Expand urls when contains both valid and invalid urls
+  * https://github.com/sue445/gitpanda/pull/79
 
 ## v0.7.1
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.7.0...v0.7.1)
