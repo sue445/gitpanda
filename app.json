@@ -2,6 +2,8 @@
   "name": "gitpanda",
   "description": "GitLab URL expander for Slack",
   "keywords": ["GitLab", "Slack", "webhook"],
+  "website": "https://github.com/sue445/gitpanda",
+  "repository": "https://github.com/sue445/gitpanda",
   "env": {
     "GITLAB_API_ENDPOINT": {
       "description": "e.g. `https://your-gitlab.example.com/api/v4`"
