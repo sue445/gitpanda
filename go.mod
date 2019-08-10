@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/aws/aws-lambda-go v1.12.1
-	github.com/aws/aws-sdk-go v1.21.9
+	github.com/aws/aws-sdk-go v1.22.3
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
