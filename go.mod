@@ -13,7 +13,7 @@ require (
 	github.com/lusis/slack-test v0.0.0-20190426140909-c40012f20018 // indirect
 	github.com/nlopes/slack v0.5.0
 	github.com/pkg/errors v0.8.1 // indirect
-	github.com/xanzy/go-gitlab v0.20.0
+	github.com/xanzy/go-gitlab v0.20.1
 	golang.org/x/net v0.0.0-20190603091049-60506f45cf65 // indirect
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4
