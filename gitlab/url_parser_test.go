@@ -1,8 +1,8 @@
 package gitlab
 
 import (
+	"github.com/stretchr/testify/assert"
 	"github.com/sue445/gitpanda/testutil"
-	"reflect"
 	"testing"
 	"time"
 
@@ -563,13 +563,14 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := p.FetchURL(tt.args.url)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("URLParser.FetchURL() error = %+v, wantErr %+v", err, tt.wantErr)
-				return
+
+			if tt.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("URLParser.FetchURL() = %+v, want %+v", got, tt.want)
-			}
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

@@ -1,6 +1,7 @@
 package util
 
 import (
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -41,9 +42,9 @@ func TestTruncateWithLine(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := TruncateWithLine(tt.args.str, tt.args.maxLines); got != tt.want {
-				t.Errorf("TruncateWithLine() = %v, want %v", got, tt.want)
-			}
+			got := TruncateWithLine(tt.args.str, tt.args.maxLines)
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -110,9 +111,9 @@ func TestSelectLines(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SelectLines(tt.args.str, tt.args.startLine, tt.args.endLine); got != tt.want {
-				t.Errorf("SelectLines() = %+v, want %+v", got, tt.want)
-			}
+			got := SelectLines(tt.args.str, tt.args.startLine, tt.args.endLine)
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -213,9 +214,9 @@ func TestFormatMarkdownForSlack(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := FormatMarkdownForSlack(tt.args.str); got != tt.want {
-				t.Errorf("FormatMarkdownForSlack() = %+v, want %+v", got, tt.want)
-			}
+			got := FormatMarkdownForSlack(tt.args.str)
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

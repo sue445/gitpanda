@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/assert"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/testutil"
 	"testing"
@@ -97,13 +98,14 @@ func TestSlackWebhook_Request(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := s.Request(tt.args.body, tt.args.truncateLines)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("SlackWebhook.Request() error = %+v and got = %s, wantErr %+v", err, got, tt.wantErr)
-				return
+
+			if tt.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
 			}
-			if got != tt.want {
-				t.Errorf("SlackWebhook.Request() = %+v, want %+v", got, tt.want)
-			}
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
