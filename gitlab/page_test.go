@@ -1,6 +1,7 @@
 package gitlab
 
 import (
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -53,9 +54,9 @@ func TestPage_FormatFooter(t *testing.T) {
 				FooterTitle: tt.fields.FooterTitle,
 				FooterURL:   tt.fields.FooterURL,
 			}
-			if got := p.FormatFooter(); got != tt.want {
-				t.Errorf("Page.formatFooter() = %v, want %+v", got, tt.want)
-			}
+
+			got := p.FormatFooter()
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
