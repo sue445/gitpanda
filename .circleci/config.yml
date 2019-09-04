@@ -104,7 +104,8 @@ workflows:
             - gofmt
           filters:
             branches:
-              only: master
+              # only: master
+              only: feature/go_1.13
 
   release:
     jobs:
