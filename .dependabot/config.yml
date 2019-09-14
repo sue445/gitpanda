@@ -6,7 +6,15 @@ update_configs:
 
     directory: "/"
 
-    update_schedule: "weekly"
+    update_schedule: "daily"
+
+    automerged_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "all"
+      - match:
+          dependency_type: "production"
+          update_type: "semver:patch"
 
     default_assignees:
       - sue445
