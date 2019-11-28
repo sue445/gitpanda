@@ -10,11 +10,11 @@ update_configs:
 
     automerged_updates:
       - match:
-          dependency_type: "development"
+          dependency_name: "github.com/stretchr/testify"
           update_type: "all"
       - match:
-          dependency_type: "production"
-          update_type: "semver:patch"
+          dependency_name: "github.com/jarcoal/httpmock"
+          update_type: "all"
 
     default_assignees:
       - sue445
