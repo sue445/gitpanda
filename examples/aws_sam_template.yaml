@@ -19,6 +19,7 @@ Parameters:
   GitlabBaseUrl:
     Type: String
     Description: Gitlab Base URL. ex) https://gitlab.example.com
+    Default: https://gitlab.example.com
   GitlabPrivateTokenKey:
     Type: String
     Description: SSM Parameter Store name of Gitlab Private Token Key
