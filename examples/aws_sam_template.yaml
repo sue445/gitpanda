@@ -10,14 +10,35 @@ Globals:
   Function:
     Timeout: 5
 
+# More info about CloudFormation Parameters: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
+Parameters:
+  GitlabApiEndpoint:
+    Type: String
+    Description: Gitlab API Endpoint URL. ex) https://gitlab.example.com/api/v4
+    Default: https://gitlab.example.com/api/v4
+  GitlabBaseUrl:
+    Type: String
+    Description: Gitlab Base URL. ex) https://gitlab.example.com
+    Default: https://gitlab.example.com
+  GitlabPrivateTokenKey:
+    Type: String
+    Description: SSM Parameter Store name of Gitlab Private Token Key
+    Default: GITPANDA_GITLAB_PRIVATE_TOKEN
+  SlackOAuthAccessTokenKey:
+    Type: String
+    Description: SSM Parameter Store name of Slack OAuth Token Key
+    Default: GITPANDA_SLACK_OAUTH_ACCESS_TOKEN
+
 Resources:
   GitpandaFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      # zipping CodeUri directory by `sam package`
       CodeUri: gitpanda/
-      Handler: gitpanda
+      Handler: gitpanda_linux_amd64
       Runtime: go1.x
-      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      # AWS X-Ray Mode Setting
+      # Tracing: Active # More info about AWS X-Ray: https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
       Events:
         CatchAll:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -28,10 +49,10 @@ Resources:
         Variables:
           # DEBUG_LOGGING:       "1"
           # TRUNCATE_LINES:      "5"
-          GITLAB_API_ENDPOINT:          https://gitlab.example.com/api/v4
-          GITLAB_BASE_URL:              https://gitlab.example.com
-          GITLAB_PRIVATE_TOKEN_KEY:     GITPANDA_GITLAB_PRIVATE_TOKEN
-          SLACK_OAUTH_ACCESS_TOKEN_KEY: GITPANDA_SLACK_OAUTH_ACCESS_TOKEN
+          GITLAB_API_ENDPOINT: !Ref GitlabApiEndpoint
+          GITLAB_BASE_URL: !Ref GitlabBaseUrl
+          GITLAB_PRIVATE_TOKEN_KEY: !Ref GitlabPrivateTokenKey
+          SLACK_OAUTH_ACCESS_TOKEN_KEY: !Ref SlackOAuthAccessTokenKey
       Policies:
         - AWSLambdaExecute # Managed Policy
         - Version: '2012-10-17' # Policy Document
