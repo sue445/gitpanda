@@ -15,6 +15,7 @@ Parameters:
   GitlabApiEndpoint:
     Type: String
     Description: Gitlab API Endpoint URL. ex) https://gitlab.example.com/api/v4
+    Default: https://gitlab.example.com/api/v4
   GitlabBaseUrl:
     Type: String
     Description: Gitlab Base URL. ex) https://gitlab.example.com
