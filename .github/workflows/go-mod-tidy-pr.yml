@@ -1,9 +1,8 @@
 name: go-mod-tidy-pr
 
 on:
-  push: # TODO: debug
   schedule:
-    - cron: "0 19 * * 5" # JST 4:00 (Sat)
+    - cron: "0 22 * * 0" # JST 7:00 (Mon)
 
 jobs:
   go-mod-tidy-pr:
