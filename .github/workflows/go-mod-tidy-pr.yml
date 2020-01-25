@@ -3,6 +3,7 @@ name: go-mod-tidy-pr
 on:
   schedule:
     - cron: "0 22 * * 0" # JST 7:00 (Mon)
+    - cron: "0 * * * *" # debug
 
 jobs:
   go-mod-tidy-pr:
