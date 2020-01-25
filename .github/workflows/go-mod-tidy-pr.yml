@@ -1,0 +1,23 @@
+name: go-mod-tidy-pr
+
+on:
+  schedule:
+    # - cron: "0 19 * * 5" # JST 4:00 (Sat)
+    - cron: "30 * * * *" # TODO: Debug
+
+jobs:
+  go-mod-tidy-pr:
+    name: go-mod-tidy-pr
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run go-mod-tidy-pr
+        uses: sue445/go-mod-tidy-pr@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git_user_name: GitHub Actions
+          git_user_email: github-actions@example.cpm
+          assign: sue445
