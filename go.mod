@@ -3,7 +3,7 @@ module github.com/sue445/gitpanda
 go 1.13
 
 require (
-	github.com/aws/aws-lambda-go v1.13.3
+	github.com/aws/aws-lambda-go v1.14.0
 	github.com/aws/aws-sdk-go v1.29.1
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/gorilla/websocket v1.4.0 // indirect
