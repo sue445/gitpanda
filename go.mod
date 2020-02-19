@@ -9,7 +9,7 @@ require (
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/jarcoal/httpmock v1.0.4
 	github.com/nlopes/slack v0.6.0
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.5.0
 	github.com/xanzy/go-gitlab v0.26.0
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4
