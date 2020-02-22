@@ -26,6 +26,8 @@ var isDebugLogging bool
 
 var truncateLines = 0
 
+var sentryDsn = ""
+
 func init() {
 	flag.BoolVar(&isPrintVersion, "version", false, "Whether showing version")
 
@@ -33,6 +35,10 @@ func init() {
 
 	if os.Getenv("DEBUG_LOGGING") != "" {
 		isDebugLogging = true
+	}
+
+	if os.Getenv("SENTRY_DSN") != "" {
+		sentryDsn = os.Getenv("SENTRY_DSN")
 	}
 
 	if s := os.Getenv("TRUNCATE_LINES"); s != "" {
