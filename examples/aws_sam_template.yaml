@@ -53,6 +53,7 @@ Resources:
           GITLAB_BASE_URL: !Ref GitlabBaseUrl
           GITLAB_PRIVATE_TOKEN_KEY: !Ref GitlabPrivateTokenKey
           SLACK_OAUTH_ACCESS_TOKEN_KEY: !Ref SlackOAuthAccessTokenKey
+          # SENTRY_DSN: https://xxxxxxxxxxxxx@sentry.example.com/0000000
       Policies:
         - AWSLambdaExecute # Managed Policy
         - Version: '2012-10-17' # Policy Document

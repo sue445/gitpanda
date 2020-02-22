@@ -27,9 +27,17 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
 	}
 
+	sentryClient, close, err := NewSentryClient(sentryDsn, isDebugLogging)
+	if err != nil {
+		fmt.Printf("Sentry initialization failed: %v\n", err)
+	}
+	defer close()
+
 	response, err := lambdaMain(body)
 
 	if err != nil {
+		sentryClient.CaptureException(err)
+
 		fmt.Printf("[ERROR] %s, error=%v\n", response, err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,

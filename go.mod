@@ -5,8 +5,7 @@ go 1.13
 require (
 	github.com/aws/aws-lambda-go v1.14.0
 	github.com/aws/aws-sdk-go v1.29.7
-	github.com/golang/protobuf v1.3.1 // indirect
-	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/getsentry/sentry-go v0.5.1
 	github.com/jarcoal/httpmock v1.0.4
 	github.com/nlopes/slack v0.6.0
 	github.com/stretchr/testify v1.5.1

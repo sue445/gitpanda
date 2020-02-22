@@ -69,6 +69,9 @@ TRUNCATE_LINES=5 \
   * see. https://api.slack.com/docs/verifying-requests-from-slack#app_management_updates
 * `TRUNCATE_LINES`
   * Line count to truncate the text (default. no truncate)
+* `SENTRY_DSN`
+  * [Sentry](https://sentry.io/) DSN
+  * e.g. `https://xxxxxxxxxxxxx@sentry.example.com/0000000`
 
 ## Running with AWS (Lambda + API Gateway + Parameter Store)
 Use latest `gitpanda_linux_amd64` on https://github.com/sue445/gitpanda/releases

@@ -24,7 +24,13 @@ func main() {
 		port = "8000"
 	}
 
+	sentryClient, close, err := NewSentryClient(sentryDsn, isDebugLogging)
+	if err != nil {
+		fmt.Printf("Sentry initialization failed: %v\n", err)
+	}
+	defer close()
+
 	fmt.Printf("gitpanda started: port=%s\n", port)
-	http.HandleFunc("/", normalHandler)
+	http.HandleFunc("/", sentryClient.HandleFunc(normalHandler))
 	http.ListenAndServe(":"+port, nil)
 }
