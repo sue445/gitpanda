@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.3...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.8.0...master)
+
+## v0.8.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.7.3...v0.8.0)
+
+* Support [Sentry](https://sentry.io/)
+  * https://github.com/sue445/gitpanda/pull/213
+* Upgrade dependencies
 
 ## v0.7.3
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.7.2...v0.7.3)
