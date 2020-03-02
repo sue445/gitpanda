@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-lambda-go v1.14.0
-	github.com/aws/aws-sdk-go v1.29.14
+	github.com/aws/aws-sdk-go v1.29.15
 	github.com/getsentry/sentry-go v0.5.1
 	github.com/jarcoal/httpmock v1.0.4
 	github.com/nlopes/slack v0.6.0
