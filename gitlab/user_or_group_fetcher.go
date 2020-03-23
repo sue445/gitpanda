@@ -2,8 +2,8 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/xanzy/go-gitlab"
-	"net/http"
 	"regexp"
 	"strings"
 	"time"
@@ -81,7 +81,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 
 func (f *userOrGroupFetcher) fetchGroupPath(name string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
 	start := time.Now()
-	group, _, err := client.Groups.GetGroup(name, func(req *http.Request) error {
+	group, _, err := client.Groups.GetGroup(name, func(req *retryablehttp.Request) error {
 		req.URL.RawQuery = "with_projects=false"
 		return nil
 	})
