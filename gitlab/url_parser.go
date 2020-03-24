@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/xanzy/go-gitlab"
+	"net/http"
 	"strings"
 )
 
@@ -22,6 +23,7 @@ type URLParserParams struct {
 	PrivateToken    string
 	GitPandaVersion string
 	IsDebugLogging  bool
+	HTTPClient      *http.Client
 }
 
 // NewGitlabURLParser create new URLParser instance
@@ -31,7 +33,7 @@ func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 		isDebugLogging: params.IsDebugLogging,
 	}
 
-	p.client = gitlab.NewClient(nil, params.PrivateToken)
+	p.client = gitlab.NewClient(params.HTTPClient, params.PrivateToken)
 	err := p.client.SetBaseURL(params.APIEndpoint)
 
 	if err != nil {

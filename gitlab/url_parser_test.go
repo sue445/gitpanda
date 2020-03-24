@@ -3,6 +3,7 @@ package gitlab
 import (
 	"github.com/stretchr/testify/assert"
 	"github.com/sue445/gitpanda/testutil"
+	"net/http"
 	"testing"
 	"time"
 
@@ -18,6 +19,15 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	// Register stub
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/",
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewStringResponse(404, "{\"error\":\"404 Not Found\"}")
+			resp.Header.Set("RateLimit-Limit", "600")
+			return resp, nil
+		},
+	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
@@ -115,6 +125,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		PrivateToken:    "xxxxxxxxxx",
 		GitPandaVersion: "v0.0.0",
 		IsDebugLogging:  true,
+		HTTPClient:      http.DefaultClient,
 	})
 
 	if err != nil {
