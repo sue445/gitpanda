@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-lambda-go v1.15.0
-	github.com/aws/aws-sdk-go v1.29.31
+	github.com/aws/aws-sdk-go v1.29.32
 	github.com/getsentry/sentry-go v0.5.1
 	github.com/hashicorp/go-retryablehttp v0.6.4
 	github.com/jarcoal/httpmock v1.0.5
