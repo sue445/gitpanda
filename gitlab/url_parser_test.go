@@ -265,6 +265,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Issue URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/issues/1",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Omnis vero earum sunt corporis dolor et placeat.",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
 			name: "Issue comment URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1#note_302",
@@ -286,6 +304,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			name: "Issue comment URL (ends with slash)",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1/#note_302",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "closed",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Issue comment URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/issues/1#note_302",
 			},
 			want: &Page{
 				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
@@ -337,6 +373,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "MergeRequest URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/merge_requests/1",
+			},
+			want: &Page{
+				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "fixed login page css paddings",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/admin.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2017, 4, 29, 8, 46, 0, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
 			name: "MergeRequest comment URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1#note_301",
@@ -358,6 +412,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			name: "MergeRequest comment URL (ends with slash)",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/merge_requests/1/#note_301",
+			},
+			want: &Page{
+				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Comment for MR",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 8, 57, 14, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "MergeRequest comment URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/merge_requests/1#note_301",
 			},
 			want: &Page{
 				Title:                  "test1 · Merge Requests · Diaspora / Diaspora Project Site · GitLab",
@@ -463,6 +535,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Blob URL (single line & including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4",
+			},
+			want: &Page{
+				Title:                  "gitlabci-templates/continuous_bundle_update.yml:4",
+				Description:            "```\n  variables:\n```",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             nil,
+				Color:                  "",
+			},
+		},
+		{
 			name: "Blob URL (multiple line)",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4-9",
@@ -482,6 +572,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		},
 		{
 			name: "Job URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/jobs/8",
+			},
+			want: &Page{
+				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "[failed] Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root in 1s",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2015, 12, 24, 15, 51, 21, 0, time.UTC)),
+				Color:                  "#db3b21",
+			},
+		},
+		{
+			name: "Job URL (including /-/)",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/-/jobs/8",
 			},
@@ -517,6 +625,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Pipeline URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/pipelines/46",
+			},
+			want: &Page{
+				Title:                  "Pipeline · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "[success] Pipeline [#46](https://example.com/foo/bar/pipelines/46) of branch master by root in 0s",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2016, 8, 11, 11, 28, 34, 0, time.UTC)),
+				Color:                  "#1aaa55",
+			},
+		},
+		{
 			name: "Project Snippet URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/snippets/1",
@@ -535,9 +661,45 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Project Snippet URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/snippets/1",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "```\nputs 'Hello'\n```",
+				AuthorName:             "John Smith",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2012, 6, 28, 10, 52, 4, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
 			name: "Project Snippet comment URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/snippets/1#note_400",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "comment",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Project Snippet comment URL (including /-/)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/snippets/1#note_400",
 			},
 			want: &Page{
 				Title:                  "add.rb",
