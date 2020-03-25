@@ -22,7 +22,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		return nil, nil
 	}
 
-	projectName := matched[1]
+	projectName := sanitizeProjectName(matched[1])
 	sha1 := matched[2]
 	fileName := matched[3]
 

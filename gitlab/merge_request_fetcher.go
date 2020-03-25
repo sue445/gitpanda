@@ -21,7 +21,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		return nil, nil
 	}
 
-	projectName := matched[1]
+	projectName := sanitizeProjectName(matched[1])
 
 	var eg errgroup.Group
 
