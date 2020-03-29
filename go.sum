@@ -10,16 +10,6 @@ github.com/ajg/form v1.5.1/go.mod h1:uL1WgH+h2mgNtvBq0339dVnzXdBETtL2LeUXaIv25UY
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/aws/aws-lambda-go v1.15.0 h1:QAhRWvXttl8TtBsODN+NzZETkci2mdN/paJ0+1hX/so=
 github.com/aws/aws-lambda-go v1.15.0/go.mod h1:FEwgPLE6+8wcGBTe5cJN3JWurd1Ztm9zN4jsXsjzKKw=
-github.com/aws/aws-sdk-go v1.29.29 h1:4TdSYzXL8bHKu80tzPjO4c0ALw4Fd8qZGqf1aozUcBU=
-github.com/aws/aws-sdk-go v1.29.29/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
-github.com/aws/aws-sdk-go v1.29.30 h1:HEEb7p5H850+hKVLRif2fWpaoJe5ZkZ5WUJwJ+CKWV4=
-github.com/aws/aws-sdk-go v1.29.30/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
-github.com/aws/aws-sdk-go v1.29.31 h1:y4lIvJf88grxomd/caxacLrNFIz2U3jld9vHElK/FhA=
-github.com/aws/aws-sdk-go v1.29.31/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
-github.com/aws/aws-sdk-go v1.29.32 h1:o4I8Qc+h9ht8NXvTHeXZH3EmtSUZ/PC0bg9Wawr+aTA=
-github.com/aws/aws-sdk-go v1.29.32/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
-github.com/aws/aws-sdk-go v1.29.33 h1:WP85+WHalTFQR2wYp5xR2sjiVAZXew2bBQXGU1QJBXI=
-github.com/aws/aws-sdk-go v1.29.33/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
 github.com/aws/aws-sdk-go v1.29.34 h1:yrzwfDaZFe9oT4AmQeNNunSQA7c0m2chz0B43+bJ1ok=
 github.com/aws/aws-sdk-go v1.29.34/go.mod h1:1KvfttTE3SPKMpo8g2c6jL3ZKfXtFvKscTgahTma5Xg=
 github.com/aymerick/raymond v2.0.3-0.20180322193309-b565731e1464+incompatible/go.mod h1:osfaiScAUVup+UC9Nfq76eWqDhXlp+4UYaA8uhTBO6g=
