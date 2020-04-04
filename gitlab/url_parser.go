@@ -33,13 +33,13 @@ func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 		isDebugLogging: params.IsDebugLogging,
 	}
 
-	p.client = gitlab.NewClient(params.HTTPClient, params.PrivateToken)
-	err := p.client.SetBaseURL(params.APIEndpoint)
+	client, err := gitlab.NewClient(params.PrivateToken, gitlab.WithHTTPClient(params.HTTPClient), gitlab.WithBaseURL(params.APIEndpoint))
 
 	if err != nil {
 		return nil, err
 	}
 
+	p.client = client
 	p.client.UserAgent = fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", params.GitPandaVersion)
 
 	return p, nil
