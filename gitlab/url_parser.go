@@ -33,7 +33,11 @@ func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 		isDebugLogging: params.IsDebugLogging,
 	}
 
-	client, err := gitlab.NewClient(params.PrivateToken, gitlab.WithHTTPClient(params.HTTPClient), gitlab.WithBaseURL(params.APIEndpoint))
+	options := []gitlab.ClientOptionFunc{gitlab.WithBaseURL(params.APIEndpoint)}
+	if params.HTTPClient != nil {
+		options = append(options, gitlab.WithHTTPClient(params.HTTPClient))
+	}
+	client, err := gitlab.NewClient(params.PrivateToken, options...)
 
 	if err != nil {
 		return nil, err
