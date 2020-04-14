@@ -6,7 +6,7 @@ require (
 	github.com/aws/aws-lambda-go v1.16.0
 	github.com/aws/aws-sdk-go v1.30.7
 	github.com/getsentry/sentry-go v0.5.1
-	github.com/hashicorp/go-retryablehttp v0.6.5
+	github.com/hashicorp/go-retryablehttp v0.6.6
 	github.com/jarcoal/httpmock v1.0.5
 	github.com/nlopes/slack v0.6.0
 	github.com/stretchr/testify v1.5.1
