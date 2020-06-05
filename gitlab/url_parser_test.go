@@ -571,6 +571,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Blob URL (without line hash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml",
+			},
+			want: &Page{
+				Title:                  "gitlabci-templates/continuous_bundle_update.yml",
+				Description:            "```\ncontinuous_bundle_update:\n  image: ruby\n\n  variables:\n    CACHE_VERSION: \"v1\"\n    GIT_EMAIL:     \"gitlabci@example.com\"\n    GIT_USER:      \"GitLab CI\"\n    LABELS:        \"bundle update\"\n    OPTIONS:       \"\"\n\n  cache:\n    key: \"$CACHE_VERSION-$CI_BUILD_NAME\"\n    paths:\n      - vendor/bundle/\n\n  script:\n    - bundle install --path vendor/bundle --clean\n    - gem install --no-doc gitlabci-bundle-update-mr\n    - gitlabci-bundle-update-mr --user=\"$GIT_USER\" --email=\"$GIT_EMAIL\" --labels=\"$LABELS\" $OPTIONS\n\n  only:\n    - schedules\n\n```",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             nil,
+				Color:                  "",
+			},
+		},
+		{
 			name: "Job URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/jobs/8",
