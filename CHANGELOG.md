@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.1...master)
+
+## v0.9.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.0...v0.9.1)
+
+* Support blob link without line hash
+  * https://github.com/sue445/gitpanda/pull/320
+* Upgrade to Go 1.14
+  * https://github.com/sue445/gitpanda/pull/321
+* Upgrade dependencies
 
 ## v0.9.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.8.0...v0.9.0)
