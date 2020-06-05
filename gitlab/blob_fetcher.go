@@ -15,7 +15,7 @@ type blobFetcher struct {
 }
 
 func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)#L([0-9-]+)$")
+	re := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)$")
 	matched := re.FindStringSubmatch(path)
 
 	if matched == nil {
@@ -25,6 +25,13 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	projectName := sanitizeProjectName(matched[1])
 	sha1 := matched[2]
 	fileName := matched[3]
+
+	lineRe := regexp.MustCompile("(.+)#L([0-9-]+)$")
+	lineMatched := lineRe.FindStringSubmatch(fileName)
+
+	if lineMatched != nil {
+		fileName = lineMatched[1]
+	}
 
 	var eg errgroup.Group
 
@@ -45,7 +52,12 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 			fmt.Printf("[DEBUG] blobFetcher (%s): fileBody=%s\n", duration, fileBody)
 		}
 
-		lineHash := matched[4]
+		if lineMatched == nil {
+			selectedFile = fileBody
+			return nil
+		}
+
+		lineHash := lineMatched[2]
 		lines := strings.Split(lineHash, "-")
 
 		switch len(lines) {
@@ -87,8 +99,13 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		return nil, err
 	}
 
+	title := fileName
+	if lineRange != "" {
+		title = fmt.Sprintf("%s:%s", title, lineRange)
+	}
+
 	page := &Page{
-		Title:                  fmt.Sprintf("%s:%s", fileName, lineRange),
+		Title:                  title,
 		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
 		AuthorName:             "",
 		AuthorAvatarURL:        "",
