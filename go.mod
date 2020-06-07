@@ -9,7 +9,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.6.6
 	github.com/jarcoal/httpmock v1.0.5
 	github.com/nlopes/slack v0.6.0
-	github.com/stretchr/testify v1.6.0
+	github.com/stretchr/testify v1.6.1
 	github.com/xanzy/go-gitlab v0.32.1
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4
