@@ -5,6 +5,7 @@ orbs:
   github-release: izumin5210/github-release@0.1.1
   go-module:      timakin/go-module@0.3.0
   heroku:         circleci/heroku@1.1.1
+  slack:          circleci/slack@volatile
 
 executors:
   golang:
@@ -33,6 +34,7 @@ jobs:
           steps:
             - run: make test
             - run: make testrace
+      - slack/status
 
   golint:
     executor: golang
@@ -42,6 +44,7 @@ jobs:
       - *restore_cache
       - run: go get -u golang.org/x/lint/golint
       - run: make lint
+      - slack/status
 
   go-vet:
     executor: golang
@@ -50,6 +53,7 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - run: make vet
+      - slack/status
 
   gofmt:
     executor: golang
@@ -58,6 +62,7 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - run: "! gofmt -d . | grep '^'"
+      - slack/status
 
   gox:
     executor: golang
@@ -71,6 +76,7 @@ jobs:
           root: /go/src/github.com/sue445/gitpanda
           paths:
             - .
+      - slack/status
 
 workflows:
   build-and-deploy:
@@ -105,6 +111,8 @@ workflows:
           filters:
             branches:
               only: master
+          post-deploy:
+            - slack/status
 
   release:
     jobs:
