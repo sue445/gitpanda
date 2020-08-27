@@ -4,7 +4,7 @@ orbs:
   codeclimate:    sue445/codeclimate@volatile
   github-release: izumin5210/github-release@0.1.1
   go-module:      timakin/go-module@0.3.0
-  heroku:         circleci/heroku@1.1.1
+  heroku:         circleci/heroku@volatile
   slack:          circleci/slack@volatile
 
 executors:
