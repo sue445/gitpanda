@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.1...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.2...master)
+
+## v0.9.2
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.1...v0.9.2)
+
+* Expand only UTF-8 file
+  * https://github.com/sue445/gitpanda/pull/430
+* Upgrade to Go 1.15
+  * https://github.com/sue445/gitpanda/pull/429
+* Upgrade dependencies
 
 ## v0.9.1
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.0...v0.9.1)
