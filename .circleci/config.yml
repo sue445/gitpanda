@@ -110,7 +110,7 @@ workflows:
             - gofmt
           filters:
             branches:
-              only: master
+              only: feature/expand_only_utf8
           post-deploy:
             - slack/status
 
