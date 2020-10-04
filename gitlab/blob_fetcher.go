@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 type blobFetcher struct {
@@ -50,6 +51,10 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		if isDebugLogging {
 			duration := time.Now().Sub(start)
 			fmt.Printf("[DEBUG] blobFetcher (%s): fileBody=%s\n", duration, fileBody)
+		}
+
+		if !utf8.ValidString(fileBody) {
+			return nil
 		}
 
 		if lineMatched == nil {
@@ -104,9 +109,14 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		title = fmt.Sprintf("%s:%s", title, lineRange)
 	}
 
+	description := ""
+	if selectedFile != "" {
+		description = fmt.Sprintf("```\n%s\n```", selectedFile)
+	}
+
 	page := &Page{
 		Title:                  title,
-		Description:            fmt.Sprintf("```\n%s\n```", selectedFile),
+		Description:            description,
 		AuthorName:             "",
 		AuthorAvatarURL:        "",
 		AvatarURL:              project.AvatarURL,
