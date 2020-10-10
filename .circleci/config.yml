@@ -34,7 +34,9 @@ jobs:
           steps:
             - run: make test
             - run: make testrace
-      - slack/status
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   golint:
     executor: golang
@@ -44,8 +46,10 @@ jobs:
       - *restore_cache
       - run: go get -u golang.org/x/lint/golint
       - run: make lint
-      - slack/status
-
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          
   go-vet:
     executor: golang
 
@@ -53,7 +57,9 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - run: make vet
-      - slack/status
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
   gofmt:
     executor: golang
@@ -62,8 +68,10 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - run: "! gofmt -d . | grep '^'"
-      - slack/status
-
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          
   gox:
     executor: golang
 
@@ -76,8 +84,10 @@ jobs:
           root: /go/src/github.com/sue445/gitpanda
           paths:
             - .
-      - slack/status
-
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          
 workflows:
   build-and-deploy:
     jobs:
@@ -112,7 +122,9 @@ workflows:
             branches:
               only: master
           post-deploy:
-            - slack/status
+            - slack/notify:
+                event: fail
+                template: basic_fail_1
 
   release:
     jobs:
