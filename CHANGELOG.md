@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.2...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.3...master)
+
+## v0.9.3
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.2...v0.9.3)
+
+* Support snippet routes including `/-/` for GitLab 13.3.0+
+  * https://github.com/sue445/gitpanda/pull/446
+* Upgrade dependencies
 
 ## v0.9.2
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.1...v0.9.2)
