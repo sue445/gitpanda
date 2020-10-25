@@ -773,6 +773,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				Color:                  "",
 			},
 		},
+		{
+			name: "Snippet URL (including /-/)",
+			args: args{
+				url: "http://example.com/-/snippets/3",
+			},
+			want: &Page{
+				Title:                  "add.rb",
+				Description:            "```\nputs 'Hello'\n```",
+				AuthorName:             "John Smith",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "",
+				CanTruncateDescription: false,
+				FooterTitle:            "",
+				FooterURL:              "",
+				FooterTime:             tp(time.Date(2012, 6, 28, 10, 52, 4, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
