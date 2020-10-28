@@ -5,7 +5,7 @@ orbs:
   github-release: izumin5210/github-release@0.1.1
   go-module:      timakin/go-module@0.3.0
   heroku:         circleci/heroku@volatile
-  slack:          circleci/slack@volatile
+  slack:          circleci/slack@3
 
 executors:
   golang:
