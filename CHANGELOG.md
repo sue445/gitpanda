@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.3...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.4...master)
+
+## v0.9.4
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.3...v0.9.4)
+
+* Wrap all error with `errors.WithStack`
+  * https://github.com/sue445/gitpanda/pull/490
+* Upgrade dependencies
 
 ## v0.9.3
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.2...v0.9.3)
