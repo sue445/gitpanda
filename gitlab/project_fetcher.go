@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"
@@ -23,7 +24,7 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	project, _, err := client.Projects.GetProject(matched[1], nil)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	if isDebugLogging {

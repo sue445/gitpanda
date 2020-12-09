@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -35,7 +36,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		snippet, _, err = client.Snippets.GetSnippet(snippetID)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -57,7 +58,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		rawFile, _, err := client.Snippets.SnippetContent(snippetID)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		content = strings.TrimSpace(string(rawFile))
@@ -71,7 +72,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	})
 
 	if err := eg.Wait(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	page := &Page{

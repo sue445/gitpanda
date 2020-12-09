@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -39,7 +40,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		snippet, _, err = client.ProjectSnippets.GetSnippet(projectName, snippetID)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -59,7 +60,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 			note, _, err = client.Notes.GetSnippetNote(projectName, snippetID, noteID)
 
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			if isDebugLogging {
@@ -79,7 +80,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		rawFile, _, err := client.ProjectSnippets.SnippetContent(projectName, snippetID)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		content = strings.TrimSpace(string(rawFile))
@@ -99,7 +100,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -111,7 +112,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 	})
 
 	if err := eg.Wait(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	description := fmt.Sprintf("```\n%s\n```", content)
