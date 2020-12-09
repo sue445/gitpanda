@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -35,7 +36,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 		pipeline, _, err = client.Pipelines.GetPipeline(projectName, pipelineID)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -53,7 +54,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -65,7 +66,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 	})
 
 	if err := eg.Wait(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	duration := time.Duration(pipeline.Duration) * time.Second

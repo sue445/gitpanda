@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
+	"github.com/pkg/errors"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 	"golang.org/x/sync/errgroup"
@@ -36,7 +37,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), option)
 
 	if err != nil {
-		return "Failed: slackevents.ParseEvent", err
+		return "Failed: slackevents.ParseEvent", errors.WithStack(err)
 	}
 
 	switch eventsAPIEvent.Type {
@@ -44,7 +45,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 		var r *slackevents.ChallengeResponse
 		err := json.Unmarshal([]byte(body), &r)
 		if err != nil {
-			return "Failed: json.Unmarshal", err
+			return "Failed: json.Unmarshal", errors.WithStack(err)
 		}
 		return r.Challenge, nil
 
@@ -63,7 +64,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
 
 	if err != nil {
-		return "Failed: NewGitlabURLParser", err
+		return "Failed: NewGitlabURLParser", errors.WithStack(err)
 	}
 
 	unfurls := map[string]slack.Attachment{}
@@ -77,7 +78,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			page, err := p.FetchURL(url)
 
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			if page == nil {
@@ -128,7 +129,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			// NOTE: Don't returns error when contains 1 or more valid urls
 			fmt.Printf("[WARN] FetchURL error=%+v\n", err)
 		} else {
-			return "Failed: FetchURL", err
+			return "Failed: FetchURL", errors.WithStack(err)
 		}
 	}
 
@@ -141,7 +142,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
 
 	if err != nil {
-		return "Failed: UnfurlMessage", err
+		return "Failed: UnfurlMessage", errors.WithStack(err)
 	}
 
 	if s.gitLabURLParserParams.IsDebugLogging {

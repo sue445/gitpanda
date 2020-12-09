@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/hashicorp/go-retryablehttp"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"
@@ -25,7 +26,7 @@ func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDeb
 	userPage, err := f.fetchUserPath(name, client, isDebugLogging)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	if userPage != nil {
@@ -35,7 +36,7 @@ func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDeb
 	groupPage, err := f.fetchGroupPath(name, client, isDebugLogging)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	if groupPage != nil {
@@ -50,7 +51,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 	users, _, err := client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &name})
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	if isDebugLogging {
@@ -87,7 +88,7 @@ func (f *userOrGroupFetcher) fetchGroupPath(name string, client *gitlab.Client, 
 	})
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	if isDebugLogging {

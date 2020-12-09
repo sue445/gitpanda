@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
@@ -43,7 +44,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		rawFile, _, err := client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		fileBody := string(rawFile)
@@ -89,7 +90,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -101,7 +102,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	})
 
 	if err := eg.Wait(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	title := fileName

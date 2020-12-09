@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/pkg/errors"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/webhook"
 	"net/http"
@@ -42,7 +43,7 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
 			Body:       response,
-		}, err
+		}, errors.WithStack(err)
 	}
 
 	return events.APIGatewayProxyResponse{
@@ -54,27 +55,27 @@ func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (
 func lambdaMain(body string) (string, error) {
 	slackOAuthAccessToken, err := GetParameterStoreOrEnv("SLACK_OAUTH_ACCESS_TOKEN", os.Getenv("SLACK_OAUTH_ACCESS_TOKEN_KEY"), true)
 	if err != nil {
-		return "Failed: slackOAuthAccessToken", err
+		return "Failed: slackOAuthAccessToken", errors.WithStack(err)
 	}
 
 	slackVerificationToken, err := GetParameterStoreOrEnv("SLACK_VERIFICATION_TOKEN", os.Getenv("SLACK_VERIFICATION_TOKEN_KEY"), false)
 	if err != nil {
-		return "Failed: slackVerificationToken", err
+		return "Failed: slackVerificationToken", errors.WithStack(err)
 	}
 
 	gitlabAPIEndpoint, err := GetParameterStoreOrEnv("GITLAB_API_ENDPOINT", os.Getenv("GITLAB_API_ENDPOINT_KEY"), true)
 	if err != nil {
-		return "Failed: gitlabAPIEndpoint", err
+		return "Failed: gitlabAPIEndpoint", errors.WithStack(err)
 	}
 
 	gitlabBaseURL, err := GetParameterStoreOrEnv("GITLAB_BASE_URL", os.Getenv("GITLAB_BASE_URL_KEY"), true)
 	if err != nil {
-		return "Failed: gitlabBaseURL", err
+		return "Failed: gitlabBaseURL", errors.WithStack(err)
 	}
 
 	gitlabPrivateToken, err := GetParameterStoreOrEnv("GITLAB_PRIVATE_TOKEN", os.Getenv("GITLAB_PRIVATE_TOKEN_KEY"), true)
 	if err != nil {
-		return "Failed: gitlabPrivateToken", err
+		return "Failed: gitlabPrivateToken", errors.WithStack(err)
 	}
 
 	s := webhook.NewSlackWebhook(
@@ -91,7 +92,7 @@ func lambdaMain(body string) (string, error) {
 	response, err := s.Request(body, truncateLines)
 
 	if err != nil {
-		return response, err
+		return response, errors.WithStack(err)
 	}
 
 	return response, nil
@@ -104,12 +105,12 @@ func GetParameterStoreOrEnv(envKey string, parameterStoreKey string, required bo
 		d, err := NewSsmDecrypter()
 
 		if err != nil {
-			return "", err
+			return "", errors.WithStack(err)
 		}
 
 		decryptedValue, err := d.Decrypt(parameterStoreKey)
 		if err != nil {
-			return fmt.Sprintf("Failed: Decrypt %s", parameterStoreKey), err
+			return fmt.Sprintf("Failed: Decrypt %s", parameterStoreKey), errors.WithStack(err)
 		}
 
 		return decryptedValue, nil
@@ -138,7 +139,7 @@ func NewSsmDecrypter() (*SsmDecrypter, error) {
 	sess, err := session.NewSession()
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	svc := ssm.New(sess)
@@ -153,7 +154,7 @@ func (d *SsmDecrypter) Decrypt(encrypted string) (string, error) {
 	}
 	resp, err := d.svc.GetParameter(params)
 	if err != nil {
-		return "", err
+		return "", errors.WithStack(err)
 	}
 	return *resp.Parameter.Value, nil
 }

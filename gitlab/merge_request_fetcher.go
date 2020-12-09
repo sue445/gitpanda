@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -37,7 +38,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		mr, _, err = client.MergeRequests.GetMergeRequest(projectName, mrID, nil)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -59,7 +60,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 			note, _, err := client.Notes.GetMergeRequestNote(projectName, mrID, noteID)
 
 			if err != nil {
-				return err
+				return errors.WithStack(err)
 			}
 
 			if isDebugLogging {
@@ -83,7 +84,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		project, _, err = client.Projects.GetProject(projectName, nil)
 
 		if err != nil {
-			return err
+			return errors.WithStack(err)
 		}
 
 		if isDebugLogging {
@@ -95,7 +96,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 	})
 
 	if err := eg.Wait(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	page := &Page{

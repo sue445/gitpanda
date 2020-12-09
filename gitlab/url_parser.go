@@ -2,6 +2,7 @@ package gitlab
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"github.com/xanzy/go-gitlab"
 	"net/http"
 	"strings"
@@ -40,7 +41,7 @@ func NewGitlabURLParser(params *URLParserParams) (*URLParser, error) {
 	client, err := gitlab.NewClient(params.PrivateToken, options...)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	p.client = client
@@ -77,7 +78,7 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 		page, err := fetcher.fetchPath(path, p.client, p.isDebugLogging)
 
 		if err != nil {
-			return nil, err
+			return nil, errors.WithStack(err)
 		}
 
 		if page != nil {
