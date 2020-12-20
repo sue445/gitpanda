@@ -11,7 +11,7 @@ require (
 	github.com/jarcoal/httpmock v1.0.6
 	github.com/nlopes/slack v0.6.0
 	github.com/stretchr/testify v1.6.1
-	github.com/xanzy/go-gitlab v0.40.1
+	github.com/xanzy/go-gitlab v0.40.2
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	google.golang.org/appengine v1.6.0 // indirect
