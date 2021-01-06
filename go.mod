@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go v1.36.21
 	github.com/getsentry/sentry-go v0.9.0
 	github.com/hashicorp/go-retryablehttp v0.6.8
-	github.com/jarcoal/httpmock v1.0.6
+	github.com/jarcoal/httpmock v1.0.7
 	github.com/nlopes/slack v0.6.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.6.1
