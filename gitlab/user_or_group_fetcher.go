@@ -11,7 +11,6 @@ import (
 )
 
 type userOrGroupFetcher struct {
-	baseURL string
 }
 
 func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
