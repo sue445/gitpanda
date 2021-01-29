@@ -73,7 +73,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 		AvatarURL:              user.AvatarURL,
 		CanTruncateDescription: true,
 		FooterTitle:            fmt.Sprintf("@%s", user.Username),
-		FooterURL:              fmt.Sprintf("%s/%s", f.baseURL, user.Username),
+		FooterURL:              user.WebURL,
 		FooterTime:             user.CreatedAt,
 	}
 
