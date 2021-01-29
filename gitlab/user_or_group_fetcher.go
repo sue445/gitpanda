@@ -11,7 +11,6 @@ import (
 )
 
 type userOrGroupFetcher struct {
-	baseURL string
 }
 
 func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
@@ -73,7 +72,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 		AvatarURL:              user.AvatarURL,
 		CanTruncateDescription: true,
 		FooterTitle:            fmt.Sprintf("@%s", user.Username),
-		FooterURL:              fmt.Sprintf("%s/%s", f.baseURL, user.Username),
+		FooterURL:              user.WebURL,
 		FooterTime:             user.CreatedAt,
 	}
 
