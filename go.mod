@@ -1,4 +1,4 @@
-// +heroku goVersion go1.15
+// +heroku goVersion go1.16
 module github.com/sue445/gitpanda
 
 go 1.16
