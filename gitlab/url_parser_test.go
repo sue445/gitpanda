@@ -80,12 +80,12 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
-		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update.yml/raw?ref=master",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/gitlabci-templates%2Fcontinuous_bundle_update%2Eyml/raw?ref=master",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlabci-templates/continuous_bundle_update.yml")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
-		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/icon.png/raw?ref=master",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/files/icon%2Epng/raw?ref=master",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/icon.png")),
 	)
 	httpmock.RegisterResponder(
@@ -800,9 +800,8 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				assert.Error(t, err)
 			} else {
 				assert.NoError(t, err)
+				assert.Equal(t, tt.want, got)
 			}
-
-			assert.Equal(t, tt.want, got)
 		})
 	}
 }
