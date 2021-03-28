@@ -111,11 +111,15 @@ Run latest version
 docker run --rm -it ghcr.io/sue445/gitpanda
 ```
 
-Run specified version
+Run with specified version
 
 ```bash
 docker run --rm -it ghcr.io/sue445/gitpanda:vX.Y.Z
 ```
+
+Available tags are followings
+
+https://github.com/users/sue445/packages/container/package/gitpanda
 
 ## Development
 Recommend to use https://github.com/direnv/direnv
