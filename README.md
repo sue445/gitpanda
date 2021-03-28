@@ -104,6 +104,19 @@ Usage of ./gitpanda:
     	Whether showing version
 ```
 
+## Running with docker
+Run latest version
+
+```bash
+docker run --rm -it ghcr.io/sue445/gitpanda
+```
+
+Run specified version
+
+```bash
+docker run --rm -it ghcr.io/sue445/gitpanda:vX.Y.Z
+```
+
 ## Development
 Recommend to use https://github.com/direnv/direnv
 
