@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.4...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.5...master)
+
+## v0.9.5
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.4...v0.9.5)
+
+* Support GitHub Container Registry (ghcr.io)
+  * https://github.com/sue445/gitpanda/pull/594
+* Upgrade to Go 1.16
+  * https://github.com/sue445/gitpanda/pull/554
+* Upgrade dependencies
 
 ## v0.9.4
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.3...v0.9.4)
