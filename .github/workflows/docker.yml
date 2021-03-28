@@ -42,3 +42,14 @@ jobs:
           push: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
+
+      - name: Slack Notification (success)
+        uses: lazy-actions/slatify@master
+        if: always()
+        continue-on-error: true
+        with:
+          job_name: '*build_and_push*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
+          token: ${{ secrets.GITHUB_TOKEN }}
