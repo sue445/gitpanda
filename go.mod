@@ -10,7 +10,7 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-retryablehttp v0.6.8
+	github.com/hashicorp/go-retryablehttp v0.7.0
 	github.com/jarcoal/httpmock v1.0.8
 	github.com/nlopes/slack v0.6.0
 	github.com/pkg/errors v0.9.1
