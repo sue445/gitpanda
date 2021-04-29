@@ -1,0 +1,17 @@
+- match:
+    update_type: "semver:patch"
+- match:
+    dependency_name: "github.com/stretchr/testify"
+    update_type: "all"
+- match:
+    dependency_name: "github.com/jarcoal/httpmock"
+    update_type: "all"
+- match:
+    dependency_name: "github.com/aws/aws-lambda-go"
+    update_type: "semver:minor"
+- match:
+    dependency_name: "github.com/aws/aws-sdk-go"
+    update_type: "semver:preminor"
+- match:
+    dependency_name: "github.com/xanzy/go-gitlab"
+    update_type: "semver:preminor"
