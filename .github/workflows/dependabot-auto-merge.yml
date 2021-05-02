@@ -21,7 +21,7 @@ jobs:
 
       - uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           config: .github/dependabot-auto-merge.yml
 
       - name: Slack Notification (not success)
