@@ -5,7 +5,7 @@ go 1.16
 
 require (
 	github.com/aws/aws-lambda-go v1.24.0
-	github.com/aws/aws-sdk-go v1.38.56
+	github.com/aws/aws-sdk-go v1.38.57
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
