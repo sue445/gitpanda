@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.5...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.6...master)
+
+## v0.9.6
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.5...v0.9.6)
+
+* Fixed.`x509: certificate signed by unknown authority`
+  * https://github.com/sue445/gitpanda/pull/662
+* Upgrade dependencies
 
 ## v0.9.5
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.4...v0.9.5)
