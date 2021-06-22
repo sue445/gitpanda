@@ -2,7 +2,9 @@ name: dependabot-auto-merge
 
 on:
   pull_request_target:
-
+permissions:
+  pull-requests: write
+  contents: write
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
