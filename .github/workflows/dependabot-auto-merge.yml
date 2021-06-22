@@ -10,12 +10,28 @@ jobs:
     if: github.actor == 'dependabot[bot]'
 
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1
         with:
-          github-token: ${{ secrets.GH_PAT_DEPENDABOT_AUTO_MERGE }}
-          config: .github/dependabot-auto-merge.yml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        if:
+          contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/stretchr/testify') ||
+          contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/jarcoal/httpmock') ||
+          (
+            steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' &&
+            (
+              contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/aws/aws-lambda-go') ||
+              contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/aws/aws-sdk-go') ||
+              contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/xanzy/go-gitlab')
+            )
+          )
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Slack Notification (not success)
         uses: lazy-actions/slatify@master
