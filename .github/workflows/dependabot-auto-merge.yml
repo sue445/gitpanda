@@ -18,6 +18,7 @@ jobs:
 
       - name: Enable auto-merge for Dependabot PRs
         if:
+          steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' ||
           contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/stretchr/testify') ||
           contains(steps.dependabot-metadata.outputs.dependency-names, 'github.com/jarcoal/httpmock') ||
           (
