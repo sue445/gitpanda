@@ -85,3 +85,14 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 
 	return page, nil
 }
+
+func normalizeJobTrace(raw string) string {
+	normalized := stripansi.Strip(raw)
+
+	normalized = regexp.MustCompile(` +\n`).ReplaceAllString(normalized, "\n")
+	normalized = regexp.MustCompile(`\n+`).ReplaceAllString(normalized, "\n")
+	normalized = regexp.MustCompile(`section_start:.+?\r`).ReplaceAllString(normalized, "")
+	normalized = regexp.MustCompile(`section_end:.+?\r`).ReplaceAllString(normalized, "\n")
+
+	return normalized
+}
