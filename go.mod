@@ -4,6 +4,7 @@ module github.com/sue445/gitpanda
 go 1.16
 
 require (
+	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/aws/aws-lambda-go v1.24.0
 	github.com/aws/aws-sdk-go v1.38.67
 	github.com/getsentry/sentry-go v0.11.0
