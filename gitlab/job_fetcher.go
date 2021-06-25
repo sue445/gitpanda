@@ -1,8 +1,11 @@
 package gitlab
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/acarl005/stripansi"
 	"github.com/pkg/errors"
+	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -24,13 +27,13 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 
 	projectName := sanitizeProjectName(matched[1])
 
+	jobID, _ := strconv.Atoi(matched[2])
+
 	var eg errgroup.Group
 
 	var job *gitlab.Job
 	eg.Go(func() error {
 		var err error
-
-		jobID, _ := strconv.Atoi(matched[2])
 
 		start := time.Now()
 		job, _, err = client.Jobs.GetJob(projectName, jobID)
@@ -46,6 +49,48 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 
 		return nil
 	})
+
+	lineRe := regexp.MustCompile(".*#L([0-9-]+)$")
+	lineMatched := lineRe.FindStringSubmatch(path)
+
+	selectedLine := ""
+	if lineMatched != nil {
+		eg.Go(func() error {
+			var err error
+
+			start := time.Now()
+			reader, _, err := client.Jobs.GetTraceFile(projectName, jobID)
+
+			if err != nil {
+				return errors.WithStack(err)
+			}
+
+			if isDebugLogging {
+				duration := time.Now().Sub(start)
+				fmt.Printf("[DEBUG] jobFetcher (%s)\n", duration)
+			}
+
+			buf := new(bytes.Buffer)
+			buf.ReadFrom(reader)
+			traceBody := normalizeJobTrace(buf.String())
+
+			lineHash := lineMatched[1]
+			lines := strings.Split(lineHash, "-")
+
+			switch len(lines) {
+			case 1:
+				line, _ := strconv.Atoi(lines[0])
+				selectedLine = util.SelectLine(traceBody, line)
+			case 2:
+				startLine, _ := strconv.Atoi(lines[0])
+				endLine, _ := strconv.Atoi(lines[1])
+				selectedLine = util.SelectLines(traceBody, startLine, endLine)
+			default:
+				return fmt.Errorf("invalid line: L%s", lineHash)
+			}
+			return nil
+		})
+	}
 
 	var project *gitlab.Project
 	eg.Go(func() error {
@@ -70,9 +115,15 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	}
 
 	duration := time.Duration(job.Duration) * time.Second
+	description := fmt.Sprintf("[%s] Job [#%d](%s) of branch %s by %s in %s", job.Status, job.ID, job.WebURL, job.Ref, job.User.Username, duration)
+
+	if selectedLine != "" {
+		description += fmt.Sprintf("\n```\n%s\n```", selectedLine)
+	}
+
 	page := &Page{
 		Title:                  strings.Join([]string{fmt.Sprintf("%s (#%d)", job.Name, job.ID), "Jobs", project.NameWithNamespace, "GitLab"}, titleSeparator),
-		Description:            fmt.Sprintf("[%s] Job [#%d](%s) of branch %s by %s in %s", job.Status, job.ID, job.WebURL, job.Ref, job.User.Username, duration),
+		Description:            description,
 		AuthorName:             job.User.Name,
 		AuthorAvatarURL:        job.User.AvatarURL,
 		AvatarURL:              "",
