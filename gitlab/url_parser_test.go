@@ -95,6 +95,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/jobs/8/trace",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/job_trace.txt")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/pipelines/46",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/pipeline.json")),
 	)
@@ -637,6 +642,42 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			want: &Page{
 				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "[failed] Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root in 1s",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2015, 12, 24, 15, 51, 21, 0, time.UTC)),
+				Color:                  "#db3b21",
+			},
+		},
+		{
+			name: "Job URL (single line)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/jobs/8#L6",
+			},
+			want: &Page{
+				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "[failed] Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root in 1s\n```\nPreparing the \"docker+machine\" executor\n```",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2015, 12, 24, 15, 51, 21, 0, time.UTC)),
+				Color:                  "#db3b21",
+			},
+		},
+		{
+			name: "Job URL (multiple line)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/jobs/8#L4-6",
+			},
+			want: &Page{
+				Title:                  "rubocop (#8) · Jobs · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "[failed] Job [#8](http://example.com/diaspora/diaspora-project-site/-/jobs/8) of branch master by root in 1s\n```\nResolving secrets\n\nPreparing the \"docker+machine\" executor\n```",
 				AuthorName:             "Administrator",
 				AuthorAvatarURL:        "http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon",
 				AvatarURL:              "",
