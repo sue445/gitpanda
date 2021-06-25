@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.6...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.0...master)
+
+## v0.10.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.9.6...v0.10.0)
+
+* Supports to job URL with the line number
+  * https://github.com/sue445/gitpanda/pull/668
+* Upgrade dependencies
 
 ## v0.9.6
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.5...v0.9.6)
