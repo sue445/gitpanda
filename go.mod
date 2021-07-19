@@ -6,7 +6,7 @@ go 1.16
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/aws/aws-lambda-go v1.25.0
-	github.com/aws/aws-sdk-go v1.40.2
+	github.com/aws/aws-sdk-go v1.40.3
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
