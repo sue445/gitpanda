@@ -1,7 +1,6 @@
 version: 2.1
 
 orbs:
-  codeclimate:    sue445/codeclimate@volatile
   github-release: izumin5210/github-release@0.1.1
   go-module:      timakin/go-module@0.3.0
   heroku:         circleci/heroku@volatile
@@ -18,10 +17,6 @@ jobs:
   test:
     executor: golang
 
-    environment:
-      CC_TEST_REPORTER_ID: 3189062605b5e7e7ea3aa51b854c1912cfe29dcee0049e1ecdbc3f57a7a27327
-      TEST_ARGS: "-coverprofile c.out"
-
     steps:
       - &attach_workspace
         attach_workspace:
@@ -29,10 +24,8 @@ jobs:
       - &restore_cache
         restore_cache:
           key: go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
-      - codeclimate/with-cc-test-reporter:
-          steps:
-            - run: make test
-            - run: make testrace
+      - run: make test
+      - run: make testrace
       - slack/notify-on-failure
 
   golint:
