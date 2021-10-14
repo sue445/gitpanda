@@ -23,7 +23,7 @@ jobs:
           at: .
       - &restore_cache
         restore_cache:
-          key: go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
+          key: v2-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
       - run: make test
       - run: make testrace
       - slack/notify-on-failure
