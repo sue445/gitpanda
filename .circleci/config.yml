@@ -76,6 +76,7 @@ workflows:
       - go-module/download:
           executor: golang
           persist-to-workspace: true
+          project_name: v2-go-mod-cache
 
       - test:
           requires:
