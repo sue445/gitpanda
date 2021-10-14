@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   github-release: izumin5210/github-release@0.1.1
-  go-module:      timakin/go-module@0.3.0
   heroku:         circleci/heroku@volatile
   slack:          circleci/slack@3
 
@@ -13,47 +12,70 @@ executors:
     environment:
       GO111MODULE: "on"
 
+commands:
+  with_cache:
+    parameters:
+      steps:
+        type: steps
+      cache_version:
+        type: string
+        default: "v2"
+
+    steps:
+      - restore_cache:
+          keys:
+            - << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
+            - << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-
+            - << parameters.cache_version >>-go-mod-cache-
+
+      - steps: << parameters.steps >>
+
+      - save_cache:
+          key: << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
 jobs:
   test:
     executor: golang
 
     steps:
-      - &attach_workspace
-        attach_workspace:
-          at: .
-      - &restore_cache
-        restore_cache:
-          key: v2-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
-      - run: make test
-      - run: make testrace
+      - checkout
+      - with_cache:
+          steps:
+            - run: make test
+            - run: make testrace
       - slack/notify-on-failure
 
   golint:
     executor: golang
 
     steps:
-      - *attach_workspace
-      - *restore_cache
-      - run: go get -u golang.org/x/lint/golint
-      - run: make lint
+      - checkout
+      - with_cache:
+          steps:
+            - run: go get -u golang.org/x/lint/golint
+            - run: make lint
       - slack/notify-on-failure
 
   go-vet:
     executor: golang
 
     steps:
-      - *attach_workspace
-      - *restore_cache
-      - run: make vet
+      - checkout
+      - with_cache:
+          steps:
+            - run: make vet
       - slack/notify-on-failure
 
   gofmt:
     executor: golang
 
     steps:
-      - *attach_workspace
-      - *restore_cache
-      - run: "! gofmt -d . | grep '^'"
+      - checkout
+      - with_cache:
+          steps:
+            - run: "! gofmt -d . | grep '^'"
       - slack/notify-on-failure
 
   gox:
@@ -73,26 +95,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - go-module/download:
-          executor: golang
-          persist-to-workspace: true
-          project_name: v2-go-mod-cache
-
-      - test:
-          requires:
-            - go-module/download
-
-      - golint:
-          requires:
-            - go-module/download
-
-      - go-vet:
-          requires:
-            - go-module/download
-
-      - gofmt:
-          requires:
-            - go-module/download
+      - test
+      - golint
+      - go-vet
+      - gofmt
 
       - heroku/deploy-via-git:
           context: Heroku
