@@ -10,7 +10,7 @@ orbs:
 executors:
   golang:
     docker:
-      - image: circleci/golang:1.16
+      - image: cimg/go:1.16
     working_directory: /go/src/github.com/sue445/gitpanda
     environment:
       GO111MODULE: "on"
