@@ -3,6 +3,7 @@
 
 [![Latest Version](https://img.shields.io/github/v/release/sue445/gitpanda)](https://github.com/sue445/gitpanda/releases)
 [![CircleCI](https://circleci.com/gh/sue445/gitpanda.svg?style=svg)](https://circleci.com/gh/sue445/gitpanda)
+[![docker](https://github.com/sue445/gitpanda/actions/workflows/docker.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/003d4dd72d10220e2564/maintainability)](https://codeclimate.com/github/sue445/gitpanda/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/003d4dd72d10220e2564/test_coverage)](https://codeclimate.com/github/sue445/gitpanda/test_coverage)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sue445/gitpanda)](https://goreportcard.com/report/github.com/sue445/gitpanda)
