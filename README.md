@@ -122,6 +122,29 @@ Available tags are followings
 
 https://github.com/users/sue445/packages/container/package/gitpanda
 
+## Running with Kubernetes
+### 1. [GKE] Create static IP and managed certificate if necessary
+c.f https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
+
+### 2. Download and edit files in [examples/kubernetes_manifests/](examples/kubernetes_manifests/)
+
+### 3. Create secrets
+e.g.
+
+```bash
+kubectl create secret generic gitpanda-secret \
+    --from-literal=gitlab_private_token=${GITLAB_PRIVATE_TOKEN} \
+    --from-literal=slack_oauth_access_token=${SLACK_OAUTH_ACCESS_TOKEN} \
+    --from-literal=slack_verification_token=${SLACK_VERIFICATION_TOKEN}
+```
+
+### 4. apply manifests
+e.g.
+
+```bash
+kubectl apply -f path/to/kubernetes_manifests/*.yaml
+```
+
 ## Development
 Recommend to use https://github.com/direnv/direnv
 
