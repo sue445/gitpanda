@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitpanda
+  labels:
+    app: gitpanda
+spec:
+  selector:
+    matchLabels:
+      app: gitpanda
+  template:
+    metadata:
+      labels:
+        app: gitpanda
+    spec:
+      containers:
+        - name: gitpanda
+          ports:
+            - containerPort: 80
+
+          # c.f. https://github.com/sue445/gitpanda/pkgs/container/gitpanda
+          image: ghcr.io/sue445/gitpanda:latest # TODO: Edit if necessary
+
+          env:
+            - name: GITLAB_API_ENDPOINT
+              value: https://your-gitlab.example.com/api/v4 # TODO: Edit
+            - name: GITLAB_BASE_URL
+              value: https://your-gitlab.example.com # TODO: Edit
+
+            - name: GITLAB_PRIVATE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitpanda-secret
+                  key: gitlab_private_token
+            - name: SLACK_OAUTH_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitpanda-secret
+                  key: slack_oauth_access_token
+            - name: SLACK_VERIFICATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitpanda-secret
+                  key: slack_verification_token
+
+            # - name: TRUNCATE_LINES
+            #   value: "5"
+            # - name: SENTRY_DSN
+            #   value:
+            # - name: DEBUG_LOGGING
+            #   value: "1"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /
+            failureThreshold: 5
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /
+            failureThreshold: 10
+            periodSeconds: 10

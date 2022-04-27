@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitpanda
+  labels:
+    app: gitpanda
+
+spec:
+  type: ClusterIP
+  selector:
+    app: gitpanda
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8000
