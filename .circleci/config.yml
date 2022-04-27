@@ -83,7 +83,7 @@ jobs:
 
     steps:
       - checkout
-      - run: go get -u github.com/mitchellh/gox
+      - run: go install github.com/mitchellh/gox@latest
       - run: rm bin/.keep
       - run: make gox_with_zip
       - persist_to_workspace:
