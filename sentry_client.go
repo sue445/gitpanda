@@ -31,7 +31,9 @@ func NewSentryClient(dsn string, debug bool) (*SentryClient, Close, error) {
 		}
 	}
 
-	sentryHandler := sentryhttp.New(sentryhttp.Options{})
+	sentryHandler := sentryhttp.New(sentryhttp.Options{
+		Repanic: true,
+	})
 
 	return &SentryClient{dsn: dsn, handler: sentryHandler}, releaseSentry, nil
 }

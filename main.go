@@ -113,7 +113,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v\n", body, response, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
-			return
+			panic(err)
 		}
 
 		w.Write([]byte(response))
