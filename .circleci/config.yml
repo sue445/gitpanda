@@ -112,6 +112,7 @@ workflows:
               only: master
           post-deploy:
             - slack/status
+          force: true
 
   release:
     jobs:
