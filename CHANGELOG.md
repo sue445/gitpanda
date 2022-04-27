@@ -1,5 +1,16 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.0...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.1...master)
+
+## v0.10.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.0...v0.10.1)
+
+* Fixed failure to send error to Sentry when not Lambda
+  * https://github.com/sue445/gitpanda/pull/896
+* Upgrade to Go 1.18
+  * https://github.com/sue445/gitpanda/pull/874
+* Add Kubernetes examples
+  * https://github.com/sue445/gitpanda/pull/895
+* Upgrade dependencies
 
 ## v0.10.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.9.6...v0.10.0)
