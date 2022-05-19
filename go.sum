@@ -35,8 +35,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d/go.mod h1:asat636LX7Bqt5lYEZ27JNDcqxfjdBQuJ/MM4CN/Lzo=
-github.com/aws/aws-lambda-go v1.31.1 h1:ECZ4ECLm+watHJ+mjNK8D4gU66UVuR8MfqDKTr/Ffkc=
-github.com/aws/aws-lambda-go v1.31.1/go.mod h1:IF5Q7wj4VyZyUFnZ54IQqeWtctHQ9tz+KhcbDenr220=
+github.com/aws/aws-lambda-go v1.32.0 h1:i8MflawW1hoyYp85GMH7LhvAs4cqzL7LOS6fSv8l2KM=
+github.com/aws/aws-lambda-go v1.32.0/go.mod h1:IF5Q7wj4VyZyUFnZ54IQqeWtctHQ9tz+KhcbDenr220=
 github.com/aws/aws-sdk-go v1.44.18 h1:rPDxVLNZL9R76yifC0kYOnfnkMswLfy89c8LBJSyvgY=
 github.com/aws/aws-sdk-go v1.44.18/go.mod h1:y4AeaBuwd2Lk+GepC1E9v0qOiTws0MIWAX4oIKwKHZo=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
