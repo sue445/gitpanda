@@ -3,15 +3,16 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/nlopes/slack"
-	"github.com/nlopes/slack/slackevents"
-	"github.com/pkg/errors"
-	"github.com/sue445/gitpanda/gitlab"
-	"github.com/sue445/gitpanda/util"
-	"golang.org/x/sync/errgroup"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/pkg/errors"
+	"github.com/slack-go/slack"
+	"github.com/slack-go/slack/slackevents"
+	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda/util"
+	"golang.org/x/sync/errgroup"
 )
 
 // SlackWebhook represents Slack webhook
@@ -139,7 +140,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 
 	start := time.Now()
 	api := slack.New(s.slackOAuthAccessToken)
-	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp.String(), unfurls)
+	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp, unfurls)
 
 	if err != nil {
 		return "Failed: UnfurlMessage", errors.WithStack(err)
