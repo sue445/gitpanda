@@ -9,8 +9,8 @@ require (
 	github.com/aws/aws-sdk-go v1.44.23
 	github.com/getsentry/sentry-go v0.13.0
 	github.com/jarcoal/httpmock v1.2.0
-	github.com/nlopes/slack v0.6.0
 	github.com/pkg/errors v0.9.1
+	github.com/slack-go/slack v0.10.3
 	github.com/stretchr/testify v1.7.1
 	github.com/xanzy/go-gitlab v0.68.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
@@ -20,7 +20,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
