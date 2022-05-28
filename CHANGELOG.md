@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.1...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...master)
+
+## v0.10.2
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.1...v0.10.2)
+
+* update nlopes/slack@v0.6.0 to slack-go/slack@v0.10.3
+  * https://github.com/sue445/gitpanda/pull/923
+* Upgrade dependencies
 
 ## v0.10.1
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.10.0...v0.10.1)
