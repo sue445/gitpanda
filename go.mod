@@ -11,7 +11,7 @@ require (
 	github.com/jarcoal/httpmock v1.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/slack-go/slack v0.10.3
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.2
 	github.com/xanzy/go-gitlab v0.68.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 )
@@ -31,5 +31,5 @@ require (
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
