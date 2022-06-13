@@ -10,7 +10,7 @@ require (
 	github.com/getsentry/sentry-go v0.13.0
 	github.com/jarcoal/httpmock v1.2.0
 	github.com/pkg/errors v0.9.1
-	github.com/slack-go/slack v0.10.3
+	github.com/slack-go/slack v0.11.0
 	github.com/stretchr/testify v1.7.2
 	github.com/xanzy/go-gitlab v0.68.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
