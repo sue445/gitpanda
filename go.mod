@@ -6,7 +6,7 @@ go 1.18
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/aws/aws-lambda-go v1.32.1
-	github.com/aws/aws-sdk-go v1.44.48
+	github.com/aws/aws-sdk-go v1.44.49
 	github.com/getsentry/sentry-go v0.13.0
 	github.com/jarcoal/httpmock v1.2.0
 	github.com/pkg/errors v0.9.1
