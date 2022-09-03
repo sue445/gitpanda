@@ -1,0 +1,65 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: gitpanda
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/client-name: cloud-console
+        autoscaling.knative.dev/minScale: '0'
+        autoscaling.knative.dev/maxScale: '10'
+
+    spec:
+      containerConcurrency: 1
+      timeoutSeconds: 5
+      serviceAccountName: gitpanda-app@gitpanda.iam.gserviceaccount.com
+      containers:
+        - image: us-docker.pkg.dev/gitpanda/gitpanda/app:main
+          ports:
+            - name: http1
+              containerPort: 8000
+          resources:
+            limits:
+              cpu: '1'
+              memory: 128Mi
+
+          env:
+            - name: GITLAB_BASE_URL
+              value: https://gitlab.com
+
+            - name: GITLAB_API_ENDPOINT
+              value: https://gitlab.com/api/v4
+
+            - name: TRUNCATE_LINES
+              value: "5"
+
+            # Get credentials from SecretManager
+            # c.f. https://cloud.google.com/run/docs/configuring/secrets
+            - name: GITLAB_PRIVATE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: GITLAB_PRIVATE_TOKEN
+
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: SENTRY_DSN
+
+            - name: SLACK_OAUTH_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: SLACK_OAUTH_ACCESS_TOKEN
+
+            - name: SLACK_VERIFICATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: latest
+                  name: SLACK_VERIFICATION_TOKEN
+
+  traffic:
+    - percent: 100
+      latestRevision: true
