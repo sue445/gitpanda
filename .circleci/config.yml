@@ -109,7 +109,7 @@ workflows:
             - gofmt
           filters:
             branches:
-              only: master
+              only: main
           post-deploy:
             - slack/status
           force: true

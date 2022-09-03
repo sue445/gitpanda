@@ -1,5 +1,5 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...master)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...main)
 
 ## v0.10.2
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.10.1...v0.10.2)
