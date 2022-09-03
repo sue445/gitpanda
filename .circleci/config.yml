@@ -84,7 +84,9 @@ jobs:
       - checkout
       - run: go install github.com/mitchellh/gox@latest
       - run: rm bin/.keep
-      - run: make gox_with_zip
+      - run:
+          command: make gox_with_zip
+          no_output_timeout: 30m
       - persist_to_workspace:
           root: .
           paths:
