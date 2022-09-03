@@ -119,15 +119,13 @@ Run with specified version
 docker run --rm -it ghcr.io/sue445/gitpanda:vX.Y.Z
 ```
 
-Available tags are followings
-
 #### Images
 * [GitHub Container Registry](https://github.com/sue445/gitpanda/pkgs/container/gitpanda) **(Recommended)**
   * `ghcr.io/sue445/gitpanda:latest`: Use latest version
-  * `ghcr.io/sue445/gitpanda:X.Y.Z`: Use specified version
+  * `ghcr.io/sue445/gitpanda:vX.Y.Z`: Use specified version
 * [Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/gitpanda/us/gitpanda/app): If you want to run this app on [Cloud Run](https://cloud.google.com/run), use this image
   * `us-docker.pkg.dev/gitpanda/gitpanda/app:latest`: Use latest version
-  * `us-docker.pkg.dev/gitpanda/gitpanda/app:X.Y.Z`: Use specified version
+  * `us-docker.pkg.dev/gitpanda/gitpanda/app:vX.Y.Z`: Use specified version
   * `us-docker.pkg.dev/gitpanda/gitpanda/app:main`: The contents of the main branch are pushed to this tag
 
 ## Running with Kubernetes

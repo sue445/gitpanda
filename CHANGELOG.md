@@ -1,7 +1,8 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.11.0...main)
 
 ## v0.11.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...v0.11.0)
 
 * Upgrade to Go 1.19
   * https://github.com/sue445/gitpanda/pull/985
