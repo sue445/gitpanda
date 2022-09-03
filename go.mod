@@ -1,4 +1,3 @@
-// +heroku goVersion go1.18
 module github.com/sue445/gitpanda
 
 go 1.19
