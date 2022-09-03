@@ -1,6 +1,14 @@
 ## Unreleased
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...main)
 
+## v0.11.0
+
+* Upgrade to Go 1.19
+  * https://github.com/sue445/gitpanda/pull/985
+* Push docker image to GCP Artifact Registry
+　* https://github.com/sue445/gitpanda/pull/1010
+* Upgrade dependencies
+
 ## v0.10.2
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.10.1...v0.10.2)
 
