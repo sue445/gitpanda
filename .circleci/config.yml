@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   github-release: izumin5210/github-release@0.1.1
-  heroku:         circleci/heroku@volatile
   slack:          circleci/slack@3
 
 executors:
@@ -99,20 +98,6 @@ workflows:
       - golint
       - go-vet
       - gofmt
-
-      - heroku/deploy-via-git:
-          context: Heroku
-          requires:
-            - test
-            - golint
-            - go-vet
-            - gofmt
-          filters:
-            branches:
-              only: main
-          post-deploy:
-            - slack/status
-          force: true
 
   release:
     jobs:
