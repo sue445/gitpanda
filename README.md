@@ -4,6 +4,7 @@
 [![Latest Version](https://img.shields.io/github/v/release/sue445/gitpanda)](https://github.com/sue445/gitpanda/releases)
 [![CircleCI](https://circleci.com/gh/sue445/gitpanda.svg?style=svg)](https://circleci.com/gh/sue445/gitpanda)
 [![docker-ghcr](https://github.com/sue445/gitpanda/actions/workflows/docker-ghcr.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker-ghcr.yml)
+[![docker-gcp](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/003d4dd72d10220e2564/maintainability)](https://codeclimate.com/github/sue445/gitpanda/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/003d4dd72d10220e2564/test_coverage)](https://codeclimate.com/github/sue445/gitpanda/test_coverage)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sue445/gitpanda)](https://goreportcard.com/report/github.com/sue445/gitpanda)
@@ -106,6 +107,20 @@ Usage of ./gitpanda:
 ```
 
 ## Running with docker
+Run latest version
+
+```bash
+docker run --rm -it ghcr.io/sue445/gitpanda
+```
+
+Run with specified version
+
+```bash
+docker run --rm -it ghcr.io/sue445/gitpanda:vX.Y.Z
+```
+
+Available tags are followings
+
 #### Images
 * [GitHub Container Registry](https://github.com/sue445/gitpanda/pkgs/container/gitpanda) **(Recommended)**
   * `ghcr.io/sue445/gitpanda:latest`: Use latest version
@@ -137,6 +152,12 @@ e.g.
 ```bash
 kubectl apply -f path/to/kubernetes_manifests/*.yaml
 ```
+
+## Running with Cloud Run
+See followings
+
+* [.github/workflows/docker-gcp.yml](.github/workflows/docker-gcp.yml) `deploy_to_cloud_run` job
+* [.github/cloud_run-service.yml](.github/cloud_run-service.yml)
 
 ## Development
 Recommend to use https://github.com/direnv/direnv
