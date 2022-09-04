@@ -7,7 +7,7 @@
 * Upgrade to Go 1.19
   * https://github.com/sue445/gitpanda/pull/985
 * Push docker image to GCP Artifact Registry
-　* https://github.com/sue445/gitpanda/pull/1010
+  * https://github.com/sue445/gitpanda/pull/1010
 * Upgrade dependencies
 
 ## v0.10.2
