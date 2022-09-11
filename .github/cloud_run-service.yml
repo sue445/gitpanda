@@ -15,7 +15,7 @@ spec:
       timeoutSeconds: 5
       serviceAccountName: gitpanda-app@gitpanda.iam.gserviceaccount.com
       containers:
-        - image: us-docker.pkg.dev/gitpanda/gitpanda/app:main
+        - image: us-docker.pkg.dev/gitpanda/gitpanda/app::sha-__GITHUB_SHA__
           ports:
             - name: http1
               containerPort: 8000

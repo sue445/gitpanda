@@ -42,6 +42,11 @@ jobs:
         with:
           images: |
             us-docker.pkg.dev/gitpanda/gitpanda/app
+          tags: |
+            type=sha,format=long
+            type=edge,branch=main
+            type=ref,event=tag
+
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
@@ -98,6 +103,11 @@ jobs:
         with:
           workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Replace __GITHUB_SHA__ in .github/cloud_run-service.yml
+        run: |
+          sed -i "s/__GITHUB_SHA__/${GITHUB_SHA}/g" .github/cloud_run-service.yml
+          grep "docker.pkg.dev" .github/cloud_run-service.yml
 
       - id: deploy
         uses: google-github-actions/deploy-cloudrun@v0

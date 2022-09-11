@@ -126,7 +126,7 @@ docker run --rm -it ghcr.io/sue445/gitpanda:vX.Y.Z
 * [Google Artifact Registry](https://console.cloud.google.com/artifacts/docker/gitpanda/us/gitpanda/app): If you want to run this app on [Cloud Run](https://cloud.google.com/run), use this image
   * `us-docker.pkg.dev/gitpanda/gitpanda/app:latest`: Use latest version
   * `us-docker.pkg.dev/gitpanda/gitpanda/app:vX.Y.Z`: Use specified version
-  * `us-docker.pkg.dev/gitpanda/gitpanda/app:main`: The contents of the main branch are pushed to this tag
+  * `us-docker.pkg.dev/gitpanda/gitpanda/app:edge`: The contents of the main branch are pushed to this tag
 
 ## Running with Kubernetes
 ### 1. [GKE] Create static IP and managed certificate if necessary
