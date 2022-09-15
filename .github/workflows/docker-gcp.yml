@@ -91,7 +91,8 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    concurrency: deploy-gcp
+    environment: production
+    concurrency: production
 
     steps:
       - name: Checkout
