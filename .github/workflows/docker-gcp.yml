@@ -73,7 +73,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Slack Notification
-        uses: lazy-actions/slatify@master
+        uses: sue445/slatify@node16
         if: always()
         continue-on-error: true
         with:
