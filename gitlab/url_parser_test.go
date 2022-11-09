@@ -239,6 +239,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Project URL (with anchor)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site#readme",
+			},
+			want: &Page{
+				Title:                  "Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Diaspora Project",
+				AuthorName:             "Diaspora",
+				AuthorAvatarURL:        "http://example.com/images/diaspora.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 9, 30, 13, 46, 2, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
 			name: "Issue URL",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/issues/1",
