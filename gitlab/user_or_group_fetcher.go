@@ -13,8 +13,7 @@ type userOrGroupFetcher struct {
 }
 
 func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile("^([^/]+)/?$")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile("^([^/]+)/?$").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil

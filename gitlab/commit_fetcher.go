@@ -13,8 +13,7 @@ type commitFetcher struct {
 }
 
 func (f *commitFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/commit/(.+)")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/commit/(.+)").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil

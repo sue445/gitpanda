@@ -18,8 +18,7 @@ type jobFetcher struct {
 }
 
 func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/jobs/(\\d+)")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/jobs/(\\d+)").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -50,8 +49,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 		return nil
 	})
 
-	lineRe := regexp.MustCompile(".*#L([0-9-]+)$")
-	lineMatched := lineRe.FindStringSubmatch(path)
+	lineMatched := regexp.MustCompile(".*#L([0-9-]+)$").FindStringSubmatch(path)
 
 	selectedLine := ""
 	if lineMatched != nil {

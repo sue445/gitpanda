@@ -16,8 +16,7 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	// Remove anchor(#) in path (e.g. gitlab-org/gitlab#gitlab -> gitlab-org/gitlab)
 	path = regexp.MustCompile("#.*$").ReplaceAllString(path, "")
 
-	re := regexp.MustCompile(reProjectName + "/?$")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/?$").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil

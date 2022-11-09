@@ -15,8 +15,7 @@ type mergeRequestFetcher struct {
 }
 
 func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/merge_requests/(\\d+)")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/merge_requests/(\\d+)").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -51,8 +50,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		authorAvatarURL = mr.Author.AvatarURL
 		footerTime = mr.CreatedAt
 
-		re2 := regexp.MustCompile("#note_(\\d+)$")
-		matched2 := re2.FindStringSubmatch(path)
+		matched2 := regexp.MustCompile("#note_(\\d+)$").FindStringSubmatch(path)
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
