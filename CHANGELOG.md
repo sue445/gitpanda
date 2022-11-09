@@ -1,5 +1,13 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.11.0...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.0...main)
+
+## v0.12.0
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.11.0...v0.12.0)
+
+* Support commit URL
+  * https://github.com/sue445/gitpanda/pull/1062
+* Fixed. 404 error for URLs containing anchors
+  * https://github.com/sue445/gitpanda/pull/1061
 
 ## v0.11.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.10.2...v0.11.0)
