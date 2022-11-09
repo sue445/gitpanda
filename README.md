@@ -36,6 +36,8 @@
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/pipelines/:id`
 * Blob URL
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/blob/:sha1/:filename`
+* Commit URL
+  * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/commit/:sha1`
 * Project snippet URL
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/snippets/:id`
 * Snippet URL

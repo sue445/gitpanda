@@ -69,6 +69,7 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 		&jobFetcher{},
 		&pipelineFetcher{},
 		&blobFetcher{},
+		&commitFetcher{},
 		&projectSnippetFetcher{},
 		&projectFetcher{},
 		&userOrGroupFetcher{},

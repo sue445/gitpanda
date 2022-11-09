@@ -128,6 +128,11 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		"http://example.com/api/v4/snippets/3/raw",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/snippet_code.rb")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/commits/c9ddb5f48418b4e2a9e41982b8177018114003d1",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/commit.json")),
+	)
 
 	p, err := NewGitlabURLParser(&URLParserParams{
 		APIEndpoint:     "http://example.com/api/v4",
@@ -847,6 +852,25 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "",
 				FooterURL:              "",
 				FooterTime:             tp(time.Date(2012, 6, 28, 10, 52, 4, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Commit URL",
+			args: args{
+				// ref. https://gitlab.com/gitlab-org/gitlab/-/commit/c9ddb5f48418b4e2a9e41982b8177018114003d1
+				url: "http://example.com/diaspora/diaspora-project-site/-/commit/c9ddb5f48418b4e2a9e41982b8177018114003d1",
+			},
+			want: &Page{
+				Title:                  "Merge branch 'renovate-workhorse/github.com-prometheus-client_golang-1.x' into 'master'",
+				Description:            "Merge branch 'renovate-workhorse/github.com-prometheus-client_golang-1.x' into 'master'\n\nworkhorse: Update module github.com/prometheus/client_golang to v1.14.0\n\nSee merge request https://gitlab.com/gitlab-org/gitlab/-/merge_requests/103423\n\nMerged-by: Jacob Vosmaer <jacob@gitlab.com>\nApproved-by: Stan Hu <stanhu@gmail.com>\nCo-authored-by: GitLab Renovate Bot <gitlab-bot@gitlab.com>",
+				AuthorName:             "Jacob Vosmaer",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2022, 11, 9, 14, 3, 6, 0, time.UTC)),
 				Color:                  "",
 			},
 		},
