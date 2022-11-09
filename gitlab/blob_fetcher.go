@@ -17,8 +17,7 @@ type blobFetcher struct {
 }
 
 func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)$")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)$").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -28,8 +27,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	sha1 := matched[2]
 	fileName := matched[3]
 
-	lineRe := regexp.MustCompile("(.+)#L([0-9-]+)$")
-	lineMatched := lineRe.FindStringSubmatch(fileName)
+	lineMatched := regexp.MustCompile("(.+)#L([0-9-]+)$").FindStringSubmatch(fileName)
 
 	if lineMatched != nil {
 		fileName = lineMatched[1]

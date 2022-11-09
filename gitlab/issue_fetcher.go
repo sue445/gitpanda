@@ -15,8 +15,7 @@ type issueFetcher struct {
 }
 
 func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	re := regexp.MustCompile(reProjectName + "/issues/(\\d+)")
-	matched := re.FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + "/issues/(\\d+)").FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -52,8 +51,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		authorAvatarURL = issue.Author.AvatarURL
 		footerTime = issue.CreatedAt
 
-		re2 := regexp.MustCompile("#note_(\\d+)$")
-		matched2 := re2.FindStringSubmatch(path)
+		matched2 := regexp.MustCompile("#note_(\\d+)$").FindStringSubmatch(path)
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])

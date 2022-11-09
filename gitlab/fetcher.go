@@ -13,6 +13,5 @@ type fetcher interface {
 }
 
 func sanitizeProjectName(projectName string) string {
-	re := regexp.MustCompile(`(/-)$`)
-	return re.ReplaceAllString(projectName, "")
+	return regexp.MustCompile(`(/-)$`).ReplaceAllString(projectName, "")
 }
