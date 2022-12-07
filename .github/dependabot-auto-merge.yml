@@ -19,3 +19,6 @@
 - match:
     dependency_name: "github.com/xanzy/go-gitlab"
     update_type: "semver:minor"
+- match:
+    dependency_name: "github.com/getsentry/sentry-go"
+    update_type: "semver:minor"
