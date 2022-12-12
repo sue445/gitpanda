@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/aws/aws-lambda-go v1.36.0
-	github.com/aws/aws-sdk-go v1.44.157
+	github.com/aws/aws-sdk-go v1.44.158
 	github.com/getsentry/sentry-go v0.16.0
 	github.com/jarcoal/httpmock v1.2.0
 	github.com/pkg/errors v0.9.1
