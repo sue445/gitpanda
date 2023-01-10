@@ -2,7 +2,8 @@
 **Git**Lab URL ex**pande**r for Slack
 
 [![Latest Version](https://img.shields.io/github/v/release/sue445/gitpanda)](https://github.com/sue445/gitpanda/releases)
-[![CircleCI](https://circleci.com/gh/sue445/gitpanda.svg?style=svg)](https://circleci.com/gh/sue445/gitpanda)
+[![test](https://github.com/sue445/gitpanda/actions/workflows/test.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/test.yml)
+[![build](https://github.com/sue445/gitpanda/actions/workflows/build.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/build.yml)
 [![docker-ghcr](https://github.com/sue445/gitpanda/actions/workflows/docker-ghcr.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker-ghcr.yml)
 [![docker-gcp](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/003d4dd72d10220e2564/maintainability)](https://codeclimate.com/github/sue445/gitpanda/maintainability)
