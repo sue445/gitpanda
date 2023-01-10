@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.0...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.1...main)
+
+## v0.12.1
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.0...v0.12.1)
+
+* Re-released due to unintentional disappearance of `us-docker.pkg.dev/gitpanda/gitpanda/app:v0.12.0` and `us-docker.pkg.dev/gitpanda/gitpanda/app:latest`
+* Upgrade dependencies
 
 ## v0.12.0
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.11.0...v0.12.0)
