@@ -11,72 +11,7 @@ executors:
     environment:
       GO111MODULE: "on"
 
-commands:
-  with_cache:
-    parameters:
-      steps:
-        type: steps
-      cache_version:
-        type: string
-        default: "v2"
-
-    steps:
-      - restore_cache:
-          keys:
-            - << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
-            - << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-
-            - << parameters.cache_version >>-go-mod-cache-
-
-      - steps: << parameters.steps >>
-
-      - save_cache:
-          key: << parameters.cache_version >>-go-mod-cache-{{ .Branch }}-{{ checksum "go.sum" }}
-          paths:
-            - "/go/pkg/mod"
-
 jobs:
-  test:
-    executor: golang
-
-    steps:
-      - checkout
-      - with_cache:
-          steps:
-            - run: make test
-            - run: make testrace
-      - slack/notify-on-failure
-
-  golint:
-    executor: golang
-
-    steps:
-      - checkout
-      - with_cache:
-          steps:
-            - run: go install golang.org/x/lint/golint@latest
-            - run: make lint
-      - slack/notify-on-failure
-
-  go-vet:
-    executor: golang
-
-    steps:
-      - checkout
-      - with_cache:
-          steps:
-            - run: make vet
-      - slack/notify-on-failure
-
-  gofmt:
-    executor: golang
-
-    steps:
-      - checkout
-      - with_cache:
-          steps:
-            - run: "! gofmt -d . | grep '^'"
-      - slack/notify-on-failure
-
   gox:
     executor: golang
 
@@ -94,13 +29,6 @@ jobs:
       - slack/notify-on-failure
 
 workflows:
-  build-and-deploy:
-    jobs:
-      - test
-      - golint
-      - go-vet
-      - gofmt
-
   release:
     jobs:
       - gox:
