@@ -17,7 +17,7 @@ linux_amd64: $(SRCS)
 
 .PHONY: gox
 gox:
-	gox -parallel=2 -ldflags=$(LDFLAGS) -osarch "!darwin/386" -output="bin/gitpanda_{{.OS}}_{{.Arch}}"
+	gox -osarch="$${GOX_OSARCH}" -ldflags=$(LDFLAGS) -output="bin/gitpanda_{{.OS}}_{{.Arch}}"
 
 .PHONY: zip
 zip:

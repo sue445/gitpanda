@@ -1,0 +1,229 @@
+name: build
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  gox:
+    name: gox
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - darwin
+          - freebsd
+          - linux
+          - netbsd
+          - openbsd
+          - windows
+        arch:
+          - amd64
+          - arm
+          - arm64
+          - 386
+        exclude:
+          - os: darwin
+            arch: arm
+          - os: darwin
+            arch: 386
+          - os: freebsd
+            arch: arm64
+          - os: linux
+            arch: arm64
+          - os: netbsd
+            arch: arm64
+          - os: openbsd
+            arch: arm
+          - os: openbsd
+            arch: arm64
+          - os: windows
+            arch: arm
+          - os: windows
+            arch: arm64
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+        id: go
+
+      - name: make package
+        run: |
+          set -xe
+          go install github.com/mitchellh/gox@latest
+          make gox_with_zip
+        env:
+          GOX_OSARCH: ${{ matrix.os }}/${{ matrix.arch }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: bin-${{ matrix.os }}-${{ matrix.arch }}
+          path: bin/
+
+      - name: Slack Notification (not success)
+        uses: lazy-actions/slatify@master
+        if: "! success()"
+        continue-on-error: true
+        with:
+          job_name: '*build*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  release:
+    name: release
+
+    needs:
+      - gox
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: "go.mod"
+        id: go
+
+      - name: Download artifacts from darwin-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-darwin-amd64
+          path: bin/
+
+      - name: Download artifacts from darwin-arm64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-darwin-arm64
+          path: bin/
+
+      - name: Download artifacts from freebsd-386
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-freebsd-386
+          path: bin/
+
+      - name: Download artifacts from freebsd-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-freebsd-amd64
+          path: bin/
+
+      - name: Download artifacts from freebsd-arm
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-freebsd-arm
+          path: bin/
+
+      - name: Download artifacts from linux-386
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-linux-386
+          path: bin/
+
+      - name: Download artifacts from linux-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-linux-amd64
+          path: bin/
+
+      - name: Download artifacts from linux-arm
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-linux-arm
+          path: bin/
+
+      - name: Download artifacts from netbsd-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-netbsd-amd64
+          path: bin/
+
+      - name: Download artifacts from netbsd-arm
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-netbsd-arm
+          path: bin/
+
+      - name: Download artifacts from netbsd-386
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-netbsd-386
+          path: bin/
+
+      - name: Download artifacts from openbsd-386
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-openbsd-386
+          path: bin/
+
+      - name: Download artifacts from openbsd-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-openbsd-amd64
+          path: bin/
+
+      - name: Download artifacts from windows-amd64
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-windows-amd64
+          path: bin/
+
+      - name: Download artifacts from windows-386
+        uses: actions/download-artifact@v3
+        with:
+          name: bin-windows-386
+          path: bin/
+
+      - name: Upload to GitHub Releases
+        run: |
+          set -xe
+
+          export PUSH_EVENT_REF=$(jq --raw-output .ref "$GITHUB_EVENT_PATH")
+
+          if [ "$(echo $PUSH_EVENT_REF | grep refs/tags/ | wc -l)" = "0" ]; then
+            echo "ref is not a tag: ${PUSH_EVENT_REF}"
+            exit 1
+          fi
+
+          export TAGNAME=$(echo $PUSH_EVENT_REF | sed -e 's!refs/tags/!!g')
+          export USERNAME=$(echo $GITHUB_REPOSITORY | cut -d / -f 1)
+          export REPO=$(echo $GITHUB_REPOSITORY | cut -d / -f 2)
+
+          go install github.com/tcnksm/ghr@latest
+
+          if [ "$(echo $TAGNAME | grep -E 'v[0-9.]+$' | wc -l)" = "0" ]; then
+            GHR_OPTIONS="${GHR_OPTIONS} -prerelease"
+          fi
+
+          ghr -u ${USERNAME} -r ${REPO} -n ${TAGNAME} -b "Release ${TAGNAME}" ${GHR_OPTIONS} ${TAGNAME} bin/
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: startsWith(github.ref, 'refs/tags/')
+
+      - name: Slack Notification
+        uses: lazy-actions/slatify@master
+        if: always()
+        continue-on-error: true
+        with:
+          job_name: '*release*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
+          token: ${{ secrets.GITHUB_TOKEN }}
