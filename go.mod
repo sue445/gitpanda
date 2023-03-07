@@ -11,7 +11,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/slack-go/slack v0.12.1
 	github.com/stretchr/testify v1.8.2
-	github.com/xanzy/go-gitlab v0.80.2
+	github.com/xanzy/go-gitlab v0.80.3
 	golang.org/x/sync v0.1.0
 )
 
