@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
-	github.com/aws/aws-lambda-go v1.40.0
+	github.com/aws/aws-lambda-go v1.41.0
 	github.com/aws/aws-sdk-go v1.44.257
 	github.com/getsentry/sentry-go v0.20.0
 	github.com/jarcoal/httpmock v1.3.0
