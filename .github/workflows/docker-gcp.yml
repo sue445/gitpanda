@@ -17,6 +17,8 @@ on:
       - "examples/**"
       - "img/**"
 
+  workflow_dispatch:
+
 env:
   # e.g. projects/123456789/locations/global/workloadIdentityPools/github-actions/providers/github-actions
   WORKLOAD_IDENTITY_PROVIDER: "projects/270340932667/locations/global/workloadIdentityPools/gitpanda/providers/github-actions"
@@ -68,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: ${{ github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main') }}
+          push: ${{ (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')) || github.event_name == 'workflow_dispatch' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -87,7 +89,7 @@ jobs:
     needs:
       - build_and_push
 
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
 
     runs-on: ubuntu-latest
 
