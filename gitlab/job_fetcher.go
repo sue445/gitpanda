@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/acarl005/stripansi"
-	"github.com/pkg/errors"
+	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"

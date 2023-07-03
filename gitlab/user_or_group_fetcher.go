@@ -2,7 +2,7 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
+	"github.com/cockroachdb/errors"
 	"github.com/xanzy/go-gitlab"
 	"regexp"
 	"strings"

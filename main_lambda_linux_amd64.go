@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
-	"github.com/pkg/errors"
+	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/webhook"
 	"net/http"

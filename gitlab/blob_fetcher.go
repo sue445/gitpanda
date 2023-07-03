@@ -2,7 +2,7 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
+	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
 	"github.com/xanzy/go-gitlab"
 	"golang.org/x/sync/errgroup"
