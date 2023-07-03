@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.1...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.2...main)
+
+## v0.12.2
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.1...v0.12.2)
+
+* Upgrade to Go 1.20 :rocket:
+  * https://github.com/sue445/gitpanda/pull/1135
+* Migrate to github.com/cockroachdb/errors
+  * https://github.com/sue445/gitpanda/pull/1275
+* Upgrade dependencies
 
 ## v0.12.1
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.0...v0.12.1)
