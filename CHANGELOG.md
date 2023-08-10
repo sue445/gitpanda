@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.2...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.3...main)
+
+## v0.12.3
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.2...v0.12.3)
+
+* Upgrade to Go 1.21 :rocket:
+  * https://github.com/sue445/gitpanda/pull/1304
+* Upgrade dependencies
 
 ## v0.12.2
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.1...v0.12.2)
