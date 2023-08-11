@@ -33,6 +33,12 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		fileName = lineMatched[1]
 	}
 
+	paramsMatched := regexp.MustCompile("(.+)\\?(.+)$").FindStringSubmatch(fileName)
+
+	if paramsMatched != nil {
+		fileName = paramsMatched[1]
+	}
+
 	var eg errgroup.Group
 
 	selectedFile := ""
