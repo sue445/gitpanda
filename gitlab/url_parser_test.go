@@ -586,6 +586,24 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 		},
 		{
+			name: "Blob URL (single line & including /-/ & conain url_params)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/blob/master/gitlabci-templates/continuous_bundle_update.yml?ref_type=head#L4",
+			},
+			want: &Page{
+				Title:                  "gitlabci-templates/continuous_bundle_update.yml:4",
+				Description:            "```\n  variables:\n```",
+				AuthorName:             "",
+				AuthorAvatarURL:        "",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: false,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             nil,
+				Color:                  "",
+			},
+		},
+		{
 			name: "Blob URL (multiple line)",
 			args: args{
 				url: "http://example.com/diaspora/diaspora-project-site/blob/master/gitlabci-templates/continuous_bundle_update.yml#L4-9",
