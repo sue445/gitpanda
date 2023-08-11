@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.3...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.4...main)
+
+## v0.12.4
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.3...v0.12.4)
+
+* ignore URL parameters in blobFetcher
+  * https://github.com/sue445/gitpanda/pull/1307
+* Upgrade dependencies
 
 ## v0.12.3
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.2...v0.12.3)
