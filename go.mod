@@ -1,6 +1,7 @@
 module github.com/sue445/gitpanda
 
 go 1.21
+
 toolchain go1.21.0
 
 require (
@@ -12,7 +13,7 @@ require (
 	github.com/jarcoal/httpmock v1.3.1
 	github.com/slack-go/slack v0.12.2
 	github.com/stretchr/testify v1.8.4
-	github.com/xanzy/go-gitlab v0.90.0
+	github.com/xanzy/go-gitlab v0.91.1
 	golang.org/x/sync v0.3.0
 )
 
