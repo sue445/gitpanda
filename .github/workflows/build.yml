@@ -68,7 +68,7 @@ jobs:
         env:
           GOX_OSARCH: ${{ matrix.os }}/${{ matrix.arch }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: bin-${{ matrix.os }}-${{ matrix.arch }}
           path: bin/
