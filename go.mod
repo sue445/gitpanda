@@ -6,7 +6,7 @@ toolchain go1.21.0
 
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
-	github.com/aws/aws-lambda-go v1.45.0
+	github.com/aws/aws-lambda-go v1.46.0
 	github.com/aws/aws-sdk-go v1.50.6
 	github.com/cockroachdb/errors v1.11.1
 	github.com/getsentry/sentry-go v0.26.0
