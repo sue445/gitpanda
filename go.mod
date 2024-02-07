@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-lambda-go v1.46.0
 	github.com/aws/aws-sdk-go v1.50.12
 	github.com/cockroachdb/errors v1.11.1
-	github.com/getsentry/sentry-go v0.26.0
+	github.com/getsentry/sentry-go v0.27.0
 	github.com/jarcoal/httpmock v1.3.1
 	github.com/slack-go/slack v0.12.3
 	github.com/stretchr/testify v1.8.4
