@@ -11,7 +11,7 @@ require (
 	github.com/cockroachdb/errors v1.11.1
 	github.com/getsentry/sentry-go v0.27.0
 	github.com/jarcoal/httpmock v1.3.1
-	github.com/slack-go/slack v0.12.4
+	github.com/slack-go/slack v0.12.5
 	github.com/stretchr/testify v1.8.4
 	github.com/xanzy/go-gitlab v0.98.0
 	golang.org/x/sync v0.6.0
