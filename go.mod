@@ -7,7 +7,7 @@ toolchain go1.22.0
 require (
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/aws/aws-lambda-go v1.47.0
-	github.com/aws/aws-sdk-go v1.53.19
+	github.com/aws/aws-sdk-go v1.53.20
 	github.com/cockroachdb/errors v1.11.3
 	github.com/getsentry/sentry-go v0.28.0
 	github.com/jarcoal/httpmock v1.3.1
