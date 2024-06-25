@@ -30,7 +30,7 @@ func (f *commitFetcher) fetchPath(path string, client *gitlab.Client, isDebugLog
 		var err error
 
 		start := time.Now()
-		commit, _, err = client.Commits.GetCommit(projectName, sha)
+		commit, _, err = client.Commits.GetCommit(projectName, sha, &gitlab.GetCommitOptions{})
 
 		if err != nil {
 			return errors.WithStack(err)
