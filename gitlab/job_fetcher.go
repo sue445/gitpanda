@@ -69,7 +69,11 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 			}
 
 			buf := new(bytes.Buffer)
-			buf.ReadFrom(reader)
+			_, err = buf.ReadFrom(reader)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+
 			traceBody := normalizeJobTrace(buf.String())
 
 			lineHash := lineMatched[1]
