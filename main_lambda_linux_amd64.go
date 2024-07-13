@@ -28,11 +28,11 @@ func lambdaHandler(_ context.Context, request events.APIGatewayProxyRequest) (ev
 		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
 	}
 
-	sentryClient, close, err := NewSentryClient(sentryDsn, isDebugLogging)
+	sentryClient, releaseSentry, err := NewSentryClient(sentryDsn, isDebugLogging)
 	if err != nil {
 		fmt.Printf("Sentry initialization failed: %v\n", err)
 	}
-	defer close()
+	defer releaseSentry()
 
 	response, err := lambdaMain(body)
 
