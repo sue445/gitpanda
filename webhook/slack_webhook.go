@@ -87,7 +87,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			}
 
 			if s.gitLabURLParserParams.IsDebugLogging {
-				duration := time.Now().Sub(start)
+				duration := time.Since(start)
 				fmt.Printf("[DEBUG] FetchURL (%s): page=%v\n", duration, page)
 			}
 
@@ -147,7 +147,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	}
 
 	if s.gitLabURLParserParams.IsDebugLogging {
-		duration := time.Now().Sub(start)
+		duration := time.Since(start)
 		fmt.Printf("[DEBUG] UnfurlMessage (%s)\n", duration)
 	}
 

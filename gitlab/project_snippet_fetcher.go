@@ -43,7 +43,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): snippet=%+v\n", duration, snippet)
 		}
 
@@ -62,7 +62,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 			}
 
 			if isDebugLogging {
-				duration := time.Now().Sub(start)
+				duration := time.Since(start)
 				fmt.Printf("[DEBUG] projectSnippetFetcher (%s): note=%+v\n", duration, note)
 			}
 		}
@@ -84,7 +84,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		content = strings.TrimSpace(string(rawFile))
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): content=%+v\n", duration, content)
 		}
 
@@ -102,7 +102,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): project=%+v\n", duration, project)
 		}
 

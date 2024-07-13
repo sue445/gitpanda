@@ -42,7 +42,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] issueFetcher (%s): issue=%+v\n", duration, issue)
 		}
 
@@ -63,7 +63,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 			}
 
 			if isDebugLogging {
-				duration := time.Now().Sub(start)
+				duration := time.Since(start)
 				fmt.Printf("[DEBUG] issueFetcher (%s): note=%+v\n", duration, note)
 			}
 
@@ -87,7 +87,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] issueFetcher (%s): project=%+v\n", duration, project)
 		}
 

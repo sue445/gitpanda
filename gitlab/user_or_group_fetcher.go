@@ -52,7 +52,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 	}
 
 	if isDebugLogging {
-		duration := time.Now().Sub(start)
+		duration := time.Since(start)
 		fmt.Printf("[DEBUG] fetchUserPath (%s): users=%+v\n", duration, users)
 	}
 
@@ -86,7 +86,7 @@ func (f *userOrGroupFetcher) fetchGroupPath(name string, client *gitlab.Client, 
 	}
 
 	if isDebugLogging {
-		duration := time.Now().Sub(start)
+		duration := time.Since(start)
 		fmt.Printf("[DEBUG] fetchGroupPath (%s): group=%+v\n", duration, group)
 	}
 
