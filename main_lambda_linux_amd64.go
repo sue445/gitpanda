@@ -21,7 +21,7 @@ func startLambda() {
 	lambda.Start(lambdaHandler)
 }
 
-func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func lambdaHandler(_ context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	body := strings.TrimSpace(request.Body)
 
 	if isDebugLogging {
