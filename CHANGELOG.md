@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.4...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.5...main)
+
+## [v0.12.5](https://github.com/sue445/gitpanda/releases/tag/v0.12.5)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.4...v0.12.5)
+
+* Upgrade to Go 1.22 :rocket:
+  * https://github.com/sue445/gitpanda/pull/1467
+* Add golangci-lint
+  * https://github.com/sue445/gitpanda/pull/1580
+* Upgrade dependencies
 
 ## v0.12.4
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.3...v0.12.4)
