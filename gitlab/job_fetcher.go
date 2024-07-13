@@ -42,7 +42,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] jobFetcher (%s): job=%+v\n", duration, job)
 		}
 
@@ -64,12 +64,16 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 			}
 
 			if isDebugLogging {
-				duration := time.Now().Sub(start)
+				duration := time.Since(start)
 				fmt.Printf("[DEBUG] jobFetcher (%s)\n", duration)
 			}
 
 			buf := new(bytes.Buffer)
-			buf.ReadFrom(reader)
+			_, err = buf.ReadFrom(reader)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+
 			traceBody := normalizeJobTrace(buf.String())
 
 			lineHash := lineMatched[1]
@@ -101,7 +105,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] jobFetcher (%s): project=%+v\n", duration, project)
 		}
 

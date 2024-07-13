@@ -66,20 +66,20 @@ func FormatMarkdownForSlack(str string) string {
 
 // ![text](url) -> text
 func sanitizeEmbedImage(str string) string {
-	return regexp.MustCompile("\\!\\[(.*?)\\]\\(.*?\\)").ReplaceAllString(str, "$1")
+	return regexp.MustCompile(`\!\[(.*?)\]\(.*?\)`).ReplaceAllString(str, "$1")
 }
 
 // [text](url) -> <url|text>
 func toSlackLink(str string) string {
-	return regexp.MustCompile("\\[(\\S+?)\\]\\((\\S+?)\\)").ReplaceAllString(str, "<$2|$1>")
+	return regexp.MustCompile(`\[(\S+?)\]\((\S+?)\)`).ReplaceAllString(str, "<$2|$1>")
 }
 
 func sanitizeEmptyLink(str string) string {
 	// [](url) -> url
-	str = regexp.MustCompile("\\[\\s*?\\]\\((\\S+?)\\)").ReplaceAllString(str, "$1")
+	str = regexp.MustCompile(`\[\s*?\]\((\S+?)\)`).ReplaceAllString(str, "$1")
 
 	// [text]() -> text
-	str = regexp.MustCompile("\\[(\\S+?)\\]\\(\\s*?\\)").ReplaceAllString(str, "$1")
+	str = regexp.MustCompile(`\[(\S+?)\]\(\s*?\)`).ReplaceAllString(str, "$1")
 
 	return str
 }

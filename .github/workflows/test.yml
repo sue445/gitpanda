@@ -51,15 +51,10 @@ jobs:
           go-version-file: "go.mod"
         id: go
 
-      - name: Run lint
-        run: |
-          set -xe
-
-          go install golang.org/x/lint/golint@latest
-
-          make fmtci
-          make vet
-          make lint
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.58
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2

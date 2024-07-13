@@ -22,7 +22,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/",
-		func(req *http.Request) (*http.Response, error) {
+		func(_ *http.Request) (*http.Response, error) {
 			resp := httpmock.NewStringResponse(404, "{\"error\":\"404 Not Found\"}")
 			resp.Header.Set("RateLimit-Limit", "600")
 			return resp, nil
@@ -152,10 +152,9 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	}
 
 	tests := []struct {
-		name    string
-		args    args
-		want    *Page
-		wantErr bool
+		name string
+		args args
+		want *Page
 	}{
 		{
 			name: "Unknown URL",
@@ -897,10 +896,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := p.FetchURL(tt.args.url)
 
-			if tt.wantErr {
-				assert.Error(t, err)
-			} else {
-				assert.NoError(t, err)
+			if assert.NoError(t, err) {
 				assert.Equal(t, tt.want, got)
 			}
 		})

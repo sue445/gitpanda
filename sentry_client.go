@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/cockroachdb/errors"
 	"github.com/getsentry/sentry-go"
 	sentryhttp "github.com/getsentry/sentry-go/http"
 	"net/http"
@@ -27,7 +28,7 @@ func NewSentryClient(dsn string, debug bool) (*SentryClient, Close, error) {
 		})
 
 		if err != nil {
-			return nil, nil, err
+			return nil, nil, errors.WithStack(err)
 		}
 	}
 

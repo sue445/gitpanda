@@ -1,12 +1,12 @@
 package testutil
 
 import (
-	"io/ioutil"
+	"os"
 )
 
 // ReadTestData returns testdata
 func ReadTestData(filename string) string {
-	buf, err := ioutil.ReadFile(filename)
+	buf, err := os.ReadFile(filename)
 
 	if err != nil {
 		panic(err)

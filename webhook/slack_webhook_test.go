@@ -3,6 +3,7 @@ package webhook
 import (
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/testutil"
 	"net/http"
@@ -17,7 +18,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/",
-		func(req *http.Request) (*http.Response, error) {
+		func(_ *http.Request) (*http.Response, error) {
 			resp := httpmock.NewStringResponse(404, "{\"error\":\"404 Not Found\"}")
 			resp.Header.Set("RateLimit-Limit", "600")
 			return resp, nil
@@ -111,12 +112,13 @@ func TestSlackWebhook_Request(t *testing.T) {
 			got, err := s.Request(tt.args.body, tt.args.truncateLines)
 
 			if tt.wantErr {
-				assert.Error(t, err)
-			} else {
-				assert.NoError(t, err)
+				require.Error(t, err)
+				return
 			}
 
-			assert.Equal(t, tt.want, got)
+			if assert.NoError(t, err) {
+				assert.Equal(t, tt.want, got)
+			}
 		})
 	}
 }

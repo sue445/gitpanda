@@ -37,7 +37,7 @@ func (f *commitFetcher) fetchPath(path string, client *gitlab.Client, isDebugLog
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] commitFetcher (%s): commit=%+v\n", duration, commit)
 		}
 
@@ -55,7 +55,7 @@ func (f *commitFetcher) fetchPath(path string, client *gitlab.Client, isDebugLog
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] commitFetcher (%s): project=%+v\n", duration, project)
 		}
 

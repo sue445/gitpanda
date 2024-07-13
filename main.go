@@ -85,11 +85,24 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case http.MethodGet:
-		w.Write([]byte("It works"))
+		_, err := w.Write([]byte("It works"))
+		if err != nil {
+			fmt.Printf("[ERROR] error=%v\n", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error())) //nolint:errcheck
+			panic(err)
+		}
 
 	case http.MethodPost:
 		buf := new(bytes.Buffer)
-		buf.ReadFrom(r.Body)
+		_, err := buf.ReadFrom(r.Body)
+		if err != nil {
+			fmt.Printf("[ERROR] error=%v\n", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error())) //nolint:errcheck
+			panic(err)
+		}
+
 		body := strings.TrimSpace(buf.String())
 
 		if isDebugLogging {
@@ -112,10 +125,16 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Printf("[ERROR] body=%s, response=%s, error=%v\n", body, response, err)
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
+			w.Write([]byte(err.Error())) //nolint:errcheck
 			panic(err)
 		}
 
-		w.Write([]byte(response))
+		_, err = w.Write([]byte(response))
+		if err != nil {
+			fmt.Printf("[ERROR] body=%s, response=%s, error=%v\n", body, response, err)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error())) //nolint:errcheck
+			panic(err)
+		}
 	}
 }

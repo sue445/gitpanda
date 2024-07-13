@@ -21,18 +21,18 @@ func startLambda() {
 	lambda.Start(lambdaHandler)
 }
 
-func lambdaHandler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func lambdaHandler(_ context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	body := strings.TrimSpace(request.Body)
 
 	if isDebugLogging {
 		fmt.Printf("[DEBUG] lambdaHandler: body=%s\n", body)
 	}
 
-	sentryClient, close, err := NewSentryClient(sentryDsn, isDebugLogging)
+	sentryClient, releaseSentry, err := NewSentryClient(sentryDsn, isDebugLogging)
 	if err != nil {
 		fmt.Printf("Sentry initialization failed: %v\n", err)
 	}
-	defer close()
+	defer releaseSentry()
 
 	response, err := lambdaMain(body)
 

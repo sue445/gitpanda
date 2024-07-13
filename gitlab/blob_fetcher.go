@@ -33,7 +33,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		fileName = lineMatched[1]
 	}
 
-	paramsMatched := regexp.MustCompile("(.+)\\?(.+)$").FindStringSubmatch(fileName)
+	paramsMatched := regexp.MustCompile(`(.+)\?(.+)$`).FindStringSubmatch(fileName)
 
 	if paramsMatched != nil {
 		fileName = paramsMatched[1]
@@ -54,7 +54,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		fileBody := string(rawFile)
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] blobFetcher (%s): fileBody=%s\n", duration, fileBody)
 		}
 
@@ -98,7 +98,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] blobFetcher (%s): project=%+v\n", duration, project)
 		}
 

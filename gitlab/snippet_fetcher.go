@@ -15,7 +15,7 @@ type snippetFetcher struct {
 }
 
 func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile("^(?:-/)?snippets/(\\d+)").FindStringSubmatch(path)
+	matched := regexp.MustCompile(`^(?:-/)?snippets/(\d+)`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -39,7 +39,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] snippetFetcher (%s): snippet=%+v\n", duration, snippet)
 		}
 
@@ -63,7 +63,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		content = strings.TrimSpace(string(rawFile))
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] snippetFetcher (%s): content=%+v\n", duration, content)
 		}
 

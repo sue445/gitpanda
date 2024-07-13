@@ -41,7 +41,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): mr=%+v\n", duration, mr)
 		}
 
@@ -50,7 +50,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		authorAvatarURL = mr.Author.AvatarURL
 		footerTime = mr.CreatedAt
 
-		matched2 := regexp.MustCompile("#note_(\\d+)$").FindStringSubmatch(path)
+		matched2 := regexp.MustCompile(`#note_(\d+)$`).FindStringSubmatch(path)
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
@@ -62,7 +62,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 			}
 
 			if isDebugLogging {
-				duration := time.Now().Sub(start)
+				duration := time.Since(start)
 				fmt.Printf("[DEBUG] mergeRequestFetcher (%s): note=%+v\n", duration, note)
 			}
 
@@ -86,7 +86,7 @@ func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDe
 		}
 
 		if isDebugLogging {
-			duration := time.Now().Sub(start)
+			duration := time.Since(start)
 			fmt.Printf("[DEBUG] mergeRequestFetcher (%s): project=%+v\n", duration, project)
 		}
 
