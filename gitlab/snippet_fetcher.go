@@ -15,7 +15,7 @@ type snippetFetcher struct {
 }
 
 func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile("^(?:-/)?snippets/(\\d+)").FindStringSubmatch(path)
+	matched := regexp.MustCompile(`^(?:-/)?snippets/(\d+)`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
