@@ -79,7 +79,7 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 
 func (f *userOrGroupFetcher) fetchGroupPath(name string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
 	start := time.Now()
-	group, _, err := client.Groups.GetGroup(name, &gitlab.GetGroupOptions{WithProjects: gitlab.Bool(false)})
+	group, _, err := client.Groups.GetGroup(name, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
 
 	if err != nil {
 		return nil, errors.WithStack(err)
