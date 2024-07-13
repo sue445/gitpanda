@@ -22,7 +22,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/",
-		func(req *http.Request) (*http.Response, error) {
+		func(_ *http.Request) (*http.Response, error) {
 			resp := httpmock.NewStringResponse(404, "{\"error\":\"404 Not Found\"}")
 			resp.Header.Set("RateLimit-Limit", "600")
 			return resp, nil
