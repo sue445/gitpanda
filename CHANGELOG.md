@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.5...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.6...main)
+
+## [v0.12.6](https://github.com/sue445/gitpanda/releases/tag/v0.12.6)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.5...v0.12.6)
+
+* Migrate to github.com/aws/aws-sdk-go-v2
+  * https://github.com/sue445/gitpanda/pull/1586
+* Upgrade dependencies
 
 ## [v0.12.5](https://github.com/sue445/gitpanda/releases/tag/v0.12.5)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.4...v0.12.5)
