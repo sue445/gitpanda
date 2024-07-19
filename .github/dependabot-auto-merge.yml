@@ -14,7 +14,7 @@
     dependency_name: "github.com/aws/aws-lambda-go"
     update_type: "semver:minor"
 - match:
-    dependency_name: "github.com/aws/aws-sdk-go"
+    dependency_name: "github.com/aws/aws-sdk-go-v2"
     update_type: "semver:minor"
 - match:
     dependency_name: "github.com/xanzy/go-gitlab"
