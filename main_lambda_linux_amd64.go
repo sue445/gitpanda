@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ssm"
-	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/webhook"
@@ -130,20 +129,18 @@ func GetParameterStoreOrEnv(envKey string, parameterStoreKey string, required bo
 
 // SsmDecrypter stores the AWS Session used for SSM decrypter.
 type SsmDecrypter struct {
-	sess *session.Session
-	svc  ssmiface.SSMAPI
+	client *ssm.Client
 }
 
 // NewSsmDecrypter returns a new SsmDecrypter.
 func NewSsmDecrypter() (*SsmDecrypter, error) {
-	sess, err := session.NewSession()
-
+	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
-	svc := ssm.New(sess)
-	return &SsmDecrypter{sess, svc}, nil
+	client := ssm.NewFromConfig(cfg)
+	return &SsmDecrypter{client}, nil
 }
 
 // Decrypt decrypts string.
@@ -152,9 +149,9 @@ func (d *SsmDecrypter) Decrypt(encrypted string) (string, error) {
 		Name:           aws.String(encrypted),
 		WithDecryption: aws.Bool(true),
 	}
-	resp, err := d.svc.GetParameter(params)
+	resp, err := d.client.GetParameter(context.TODO(), params)
 	if err != nil {
 		return "", errors.WithStack(err)
 	}
-	return *resp.Parameter.Value, nil
+	return aws.ToString(resp.Parameter.Value), nil
 }
