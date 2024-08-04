@@ -16,7 +16,7 @@ require (
 	github.com/slack-go/slack v0.13.1
 	github.com/stretchr/testify v1.9.0
 	github.com/xanzy/go-gitlab v0.107.0
-	golang.org/x/sync v0.7.0
+	golang.org/x/sync v0.8.0
 )
 
 require (
