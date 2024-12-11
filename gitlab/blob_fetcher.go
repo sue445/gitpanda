@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
-	"github.com/xanzy/go-gitlab"
+	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
