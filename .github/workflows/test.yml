@@ -12,7 +12,7 @@ on:
 
 env:
   # c.f. https://github.com/golangci/golangci-lint/blob/master/CHANGELOG.md
-  GOLANGCI_LINT_VERSION: v1.60
+  GOLANGCI_LINT_VERSION: v1.64
 
   TEST_ARGS: -coverprofile coverage.out -covermode atomic
 
@@ -42,6 +42,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: coverage.out
           format: golang
+          fail-on-error: false
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2
