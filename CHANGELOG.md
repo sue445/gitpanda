@@ -1,5 +1,14 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.7...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.8...main)
+
+## [v0.12.8](https://github.com/sue445/gitpanda/releases/tag/v0.12.8)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.7...v0.12.8)
+
+* Upgrade to Go 1.24 :rocket:
+  * https://github.com/sue445/gitpanda/pull/1703
+* Migrate to gitlab.com/gitlab-org/api/client-go
+  * https://github.com/sue445/gitpanda/pull/1660
+* Upgrade dependencies
 
 ## [v0.12.7](https://github.com/sue445/gitpanda/releases/tag/v0.12.7)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.6...v0.12.7)
