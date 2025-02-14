@@ -66,7 +66,7 @@ TRUNCATE_LINES=5 \
 * `GITLAB_BASE_URL`
   * e.g. `https://your-gitlab.example.com`
 * `GITLAB_PRIVATE_TOKEN`
-  * Generate a personal access token with `api` scope
+  * Generate a personal access token with `read_api` (recommended) or `api` scope
 * `SLACK_OAUTH_ACCESS_TOKEN`
   * see [CREATE_SLACK_APP.md](CREATE_SLACK_APP.md)
   * e.g. `xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000`
