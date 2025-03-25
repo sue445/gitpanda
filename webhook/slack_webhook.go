@@ -58,7 +58,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 		}
 	}
 
-	return "", fmt.Errorf("Unknown event type: %s", eventsAPIEvent.Type)
+	return "", fmt.Errorf("unknown event type: %s", eventsAPIEvent.Type)
 }
 
 func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, truncateLines int) (string, error) {
