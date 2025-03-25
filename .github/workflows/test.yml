@@ -11,8 +11,8 @@ on:
       - reopened
 
 env:
-  # c.f. https://github.com/golangci/golangci-lint/blob/master/CHANGELOG.md
-  GOLANGCI_LINT_VERSION: v1.64
+  # c.f. https://github.com/golangci/golangci-lint/blob/main/CHANGELOG.md
+  GOLANGCI_LINT_VERSION: v2.0
 
   TEST_ARGS: -coverprofile coverage.out -covermode atomic
 
