@@ -83,7 +83,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 			selectedFile = util.SelectLines(fileBody, startLine, endLine)
 			return nil
 		default:
-			return fmt.Errorf("Invalid line: L%s", lineHash)
+			return fmt.Errorf("invalid line: L%s", lineHash)
 		}
 	})
 

@@ -121,7 +121,7 @@ func GetParameterStoreOrEnv(envKey string, parameterStoreKey string, required bo
 	}
 
 	if required {
-		return "", fmt.Errorf("Either %s or %s is required", envKey, parameterStoreKey)
+		return "", fmt.Errorf("either %s or %s is required", envKey, parameterStoreKey)
 	}
 
 	return "", nil
