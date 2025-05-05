@@ -12,7 +12,7 @@ on:
 
 env:
   # c.f. https://github.com/golangci/golangci-lint/blob/main/CHANGELOG.md
-  GOLANGCI_LINT_VERSION: v2.0
+  GOLANGCI_LINT_VERSION: v2.1
 
   TEST_ARGS: -coverprofile coverage.out -covermode atomic
 
@@ -66,7 +66,7 @@ jobs:
         id: go
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v7
+        uses: golangci/golangci-lint-action@v8
         with:
           version: ${{ env.GOLANGCI_LINT_VERSION }}
 
