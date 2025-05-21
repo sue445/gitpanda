@@ -15,8 +15,7 @@ func tp(t time.Time) *time.Time {
 }
 
 func TestGitlabUrlParser_FetchURL(t *testing.T) {
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
+	httpmock.Activate(t)
 
 	// Register stub
 	httpmock.RegisterResponder(
