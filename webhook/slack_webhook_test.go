@@ -11,8 +11,7 @@ import (
 )
 
 func TestSlackWebhook_Request(t *testing.T) {
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
+	httpmock.Activate(t)
 
 	// Register stub
 	httpmock.RegisterResponder(
