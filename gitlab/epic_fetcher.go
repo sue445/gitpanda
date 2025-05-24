@@ -80,6 +80,12 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	eg.Go(func() error {
 		var err error
 		start := time.Now()
+
+		// FIXME: `WithProjects` is deprecated and will be removed since API v5.
+		//        However `with_projects` is default to `true`.
+		//        c.f. https://docs.gitlab.com/api/groups/#get-a-single-group
+		//        So `with_projects=false` is needed to get the group without including Projects.
+		//        `WithProjects` can be deleted after API v5.
 		group, _, err = client.Groups.GetGroup(groupName, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
 
 		if err != nil {
