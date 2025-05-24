@@ -33,9 +33,9 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	eg.Go(func() error {
 		var err error
-		epicID, _ := strconv.Atoi(matched[2])
+		epicIID, _ := strconv.Atoi(matched[2])
 		start := time.Now()
-		epic, _, err = client.Epics.GetEpic(groupName, epicID)
+		epic, _, err = client.Epics.GetEpic(groupName, epicIID)
 
 		if err != nil {
 			return errors.WithStack(err)
@@ -56,7 +56,7 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
 			start := time.Now()
-			note, _, err := client.Notes.GetEpicNote(groupName, epicID, noteID)
+			note, _, err := client.Notes.GetEpicNote(groupName, epic.ID, noteID)
 
 			if err != nil {
 				return errors.WithStack(err)

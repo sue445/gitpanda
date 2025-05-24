@@ -139,7 +139,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
-		"http://example.com/api/v4/groups/gitlab-org/epics/1/notes/2",
+		"http://example.com/api/v4/groups/gitlab-org/epics/30/notes/2",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/epic_note.json")),
 	)
 
