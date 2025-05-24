@@ -132,6 +132,16 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/commits/c9ddb5f48418b4e2a9e41982b8177018114003d1",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/commit.json")),
 	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/groups/gitlab-org/epics/1",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/epic.json")),
+	)
+	httpmock.RegisterResponder(
+		"GET",
+		"http://example.com/api/v4/groups/gitlab-org/epics/1/notes/2",
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/epic_note.json")),
+	)
 
 	p, err := NewGitlabURLParser(&URLParserParams{
 		APIEndpoint:     "http://example.com/api/v4",
@@ -887,6 +897,60 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 				FooterTitle:            "diaspora/diaspora-project-site",
 				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
 				FooterTime:             tp(time.Date(2022, 11, 9, 14, 3, 6, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Epic URL",
+			args: args{
+				url: "https://example.com/groups/gitlab-org/epics/1",
+			},
+			want: &Page{
+				Title:                  "Ea cupiditate dolores ut vero consequatur quasi veniam voluptatem et non.",
+				Description:            "Molestias dolorem eos vitae expedita impedit necessitatibus quo voluptatum.",
+				AuthorName:             "Pamella Huel",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/a2f5c6fcef64c9c69cb8779cb292be1b?s=80&d=identicon",
+				AvatarURL:              "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "gitlab-org",
+				FooterURL:              "https://example.com/groups/gitlab-org/-/epics/1",
+				FooterTime:             tp(time.Date(2018, 7, 17, 13, 36, 22, 770, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Epic URL (including /-/)",
+			args: args{
+				url: "https://example.com/groups/gitlab-org/-/epics/1",
+			},
+			want: &Page{
+				Title:                  "Ea cupiditate dolores ut vero consequatur quasi veniam voluptatem et non.",
+				Description:            "Molestias dolorem eos vitae expedita impedit necessitatibus quo voluptatum.",
+				AuthorName:             "Pamella Huel",
+				AuthorAvatarURL:        "http://www.gravatar.com/avatar/a2f5c6fcef64c9c69cb8779cb292be1b?s=80&d=identicon",
+				AvatarURL:              "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "gitlab-org",
+				FooterURL:              "https://example.com/groups/gitlab-org/-/epics/1",
+				FooterTime:             tp(time.Date(2018, 7, 17, 13, 36, 22, 770, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Epic note URL",
+			args: args{
+				url: "https://example.com/groups/gitlab-org/epics/1#note_2",
+			},
+			want: &Page{
+				Title:                  "Ea cupiditate dolores ut vero consequatur quasi veniam voluptatem et non.",
+				Description:            "Epic note",
+				AuthorName:             "pipin",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
+				AvatarURL:              "https://assets.gitlab-static.net/uploads/-/system/group/avatar/9970/logo-extra-whitespace.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "gitlab-org",
+				FooterURL:              "https://example.com/groups/gitlab-org/-/epics/1",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
 				Color:                  "",
 			},
 		},

@@ -4,6 +4,7 @@
   "author": {
     "id": 1,
     "username": "pipin",
+    "avatar_url" : "https://gitlab.example.com/images/root.png",
     "email": "admin@example.com",
     "name": "Pip",
     "state": "active",
