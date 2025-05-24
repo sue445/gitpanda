@@ -63,6 +63,7 @@ func (p *URLParser) FetchURL(url string) (*Page, error) {
 	path := url[pos:]
 
 	fetchers := []fetcher{
+		&epicFetcher{},
 		&snippetFetcher{},
 		&issueFetcher{},
 		&mergeRequestFetcher{},
