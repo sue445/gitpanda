@@ -43,6 +43,8 @@
   * e.g. `${GITLAB_BASE_URL}/:namespace/:reponame/snippets/:id`
 * Snippet URL
   * e.g. `${GITLAB_BASE_URL}/snippets/:id`
+* Epic URL
+  * e.g. `${GITLAB_BASE_URL}/groups/:groupname/-/epics/:iid`
 
 ## Running standalone
 Download latest binary from https://github.com/sue445/gitpanda/releases
