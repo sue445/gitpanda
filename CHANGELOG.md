@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.8...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.0...main)
+
+## [v0.13.0](https://github.com/sue445/gitpanda/releases/tag/v0.13.0)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.12.8...v0.13.0)
+
+* Support epic url
+  * https://github.com/sue445/gitpanda/pull/1742
+* Upgrade dependencies
 
 ## [v0.12.8](https://github.com/sue445/gitpanda/releases/tag/v0.12.8)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.7...v0.12.8)
