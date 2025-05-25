@@ -34,6 +34,9 @@ spec:
             - name: TRUNCATE_LINES
               value: "5"
 
+            - name: DEBUG_LOGGING
+              value: "1"
+
             # Get credentials from SecretManager
             # c.f. https://cloud.google.com/run/docs/configuring/secrets
             - name: GITLAB_PRIVATE_TOKEN
