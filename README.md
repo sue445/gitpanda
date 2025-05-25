@@ -80,6 +80,9 @@ TRUNCATE_LINES=5 \
 * `SENTRY_DSN`
   * [Sentry](https://sentry.io/) DSN
   * e.g. `https://xxxxxxxxxxxxx@sentry.example.com/0000000`
+* `DEBUG_LOGGING`
+  * Output debug log if non-empty character set
+  * e.g. `DEBUG_LOGGING=1`
 
 ## Running with AWS (Lambda + API Gateway + Parameter Store)
 Use latest `gitpanda_linux_amd64` on https://github.com/sue445/gitpanda/releases
