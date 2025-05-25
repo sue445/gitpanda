@@ -9,7 +9,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"time"
 	"unicode/utf8"
 )
 
@@ -44,26 +43,24 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	selectedFile := ""
 	lineRange := ""
 	eg.Go(func() error {
-		start := time.Now()
-		rawFile, _, err := client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
-
+		fileBody, err := util.WithDebugLogging("blobFetcher(GetRawFile)", isDebugLogging, func() (*string, error) {
+			rawFile, _, err := client.RepositoryFiles.GetRawFile(projectName, fileName, &gitlab.GetRawFileOptions{Ref: &sha1})
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			fileBody := string(rawFile)
+			return &fileBody, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		fileBody := string(rawFile)
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] blobFetcher (%s): fileBody=%s\n", duration, fileBody)
-		}
-
-		if !utf8.ValidString(fileBody) {
+		if !utf8.ValidString(*fileBody) {
 			return nil
 		}
 
 		if lineMatched == nil {
-			selectedFile = fileBody
+			selectedFile = *fileBody
 			return nil
 		}
 
@@ -74,13 +71,13 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		case 1:
 			line, _ := strconv.Atoi(lines[0])
 			lineRange = lines[0]
-			selectedFile = util.SelectLine(fileBody, line)
+			selectedFile = util.SelectLine(*fileBody, line)
 			return nil
 		case 2:
 			startLine, _ := strconv.Atoi(lines[0])
 			endLine, _ := strconv.Atoi(lines[1])
 			lineRange = fmt.Sprintf("%s-%s", lines[0], lines[1])
-			selectedFile = util.SelectLines(fileBody, startLine, endLine)
+			selectedFile = util.SelectLines(*fileBody, startLine, endLine)
 			return nil
 		default:
 			return fmt.Errorf("invalid line: L%s", lineHash)
@@ -90,18 +87,16 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("blobFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] blobFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 

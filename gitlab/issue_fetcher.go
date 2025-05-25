@@ -1,8 +1,8 @@
 package gitlab
 
 import (
-	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -34,16 +34,15 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 	eg.Go(func() error {
 		var err error
 		issueID, _ := strconv.Atoi(matched[2])
-		start := time.Now()
-		issue, _, err = client.Issues.GetIssue(projectName, issueID)
-
+		issue, err = util.WithDebugLogging("issueFetcher(GetIssue)", isDebugLogging, func() (*gitlab.Issue, error) {
+			issue, _, err := client.Issues.GetIssue(projectName, issueID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return issue, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
-		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] issueFetcher (%s): issue=%+v\n", duration, issue)
 		}
 
 		description = issue.Description
@@ -54,17 +53,16 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		matched2 := regexp.MustCompile(`#note_(\d+)$`).FindStringSubmatch(path)
 
 		if matched2 != nil {
-			noteID, _ := strconv.Atoi(matched2[1])
-			start := time.Now()
-			note, _, err := client.Notes.GetIssueNote(projectName, issueID, noteID)
-
+			note, err := util.WithDebugLogging("noteFetcher(GetIssueNote)", isDebugLogging, func() (*gitlab.Note, error) {
+				noteID, _ := strconv.Atoi(matched2[1])
+				note, _, err := client.Notes.GetIssueNote(projectName, issueID, noteID)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
+				return note, nil
+			})
 			if err != nil {
 				return errors.WithStack(err)
-			}
-
-			if isDebugLogging {
-				duration := time.Since(start)
-				fmt.Printf("[DEBUG] issueFetcher (%s): note=%+v\n", duration, note)
 			}
 
 			description = note.Body
@@ -79,18 +77,16 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("projectFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] issueFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 

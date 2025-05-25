@@ -33,19 +33,16 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	var job *gitlab.Job
 	eg.Go(func() error {
 		var err error
-
-		start := time.Now()
-		job, _, err = client.Jobs.GetJob(projectName, jobID)
-
+		job, err = util.WithDebugLogging("jobFetcher(GetJob)", isDebugLogging, func() (*gitlab.Job, error) {
+			job, _, err := client.Jobs.GetJob(projectName, jobID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return job, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] jobFetcher (%s): job=%+v\n", duration, job)
-		}
-
 		return nil
 	})
 
@@ -55,26 +52,25 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	if lineMatched != nil {
 		eg.Go(func() error {
 			var err error
+			body, err := util.WithDebugLogging("jobFetcher(GetTraceFile)", isDebugLogging, func() (*string, error) {
+				reader, _, err := client.Jobs.GetTraceFile(projectName, jobID)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
 
-			start := time.Now()
-			reader, _, err := client.Jobs.GetTraceFile(projectName, jobID)
-
+				buf := new(bytes.Buffer)
+				_, err = buf.ReadFrom(reader)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
+				body := buf.String()
+				return &body, nil
+			})
 			if err != nil {
 				return errors.WithStack(err)
 			}
 
-			if isDebugLogging {
-				duration := time.Since(start)
-				fmt.Printf("[DEBUG] jobFetcher (%s)\n", duration)
-			}
-
-			buf := new(bytes.Buffer)
-			_, err = buf.ReadFrom(reader)
-			if err != nil {
-				return errors.WithStack(err)
-			}
-
-			traceBody := normalizeJobTrace(buf.String())
+			traceBody := normalizeJobTrace(*body)
 
 			lineHash := lineMatched[1]
 			lines := strings.Split(lineHash, "-")
@@ -97,18 +93,16 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("jobFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] jobFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 

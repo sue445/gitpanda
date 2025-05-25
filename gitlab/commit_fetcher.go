@@ -1,12 +1,11 @@
 package gitlab
 
 import (
-	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
-	"time"
 )
 
 type commitFetcher struct {
@@ -28,37 +27,32 @@ func (f *commitFetcher) fetchPath(path string, client *gitlab.Client, isDebugLog
 	var commit *gitlab.Commit
 	eg.Go(func() error {
 		var err error
-
-		start := time.Now()
-		commit, _, err = client.Commits.GetCommit(projectName, sha, &gitlab.GetCommitOptions{})
-
+		commit, err = util.WithDebugLogging("commitFetcher(GetCommit)", isDebugLogging, func() (*gitlab.Commit, error) {
+			commit, _, err := client.Commits.GetCommit(projectName, sha, &gitlab.GetCommitOptions{})
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return commit, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] commitFetcher (%s): commit=%+v\n", duration, commit)
-		}
-
 		return nil
 	})
 
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("commitFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] commitFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 

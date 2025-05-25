@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -28,39 +29,33 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 	var pipeline *gitlab.Pipeline
 	eg.Go(func() error {
 		var err error
-
-		pipelineID, _ := strconv.Atoi(matched[2])
-
-		start := time.Now()
-		pipeline, _, err = client.Pipelines.GetPipeline(projectName, pipelineID)
-
+		pipeline, err = util.WithDebugLogging("pipelineFetcher(GetPipeline)", isDebugLogging, func() (*gitlab.Pipeline, error) {
+			pipelineID, _ := strconv.Atoi(matched[2])
+			pipeline, _, err := client.Pipelines.GetPipeline(projectName, pipelineID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return pipeline, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] pipelineFetcher (%s): pipeline=%+v\n", duration, pipeline)
-		}
-
 		return nil
 	})
 
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("pipelineFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] pipelineFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 
