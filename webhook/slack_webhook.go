@@ -3,16 +3,14 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
-	"sync"
-	"time"
-
 	"github.com/cockroachdb/errors"
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
 	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 	"golang.org/x/sync/errgroup"
+	"strconv"
+	"sync"
 )
 
 // SlackWebhook represents Slack webhook
@@ -75,20 +73,19 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	for _, link := range ev.Links {
 		url := link.URL
 		eg.Go(func() error {
-			start := time.Now()
-			page, err := p.FetchURL(url)
-
+			page, err := util.WithDebugLogging("FetchURL", s.gitLabURLParserParams.IsDebugLogging, func() (*gitlab.Page, error) {
+				page, err := p.FetchURL(url)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
+				return page, nil
+			})
 			if err != nil {
 				return errors.WithStack(err)
 			}
 
 			if page == nil {
 				return nil
-			}
-
-			if s.gitLabURLParserParams.IsDebugLogging {
-				duration := time.Since(start)
-				fmt.Printf("[DEBUG] FetchURL (%s): page=%v\n", duration, page)
 			}
 
 			description := util.FormatMarkdownForSlack(page.Description)
@@ -138,17 +135,17 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 		return "do nothing", nil
 	}
 
-	start := time.Now()
-	api := slack.New(s.slackOAuthAccessToken)
-	_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp, unfurls)
+	_, err = util.WithDebugLogging("UnfurlMessage", s.gitLabURLParserParams.IsDebugLogging, func() (*interface{}, error) {
+		api := slack.New(s.slackOAuthAccessToken)
+		_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp, unfurls)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		return nil, nil
+	})
 
 	if err != nil {
 		return "Failed: UnfurlMessage", errors.WithStack(err)
-	}
-
-	if s.gitLabURLParserParams.IsDebugLogging {
-		duration := time.Since(start)
-		fmt.Printf("[DEBUG] UnfurlMessage (%s)\n", duration)
 	}
 
 	return "ok", nil

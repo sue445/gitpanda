@@ -1,8 +1,11 @@
 package util
 
 import (
+	"fmt"
+	"github.com/cockroachdb/errors"
 	"regexp"
 	"strings"
+	"time"
 )
 
 // TruncateWithLine truncate string with line
@@ -82,4 +85,22 @@ func sanitizeEmptyLink(str string) string {
 	str = regexp.MustCompile(`\[(\S+?)\]\(\s*?\)`).ReplaceAllString(str, "$1")
 
 	return str
+}
+
+// WithDebugLogging executes blocks and outputs debug logs if necessary
+func WithDebugLogging[T any](label string, isDebugLogging bool, fn func() (*T, error)) (*T, error) {
+	start := time.Now()
+
+	ret, err := fn()
+
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	if isDebugLogging {
+		duration := time.Since(start)
+		fmt.Printf("[DEBUG] %s : duration=%s, ret=%+v\n", label, duration, ret)
+	}
+
+	return ret, nil
 }

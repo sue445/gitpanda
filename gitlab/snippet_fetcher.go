@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -31,16 +32,15 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		snippet, _, err = client.Snippets.GetSnippet(snippetID)
-
+		snippet, err = util.WithDebugLogging("snippetFetcher(GetSnippet)", isDebugLogging, func() (*gitlab.Snippet, error) {
+			snippet, _, err := client.Snippets.GetSnippet(snippetID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return snippet, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
-		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] snippetFetcher (%s): snippet=%+v\n", duration, snippet)
 		}
 
 		authorName = snippet.Author.Name
@@ -52,20 +52,19 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	content := ""
 
 	eg.Go(func() error {
-		var err error
-		start := time.Now()
-		rawFile, _, err := client.Snippets.SnippetContent(snippetID)
-
+		body, err := util.WithDebugLogging("snippetFetcher(SnippetContent)", isDebugLogging, func() (*string, error) {
+			rawFile, _, err := client.Snippets.SnippetContent(snippetID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			body := string(rawFile)
+			return &body, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		content = strings.TrimSpace(string(rawFile))
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] snippetFetcher (%s): content=%+v\n", duration, content)
-		}
+		content = strings.TrimSpace(*body)
 
 		return nil
 	})

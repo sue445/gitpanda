@@ -3,10 +3,10 @@ package gitlab
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"regexp"
 	"strings"
-	"time"
 )
 
 type userOrGroupFetcher struct {
@@ -44,23 +44,23 @@ func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDeb
 }
 
 func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	start := time.Now()
-	users, _, err := client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &name})
-
+	user, err := util.WithDebugLogging("userOrGroupFetcher(fetchUserPath)", isDebugLogging, func() (*gitlab.User, error) {
+		users, _, err := client.Users.ListUsers(&gitlab.ListUsersOptions{Username: &name})
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		if len(users) < 1 {
+			return nil, nil
+		}
+		return users[0], nil
+	})
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
-	if isDebugLogging {
-		duration := time.Since(start)
-		fmt.Printf("[DEBUG] fetchUserPath (%s): users=%+v\n", duration, users)
-	}
-
-	if len(users) < 1 {
+	if user == nil {
 		return nil, nil
 	}
-
-	user := users[0]
 
 	page := &Page{
 		Title:                  strings.Join([]string{user.Name, "GitLab"}, titleSeparator),
@@ -78,22 +78,20 @@ func (f *userOrGroupFetcher) fetchUserPath(name string, client *gitlab.Client, i
 }
 
 func (f *userOrGroupFetcher) fetchGroupPath(name string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	start := time.Now()
-
-	// FIXME: `WithProjects` is deprecated and will be removed since API v5.
-	//        However `with_projects` is default to `true`.
-	//        c.f. https://docs.gitlab.com/api/groups/#get-a-single-group
-	//        So `with_projects=false` is needed to get the group without including Projects.
-	//        `WithProjects` can be deleted after API v5.
-	group, _, err := client.Groups.GetGroup(name, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
-
+	group, err := util.WithDebugLogging("userOrGroupFetcher(fetchGroupPath)", isDebugLogging, func() (*gitlab.Group, error) {
+		// FIXME: `WithProjects` is deprecated and will be removed since API v5.
+		//        However `with_projects` is default to `true`.
+		//        c.f. https://docs.gitlab.com/api/groups/#get-a-single-group
+		//        So `with_projects=false` is needed to get the group without including Projects.
+		//        `WithProjects` can be deleted after API v5.
+		group, _, err := client.Groups.GetGroup(name, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		return group, nil
+	})
 	if err != nil {
 		return nil, errors.WithStack(err)
-	}
-
-	if isDebugLogging {
-		duration := time.Since(start)
-		fmt.Printf("[DEBUG] fetchGroupPath (%s): group=%+v\n", duration, group)
 	}
 
 	page := &Page{

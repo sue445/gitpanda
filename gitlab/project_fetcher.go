@@ -1,12 +1,11 @@
 package gitlab
 
 import (
-	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"regexp"
 	"strings"
-	"time"
 )
 
 type projectFetcher struct {
@@ -22,16 +21,16 @@ func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 		return nil, nil
 	}
 
-	start := time.Now()
-	project, _, err := client.Projects.GetProject(matched[1], nil)
+	project, err := util.WithDebugLogging("projectFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+		project, _, err := client.Projects.GetProject(matched[1], nil)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		return project, nil
+	})
 
 	if err != nil {
 		return nil, errors.WithStack(err)
-	}
-
-	if isDebugLogging {
-		duration := time.Since(start)
-		fmt.Printf("[DEBUG] projectFetcher (%s): project=%+v\n", duration, project)
 	}
 
 	page := &Page{

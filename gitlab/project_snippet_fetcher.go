@@ -3,6 +3,7 @@ package gitlab
 import (
 	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -35,16 +36,16 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		snippet, _, err = client.ProjectSnippets.GetSnippet(projectName, snippetID)
+		snippet, err = util.WithDebugLogging("projectSnippetFetcher(GetSnippet)", isDebugLogging, func() (*gitlab.Snippet, error) {
+			snippet, _, err := client.ProjectSnippets.GetSnippet(projectName, snippetID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return snippet, nil
+		})
 
 		if err != nil {
 			return errors.WithStack(err)
-		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): snippet=%+v\n", duration, snippet)
 		}
 
 		authorName = snippet.Author.Name
@@ -53,17 +54,17 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 		matched2 := regexp.MustCompile(`#note_(\d+)$`).FindStringSubmatch(path)
 
 		if matched2 != nil {
-			noteID, _ := strconv.Atoi(matched2[1])
-			start := time.Now()
-			note, _, err = client.Notes.GetSnippetNote(projectName, snippetID, noteID)
+			note, err = util.WithDebugLogging("projectSnippetFetcher(GetSnippetNote)", isDebugLogging, func() (*gitlab.Note, error) {
+				noteID, _ := strconv.Atoi(matched2[1])
+				note, _, err := client.Notes.GetSnippetNote(projectName, snippetID, noteID)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
+				return note, nil
+			})
 
 			if err != nil {
 				return errors.WithStack(err)
-			}
-
-			if isDebugLogging {
-				duration := time.Since(start)
-				fmt.Printf("[DEBUG] projectSnippetFetcher (%s): note=%+v\n", duration, note)
 			}
 		}
 
@@ -73,20 +74,19 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 	content := ""
 
 	eg.Go(func() error {
-		var err error
-		start := time.Now()
-		rawFile, _, err := client.ProjectSnippets.SnippetContent(projectName, snippetID)
-
+		body, err := util.WithDebugLogging("projectSnippetFetcher(SnippetContent)", isDebugLogging, func() (*string, error) {
+			rawFile, _, err := client.ProjectSnippets.SnippetContent(projectName, snippetID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			body := string(rawFile)
+			return &body, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
 
-		content = strings.TrimSpace(string(rawFile))
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): content=%+v\n", duration, content)
-		}
+		content = strings.TrimSpace(*body)
 
 		return nil
 	})
@@ -94,18 +94,16 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 	var project *gitlab.Project
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-		project, _, err = client.Projects.GetProject(projectName, nil)
-
+		project, err = util.WithDebugLogging("projectSnippetFetcher(GetProject)", isDebugLogging, func() (*gitlab.Project, error) {
+			project, _, err := client.Projects.GetProject(projectName, nil)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return project, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] projectSnippetFetcher (%s): project=%+v\n", duration, project)
-		}
-
 		return nil
 	})
 

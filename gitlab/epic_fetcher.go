@@ -1,8 +1,8 @@
 package gitlab
 
 import (
-	"fmt"
 	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
 	"regexp"
@@ -33,17 +33,16 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 	eg.Go(func() error {
 		var err error
-		epicIID, _ := strconv.Atoi(matched[2])
-		start := time.Now()
-		epic, _, err = client.Epics.GetEpic(groupName, epicIID)
-
+		epic, err = util.WithDebugLogging("epicFetcher(GetEpic)", isDebugLogging, func() (*gitlab.Epic, error) {
+			epicIID, _ := strconv.Atoi(matched[2])
+			epic, _, err := client.Epics.GetEpic(groupName, epicIID)
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return epic, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
-		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] epicFetcher (%s): epic=%+v\n", duration, epic)
 		}
 
 		description = epic.Description
@@ -55,16 +54,16 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 
 		if matched2 != nil {
 			noteID, _ := strconv.Atoi(matched2[1])
-			start := time.Now()
-			note, _, err := client.Notes.GetEpicNote(groupName, epic.ID, noteID)
 
+			note, err := util.WithDebugLogging("noteFetcher(GetEpicNote)", isDebugLogging, func() (*gitlab.Note, error) {
+				note, _, err := client.Notes.GetEpicNote(groupName, epic.ID, noteID)
+				if err != nil {
+					return nil, errors.WithStack(err)
+				}
+				return note, nil
+			})
 			if err != nil {
 				return errors.WithStack(err)
-			}
-
-			if isDebugLogging {
-				duration := time.Since(start)
-				fmt.Printf("[DEBUG] epicFetcher (%s): note=%+v\n", duration, note)
 			}
 
 			description = note.Body
@@ -72,31 +71,27 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 			authorAvatarURL = note.Author.AvatarURL
 			footerTime = note.CreatedAt
 		}
-
 		return nil
 	})
 
 	var group *gitlab.Group
 	eg.Go(func() error {
 		var err error
-		start := time.Now()
-
-		// FIXME: `WithProjects` is deprecated and will be removed since API v5.
-		//        However `with_projects` is default to `true`.
-		//        c.f. https://docs.gitlab.com/api/groups/#get-a-single-group
-		//        So `with_projects=false` is needed to get the group without including Projects.
-		//        `WithProjects` can be deleted after API v5.
-		group, _, err = client.Groups.GetGroup(groupName, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
-
+		group, err = util.WithDebugLogging("groupFetcher(GetGroup)", isDebugLogging, func() (*gitlab.Group, error) {
+			// FIXME: `WithProjects` is deprecated and will be removed since API v5.
+			//        However `with_projects` is default to `true`.
+			//        c.f. https://docs.gitlab.com/api/groups/#get-a-single-group
+			//        So `with_projects=false` is needed to get the group without including Projects.
+			//        `WithProjects` can be deleted after API v5.
+			group, _, err := client.Groups.GetGroup(groupName, &gitlab.GetGroupOptions{WithProjects: gitlab.Ptr(false)})
+			if err != nil {
+				return nil, errors.WithStack(err)
+			}
+			return group, nil
+		})
 		if err != nil {
 			return errors.WithStack(err)
 		}
-
-		if isDebugLogging {
-			duration := time.Since(start)
-			fmt.Printf("[DEBUG] epicFetcher (%s): group=%+v\n", duration, group)
-		}
-
 		return nil
 	})
 
