@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.0...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.1...main)
+
+## [v0.13.1](https://github.com/sue445/gitpanda/releases/tag/v0.13.1)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.0...v0.13.1)
+
+* nits: Refactor debug logging
+  * https://github.com/sue445/gitpanda/pull/1743
 
 ## [v0.13.0](https://github.com/sue445/gitpanda/releases/tag/v0.13.0)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.12.8...v0.13.0)
