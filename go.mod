@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-lambda-go v1.49.0
 	github.com/aws/aws-sdk-go-v2 v1.36.6
 	github.com/aws/aws-sdk-go-v2/config v1.29.18
-	github.com/aws/aws-sdk-go-v2/service/ssm v1.60.0
+	github.com/aws/aws-sdk-go-v2/service/ssm v1.60.2
 	github.com/cockroachdb/errors v1.12.0
 	github.com/getsentry/sentry-go v0.34.1
 	github.com/jarcoal/httpmock v1.4.0
