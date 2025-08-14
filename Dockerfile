@@ -1,4 +1,4 @@
-FROM golang:1.24-bookworm AS build-env
+FROM golang:1.25-bookworm AS build-env
 
 ADD . /work
 WORKDIR /work
