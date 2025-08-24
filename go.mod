@@ -13,7 +13,7 @@ require (
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/slack-go/slack v0.17.3
 	github.com/stretchr/testify v1.11.0
-	gitlab.com/gitlab-org/api/client-go v0.141.2
+	gitlab.com/gitlab-org/api/client-go v0.142.0
 	golang.org/x/sync v0.16.0
 )
 
