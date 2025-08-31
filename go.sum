@@ -2,8 +2,8 @@ github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpH
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d/go.mod h1:asat636LX7Bqt5lYEZ27JNDcqxfjdBQuJ/MM4CN/Lzo=
 github.com/aws/aws-lambda-go v1.49.0 h1:z4VhTqkFZPM3xpEtTqWqRqsRH4TZBMJqTkRiBPYLqIQ=
 github.com/aws/aws-lambda-go v1.49.0/go.mod h1:dpMpZgvWx5vuQJfBt0zqBha60q7Dd7RfgJv23DymV8A=
-github.com/aws/aws-sdk-go-v2 v1.38.2 h1:QUkLO1aTW0yqW95pVzZS0LGFanL71hJ0a49w4TJLMyM=
-github.com/aws/aws-sdk-go-v2 v1.38.2/go.mod h1:sDioUELIUO9Znk23YVmIk86/9DOpkbyyVb1i/gUNFXY=
+github.com/aws/aws-sdk-go-v2 v1.38.3 h1:B6cV4oxnMs45fql4yRH+/Po/YU+597zgWqvDpYMturk=
+github.com/aws/aws-sdk-go-v2 v1.38.3/go.mod h1:sDioUELIUO9Znk23YVmIk86/9DOpkbyyVb1i/gUNFXY=
 github.com/aws/aws-sdk-go-v2/config v1.31.5 h1:wsZr2kq1XeKU/D2QDcW5xEB1zHPdHAuQqnR0yaygAQQ=
 github.com/aws/aws-sdk-go-v2/config v1.31.5/go.mod h1:IpXejRuSIyOSCyT4BomfIJ5gWRcDoX/NJaAHh9Cp8jE=
 github.com/aws/aws-sdk-go-v2/credentials v1.18.9 h1:zKrnPtmO7j2FpMqudayjCzNxyO8KtPQGCIzqEosKQbg=
