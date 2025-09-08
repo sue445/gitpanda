@@ -116,7 +116,7 @@ jobs:
           grep "docker.pkg.dev" .github/cloud_run-service.yml
 
       - id: deploy
-        uses: google-github-actions/deploy-cloudrun@v2
+        uses: google-github-actions/deploy-cloudrun@v3
         with:
           region: us-central1
           metadata: .github/cloud_run-service.yml
