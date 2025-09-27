@@ -78,10 +78,27 @@ jobs:
           status: ${{ job.status }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK }}
 
+  govulncheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: golang/govulncheck-action@v1
+        with:
+          go-version-file: "go.mod"
+
+      - name: Slack Notification (not success)
+        uses: act10ns/slack@v2
+        if: "! success()"
+        continue-on-error: true
+        with:
+          status: ${{ job.status }}
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+
   notify:
     needs:
       - test
       - lint
+      - govulncheck
 
     runs-on: ubuntu-latest
 
