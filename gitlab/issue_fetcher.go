@@ -1,21 +1,22 @@
 package gitlab
 
 import (
-	"github.com/cockroachdb/errors"
-	"github.com/sue445/gitpanda/util"
-	"gitlab.com/gitlab-org/api/client-go"
-	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
+	"gitlab.com/gitlab-org/api/client-go"
+	"golang.org/x/sync/errgroup"
 )
 
 type issueFetcher struct {
 }
 
 func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile(reProjectName + "/issues/(\\d+)").FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + `/(issues|work_items)/(\d+)`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -33,7 +34,7 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 
 	eg.Go(func() error {
 		var err error
-		issueID, _ := strconv.Atoi(matched[2])
+		issueID, _ := strconv.Atoi(matched[3])
 		issue, err = util.WithDebugLogging("issueFetcher(GetIssue)", isDebugLogging, func() (*gitlab.Issue, error) {
 			issue, _, err := client.Issues.GetIssue(projectName, issueID)
 			if err != nil {
@@ -94,8 +95,16 @@ func (f *issueFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogg
 		return nil, errors.WithStack(err)
 	}
 
+	subTitle := ""
+	switch matched[2] {
+	case "issues":
+		subTitle = "Issues"
+	case "work_items":
+		subTitle = "Work items"
+	}
+
 	page := &Page{
-		Title:                  strings.Join([]string{issue.Title, "Issues", project.NameWithNamespace, "GitLab"}, titleSeparator),
+		Title:                  strings.Join([]string{issue.Title, subTitle, project.NameWithNamespace, "GitLab"}, titleSeparator),
 		Description:            description,
 		AuthorName:             authorName,
 		AuthorAvatarURL:        authorAvatarURL,
