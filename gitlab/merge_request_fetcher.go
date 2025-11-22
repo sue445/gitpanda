@@ -1,21 +1,22 @@
 package gitlab
 
 import (
-	"github.com/cockroachdb/errors"
-	"github.com/sue445/gitpanda/util"
-	"gitlab.com/gitlab-org/api/client-go"
-	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
+	"gitlab.com/gitlab-org/api/client-go"
+	"golang.org/x/sync/errgroup"
 )
 
 type mergeRequestFetcher struct {
 }
 
 func (f *mergeRequestFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile(reProjectName + "/merge_requests/(\\d+)").FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + `/merge_requests/(\d+)`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
