@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.2...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.0...main)
+
+## [v0.14.0](https://github.com/sue445/gitpanda/releases/tag/v0.14.0)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.13.2...v0.13.0)
+
+* Support Work item url
+  * https://github.com/sue445/gitpanda/pull/1886
+* Upgrade dependencies
 
 ## [v0.13.2](https://github.com/sue445/gitpanda/releases/tag/v0.13.2)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.13.1...v0.13.2)
