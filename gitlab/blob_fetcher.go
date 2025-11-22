@@ -2,21 +2,22 @@ package gitlab
 
 import (
 	"fmt"
-	"github.com/cockroachdb/errors"
-	"github.com/sue445/gitpanda/util"
-	"gitlab.com/gitlab-org/api/client-go"
-	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
+	"gitlab.com/gitlab-org/api/client-go"
+	"golang.org/x/sync/errgroup"
 )
 
 type blobFetcher struct {
 }
 
 func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile(reProjectName + "/blob/([^/]+)/(.+)$").FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + `/blob/([^/]+)/(.+)$`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -26,7 +27,7 @@ func (f *blobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	sha1 := matched[2]
 	fileName := matched[3]
 
-	lineMatched := regexp.MustCompile("(.+)#L([0-9-]+)$").FindStringSubmatch(fileName)
+	lineMatched := regexp.MustCompile(`(.+)#L([0-9-]+)$`).FindStringSubmatch(fileName)
 
 	if lineMatched != nil {
 		fileName = lineMatched[1]

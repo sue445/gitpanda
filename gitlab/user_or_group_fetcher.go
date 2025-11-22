@@ -2,18 +2,19 @@ package gitlab
 
 import (
 	"fmt"
+	"regexp"
+	"strings"
+
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
-	"regexp"
-	"strings"
 )
 
 type userOrGroupFetcher struct {
 }
 
 func (f *userOrGroupFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile("^([^/]+)/?$").FindStringSubmatch(path)
+	matched := regexp.MustCompile(`^([^/]+)/?$`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil

@@ -3,22 +3,23 @@ package gitlab
 import (
 	"bytes"
 	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/acarl005/stripansi"
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
 	"golang.org/x/sync/errgroup"
-	"regexp"
-	"strconv"
-	"strings"
-	"time"
 )
 
 type jobFetcher struct {
 }
 
 func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
-	matched := regexp.MustCompile(reProjectName + "/jobs/(\\d+)").FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + `/jobs/(\d+)`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
@@ -46,7 +47,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 		return nil
 	})
 
-	lineMatched := regexp.MustCompile(".*#L([0-9-]+)$").FindStringSubmatch(path)
+	lineMatched := regexp.MustCompile(`.*#L([0-9-]+)$`).FindStringSubmatch(path)
 
 	selectedLine := ""
 	if lineMatched != nil {

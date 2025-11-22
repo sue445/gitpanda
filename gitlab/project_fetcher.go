@@ -1,11 +1,12 @@
 package gitlab
 
 import (
+	"regexp"
+	"strings"
+
 	"github.com/cockroachdb/errors"
 	"github.com/sue445/gitpanda/util"
 	"gitlab.com/gitlab-org/api/client-go"
-	"regexp"
-	"strings"
 )
 
 type projectFetcher struct {
@@ -13,9 +14,9 @@ type projectFetcher struct {
 
 func (f *projectFetcher) fetchPath(path string, client *gitlab.Client, isDebugLogging bool) (*Page, error) {
 	// Remove anchor(#) in path (e.g. gitlab-org/gitlab#gitlab -> gitlab-org/gitlab)
-	path = regexp.MustCompile("#.*$").ReplaceAllString(path, "")
+	path = regexp.MustCompile(`#.*$`).ReplaceAllString(path, "")
 
-	matched := regexp.MustCompile(reProjectName + "/?$").FindStringSubmatch(path)
+	matched := regexp.MustCompile(reProjectName + `/?$`).FindStringSubmatch(path)
 
 	if matched == nil {
 		return nil, nil
