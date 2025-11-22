@@ -1,11 +1,12 @@
 package gitlab
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/sue445/gitpanda/testutil"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/sue445/gitpanda/testutil"
 
 	"github.com/jarcoal/httpmock"
 )
@@ -366,6 +367,60 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 			},
 			want: &Page{
 				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Issues · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "closed",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Work item URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/work_items/1",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Work items · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "Omnis vero earum sunt corporis dolor et placeat.",
+				AuthorName:             "Administrator",
+				AuthorAvatarURL:        "https://gitlab.example.com/images/root.png",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2016, 1, 4, 15, 31, 46, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Work item comment URL",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/work_items/1#note_302",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Work items · Diaspora / Diaspora Project Site · GitLab",
+				Description:            "closed",
+				AuthorName:             "Pip",
+				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
+				AvatarURL:              "http://example.com/uploads/project/avatar/3/uploads/avatar.png",
+				CanTruncateDescription: true,
+				FooterTitle:            "diaspora/diaspora-project-site",
+				FooterURL:              "http://example.com/diaspora/diaspora-project-site",
+				FooterTime:             tp(time.Date(2013, 10, 2, 9, 22, 45, 0, time.UTC)),
+				Color:                  "",
+			},
+		},
+		{
+			name: "Work item comment URL (ends with slash)",
+			args: args{
+				url: "http://example.com/diaspora/diaspora-project-site/-/work_items/1/#note_302",
+			},
+			want: &Page{
+				Title:                  "Ut commodi ullam eos dolores perferendis nihil sunt. · Work items · Diaspora / Diaspora Project Site · GitLab",
 				Description:            "closed",
 				AuthorName:             "Pip",
 				AuthorAvatarURL:        "http://localhost:3000/uploads/user/avatar/1/pipin.jpeg",
