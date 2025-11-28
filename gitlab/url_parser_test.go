@@ -45,7 +45,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
-		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/issues/1",
+		"http://example.com/api/v4/projects/diaspora%252Fdiaspora-project-site/issues/1",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/issue.json")),
 	)
 	httpmock.RegisterResponder(
@@ -130,7 +130,7 @@ func TestGitlabUrlParser_FetchURL(t *testing.T) {
 	)
 	httpmock.RegisterResponder(
 		"GET",
-		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/repository/commits/c9ddb5f48418b4e2a9e41982b8177018114003d1",
+		"http://example.com/api/v4/projects/diaspora%252Fdiaspora-project-site/repository/commits/c9ddb5f48418b4e2a9e41982b8177018114003d1",
 		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/commit.json")),
 	)
 	httpmock.RegisterResponder(
