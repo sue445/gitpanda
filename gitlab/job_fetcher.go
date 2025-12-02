@@ -27,7 +27,7 @@ func (f *jobFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggin
 
 	projectName := sanitizeProjectName(matched[1])
 
-	jobID, _ := strconv.Atoi(matched[2])
+	jobID, _ := strconv.ParseInt(matched[2], 10, 64)
 
 	var eg errgroup.Group
 
