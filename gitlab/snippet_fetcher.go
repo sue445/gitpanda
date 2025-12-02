@@ -28,7 +28,7 @@ func (f *snippetFetcher) fetchPath(path string, client *gitlab.Client, isDebugLo
 	authorName := ""
 	var footerTime *time.Time
 
-	snippetID, _ := strconv.Atoi(matched[1])
+	snippetID, _ := strconv.ParseInt(matched[1], 10, 64)
 
 	eg.Go(func() error {
 		var err error

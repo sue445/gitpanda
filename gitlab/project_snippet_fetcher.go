@@ -33,7 +33,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 	var footerTime *time.Time
 	var note *gitlab.Note
 
-	snippetID, _ := strconv.Atoi(matched[2])
+	snippetID, _ := strconv.ParseInt(matched[2], 10, 64)
 
 	eg.Go(func() error {
 		var err error
@@ -56,7 +56,7 @@ func (f *projectSnippetFetcher) fetchPath(path string, client *gitlab.Client, is
 
 		if matched2 != nil {
 			note, err = util.WithDebugLogging("projectSnippetFetcher(GetSnippetNote)", isDebugLogging, func() (*gitlab.Note, error) {
-				noteID, _ := strconv.Atoi(matched2[1])
+				noteID, _ := strconv.ParseInt(matched2[1], 10, 64)
 				note, _, err := client.Notes.GetSnippetNote(projectName, snippetID, noteID)
 				if err != nil {
 					return nil, errors.WithStack(err)

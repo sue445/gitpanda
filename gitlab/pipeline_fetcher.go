@@ -31,7 +31,7 @@ func (f *pipelineFetcher) fetchPath(path string, client *gitlab.Client, isDebugL
 	eg.Go(func() error {
 		var err error
 		pipeline, err = util.WithDebugLogging("pipelineFetcher(GetPipeline)", isDebugLogging, func() (*gitlab.Pipeline, error) {
-			pipelineID, _ := strconv.Atoi(matched[2])
+			pipelineID, _ := strconv.ParseInt(matched[2], 10, 64)
 			pipeline, _, err := client.Pipelines.GetPipeline(projectName, pipelineID)
 			if err != nil {
 				return nil, errors.WithStack(err)

@@ -1,14 +1,15 @@
 package gitlab
 
 import (
-	"github.com/cockroachdb/errors"
-	"github.com/sue445/gitpanda/util"
-	"gitlab.com/gitlab-org/api/client-go"
-	"golang.org/x/sync/errgroup"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cockroachdb/errors"
+	"github.com/sue445/gitpanda/util"
+	"gitlab.com/gitlab-org/api/client-go"
+	"golang.org/x/sync/errgroup"
 )
 
 type epicFetcher struct {
@@ -34,7 +35,7 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 	eg.Go(func() error {
 		var err error
 		epic, err = util.WithDebugLogging("epicFetcher(GetEpic)", isDebugLogging, func() (*gitlab.Epic, error) {
-			epicIID, _ := strconv.Atoi(matched[2])
+			epicIID, _ := strconv.ParseInt(matched[2], 10, 64)
 			epic, _, err := client.Epics.GetEpic(groupName, epicIID)
 			if err != nil {
 				return nil, errors.WithStack(err)
@@ -53,7 +54,7 @@ func (f *epicFetcher) fetchPath(path string, client *gitlab.Client, isDebugLoggi
 		matched2 := regexp.MustCompile(`#note_(\d+)$`).FindStringSubmatch(path)
 
 		if matched2 != nil {
-			noteID, _ := strconv.Atoi(matched2[1])
+			noteID, _ := strconv.ParseInt(matched2[1], 10, 64)
 
 			note, err := util.WithDebugLogging("noteFetcher(GetEpicNote)", isDebugLogging, func() (*gitlab.Note, error) {
 				note, _, err := client.Notes.GetEpicNote(groupName, epic.ID, noteID)
