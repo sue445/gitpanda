@@ -1,5 +1,10 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.1...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.2...main)
+
+## [v0.14.2](https://github.com/sue445/gitpanda/releases/tag/v0.14.2)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.1...v0.14.2)
+
+* Re-release due to an error in the release workflow
 
 ## [v0.14.1](https://github.com/sue445/gitpanda/releases/tag/v0.14.1)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.14.0...v0.14.1)
