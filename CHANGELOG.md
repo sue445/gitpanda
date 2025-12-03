@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.0...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.1...main)
+
+## [v0.14.1](https://github.com/sue445/gitpanda/releases/tag/v0.14.1)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.0...v0.14.1)
+
+* [CVE-2025-61729] Upgrade to Go 1.25.5
+  * https://github.com/sue445/gitpanda/pull/1907
+* Upgrade dependencies
 
 ## [v0.14.0](https://github.com/sue445/gitpanda/releases/tag/v0.14.0)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.13.2...v0.14.0)
