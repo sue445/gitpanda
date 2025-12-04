@@ -29,7 +29,7 @@ updates:
   # NOTE: following sections are auto generated. DO NOT EDIT!
   ###########################################################
   - package-ecosystem: gomod
-    directory: "/"
+    directory: /
     schedule:
       interval: daily
       time: "05:00"
