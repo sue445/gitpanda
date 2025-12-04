@@ -19,6 +19,11 @@ updates:
     cooldown:
       default-days: 7
   ###########################################################
+    groups:
+      artifact-actions:
+        patterns:
+          - "actions/upload-artifact"
+          - "actions/download-artifact"
 
   ###########################################################
   # NOTE: following sections are auto generated. DO NOT EDIT!
