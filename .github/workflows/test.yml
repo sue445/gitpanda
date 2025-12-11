@@ -43,6 +43,7 @@ jobs:
           file: coverage.out
           format: golang
           fail-on-error: false
+        continue-on-error: true
 
       - name: Slack Notification (not success)
         uses: act10ns/slack@v2
