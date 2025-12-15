@@ -53,9 +53,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
         with:
           go-version-file: "go.mod"
         id: go
@@ -68,13 +68,13 @@ jobs:
         env:
           GOX_OSARCH: ${{ matrix.os }}/${{ matrix.arch }}
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: bin-${{ matrix.os }}-${{ matrix.arch }}
           path: bin/
 
       - name: Slack Notification (not success)
-        uses: act10ns/slack@v2
+        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
         if: "! success()"
         continue-on-error: true
         with:
@@ -90,15 +90,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
         with:
           go-version-file: "go.mod"
         id: go
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           path: bin/
           pattern: bin-*
@@ -132,7 +132,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
 
       - name: Slack Notification
-        uses: act10ns/slack@v2
+        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
         if: always()
         continue-on-error: true
         with:
@@ -155,7 +155,7 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
       - name: Slack Notification (success)
-        uses: act10ns/slack@v2
+        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
         if: success()
         continue-on-error: true
         with:
