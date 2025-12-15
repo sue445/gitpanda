@@ -58,3 +58,25 @@ jobs:
         with:
           status: ${{ job.status }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+
+  all-pass-docker-ghcr:
+    if: always()
+
+    needs:
+      - build_and_push
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: check dependent jobs
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
+
+      - name: Slack Notification (success)
+        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
+        if: success()
+        continue-on-error: true
+        with:
+          status: ${{ job.status }}
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}

@@ -139,7 +139,7 @@ jobs:
           status: ${{ job.status }}
           webhook-url: ${{ secrets.SLACK_WEBHOOK }}
 
-  all-pass:
+  all-pass-build:
     if: always()
 
     needs:
