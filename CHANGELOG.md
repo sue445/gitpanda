@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.2...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.3...main)
+
+## [v0.14.3](https://github.com/sue445/gitpanda/releases/tag/v0.14.3)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.2...v0.14.3)
+
+* Upgrade to Go 1.26 :rocket:
+  * https://github.com/sue445/gitpanda/pull/1969
+* Upgrade dependencies
 
 ## [v0.14.2](https://github.com/sue445/gitpanda/releases/tag/v0.14.2)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.14.1...v0.14.2)
