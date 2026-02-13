@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.0...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.1...main)
+
+## [v1.0.1](https://github.com/sue445/gitpanda/releases/tag/v1.0.1)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.0...v1.0.1)
+
+* ci: Fix releasing error on CI
+  * https://github.com/sue445/gitpanda/pull/1974
 
 ## [v1.0.0](https://github.com/sue445/gitpanda/releases/tag/v1.0.0)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.14.3...v1.0.0)
