@@ -85,7 +85,7 @@ func lambdaMain(body string) (string, error) {
 			APIEndpoint:     gitlabAPIEndpoint,
 			BaseURL:         gitlabBaseURL,
 			PrivateToken:    gitlabPrivateToken,
-			UserAgent:       fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version),
+			UserAgent:       getUserAgent(),
 			IsDebugLogging:  isDebugLogging,
 		},
 	)

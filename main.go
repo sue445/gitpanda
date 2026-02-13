@@ -117,7 +117,7 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 				APIEndpoint:     os.Getenv("GITLAB_API_ENDPOINT"),
 				BaseURL:         os.Getenv("GITLAB_BASE_URL"),
 				PrivateToken:    os.Getenv("GITLAB_PRIVATE_TOKEN"),
-				UserAgent:       fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version),
+				UserAgent:       getUserAgent(),
 				IsDebugLogging:  isDebugLogging,
 			},
 		)
@@ -138,4 +138,8 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 	}
+}
+
+func getUserAgent() string {
+	return fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version)
 }
