@@ -7,6 +7,7 @@ import (
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
 	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/util"
 	"golang.org/x/sync/errgroup"
 	"strconv"

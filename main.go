@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/webhook"
 	"net/http"
 	"os"

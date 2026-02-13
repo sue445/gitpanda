@@ -4,7 +4,7 @@ import (
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/sue445/gitpanda/gitlab"
+	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/testutil"
 	"net/http"
 	"testing"
