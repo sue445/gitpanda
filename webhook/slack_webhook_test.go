@@ -27,22 +27,22 @@ func TestSlackWebhook_Request(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/project.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/merge_request.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/users.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/users.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fmissing-repo",
-		httpmock.NewStringResponder(404, testutil.ReadTestData("../gitlab/testdata/project_not_found.json")),
+		httpmock.NewStringResponder(404, testutil.ReadTestData("testdata/gitlab/project_not_found.json")),
 	)
 
 	httpmock.RegisterResponder(
