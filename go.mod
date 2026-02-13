@@ -3,7 +3,6 @@ module github.com/sue445/gitpanda
 go 1.26.0
 
 require (
-	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/aws/aws-lambda-go v1.52.0
 	github.com/aws/aws-sdk-go-v2 v1.41.1
 	github.com/aws/aws-sdk-go-v2/config v1.32.7
@@ -13,11 +12,12 @@ require (
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/slack-go/slack v0.17.3
 	github.com/stretchr/testify v1.11.1
-	gitlab.com/gitlab-org/api/client-go v1.31.0
+	github.com/sue445/gitpanda_fetcher v1.0.0
 	golang.org/x/sync v0.19.0
 )
 
 require (
+	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.7 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.17 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.17 // indirect
@@ -43,7 +43,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	github.com/sue445/gitpanda_fetcher v1.0.0 // indirect
+	gitlab.com/gitlab-org/api/client-go v1.31.0 // indirect
 	golang.org/x/oauth2 v0.35.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
