@@ -1,122 +1,0 @@
-[0KRunning with gitlab-runner 13.12.0-rc1 (b21d5c5b)
-[0;m[0K  on docker-auto-scale 72989761
-[0;m[0K  feature flags: FF_GITLAB_REGISTRY_HELPER_IMAGE:true, FF_SKIP_DOCKER_MACHINE_PROVISION_ON_CREATION_FAILURE:true
-[0;msection_start:1624529145:resolve_secrets[0K[0K[36;1mResolving secrets[0;m
-[0;msection_end:1624529145:resolve_secrets[0Ksection_start:1624529145:prepare_executor[0K[0K[36;1mPreparing the "docker+machine" executor[0;m
-[0;m[0KUsing Docker executor with image docker:19.03.12 ...
-[0;m[0KStarting service docker:19.03.12-dind ...
-[0;m[0KPulling docker image docker:19.03.12-dind ...
-[0;m[0KUsing docker image sha256:66dc2d45749a48592f4348fb3d567bdd65c9dbd5402a413b6d169619e32f6bd2 for docker:19.03.12-dind with digest docker@sha256:674f1f40ff7c8ac14f5d8b6b28d8fb1f182647ff75304d018003f1e21a0d8771 ...
-[0;m[0KWaiting for services to be up and running...
-[0;m
-[0;33m*** WARNING:[0;m Service runner-72989761-project-15036160-concurrent-0-8476396b0129fe9c-docker-0 probably didn't start properly.
-
-Health check error:
-service "runner-72989761-project-15036160-concurrent-0-8476396b0129fe9c-docker-0-wait-for-service" timeout
-
-Health check container logs:
-
-
-Service container logs:
-2021-06-24T10:05:52.140248642Z time="2021-06-24T10:05:52.140055954Z" level=info msg="Starting up"
-2021-06-24T10:05:52.147836581Z time="2021-06-24T10:05:52.147354027Z" level=warning msg="could not change group /var/run/docker.sock to docker: group docker not found"
-2021-06-24T10:05:52.148863873Z time="2021-06-24T10:05:52.148313440Z" level=warning msg="[!] DON'T BIND ON ANY IP ADDRESS WITHOUT setting --tlsverify IF YOU DON'T KNOW WHAT YOU'RE DOING [!]"
-2021-06-24T10:05:52.161506730Z time="2021-06-24T10:05:52.161102596Z" level=info msg="libcontainerd: started new containerd process" pid=19
-2021-06-24T10:05:52.161563729Z time="2021-06-24T10:05:52.161173721Z" level=info msg="parsed scheme: \"unix\"" module=grpc
-2021-06-24T10:05:52.161568901Z time="2021-06-24T10:05:52.161184584Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" module=grpc
-2021-06-24T10:05:52.161573200Z time="2021-06-24T10:05:52.161216143Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///var/run/docker/containerd/containerd.sock 0  <nil>}] <nil>}" module=grpc
-2021-06-24T10:05:52.161577673Z time="2021-06-24T10:05:52.161236850Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
-2021-06-24T10:05:52.387845977Z time="2021-06-24T10:05:52.387720751Z" level=info msg="starting containerd" revision=7ad184331fa3e55e52b890ea95e65ba581ae3429 version=v1.2.13 
-2021-06-24T10:05:52.388273862Z time="2021-06-24T10:05:52.388219466Z" level=info msg="loading plugin "io.containerd.content.v1.content"..." type=io.containerd.content.v1 
-2021-06-24T10:05:52.388445469Z time="2021-06-24T10:05:52.388401844Z" level=info msg="loading plugin "io.containerd.snapshotter.v1.btrfs"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.388787754Z time="2021-06-24T10:05:52.388730630Z" level=warning msg="failed to load plugin io.containerd.snapshotter.v1.btrfs" error="path /var/lib/docker/containerd/daemon/io.containerd.snapshotter.v1.btrfs must be a btrfs filesystem to be used with the btrfs snapshotter" 
-2021-06-24T10:05:52.388850842Z time="2021-06-24T10:05:52.388816377Z" level=info msg="loading plugin "io.containerd.snapshotter.v1.aufs"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.418120727Z time="2021-06-24T10:05:52.417998969Z" level=warning msg="failed to load plugin io.containerd.snapshotter.v1.aufs" error="modprobe aufs failed: "ip: can't find device 'aufs'\nmodprobe: can't change directory to '/lib/modules': No such file or directory\n": exit status 1" 
-2021-06-24T10:05:52.418231456Z time="2021-06-24T10:05:52.418194536Z" level=info msg="loading plugin "io.containerd.snapshotter.v1.native"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.418446435Z time="2021-06-24T10:05:52.418397003Z" level=info msg="loading plugin "io.containerd.snapshotter.v1.overlayfs"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.418740749Z time="2021-06-24T10:05:52.418689135Z" level=info msg="loading plugin "io.containerd.snapshotter.v1.zfs"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.419267518Z time="2021-06-24T10:05:52.419211872Z" level=info msg="skip loading plugin "io.containerd.snapshotter.v1.zfs"..." type=io.containerd.snapshotter.v1 
-2021-06-24T10:05:52.419328000Z time="2021-06-24T10:05:52.419294463Z" level=info msg="loading plugin "io.containerd.metadata.v1.bolt"..." type=io.containerd.metadata.v1 
-2021-06-24T10:05:52.419464442Z time="2021-06-24T10:05:52.419419274Z" level=warning msg="could not use snapshotter btrfs in metadata plugin" error="path /var/lib/docker/containerd/daemon/io.containerd.snapshotter.v1.btrfs must be a btrfs filesystem to be used with the btrfs snapshotter" 
-2021-06-24T10:05:52.419529962Z time="2021-06-24T10:05:52.419485531Z" level=warning msg="could not use snapshotter aufs in metadata plugin" error="modprobe aufs failed: "ip: can't find device 'aufs'\nmodprobe: can't change directory to '/lib/modules': No such file or directory\n": exit status 1" 
-2021-06-24T10:05:52.419597916Z time="2021-06-24T10:05:52.419559730Z" level=warning msg="could not use snapshotter zfs in metadata plugin" error="path /var/lib/docker/containerd/daemon/io.containerd.snapshotter.v1.zfs must be a zfs filesystem to be used with the zfs snapshotter: skip plugin" 
-2021-06-24T10:05:52.438304473Z time="2021-06-24T10:05:52.438186959Z" level=info msg="loading plugin "io.containerd.differ.v1.walking"..." type=io.containerd.differ.v1 
-2021-06-24T10:05:52.438623679Z time="2021-06-24T10:05:52.438559545Z" level=info msg="loading plugin "io.containerd.gc.v1.scheduler"..." type=io.containerd.gc.v1 
-2021-06-24T10:05:52.438761843Z time="2021-06-24T10:05:52.438721790Z" level=info msg="loading plugin "io.containerd.service.v1.containers-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.438835398Z time="2021-06-24T10:05:52.438805621Z" level=info msg="loading plugin "io.containerd.service.v1.content-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.438915393Z time="2021-06-24T10:05:52.438883168Z" level=info msg="loading plugin "io.containerd.service.v1.diff-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.438994893Z time="2021-06-24T10:05:52.438942528Z" level=info msg="loading plugin "io.containerd.service.v1.images-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.439051733Z time="2021-06-24T10:05:52.439026457Z" level=info msg="loading plugin "io.containerd.service.v1.leases-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.439124087Z time="2021-06-24T10:05:52.439093723Z" level=info msg="loading plugin "io.containerd.service.v1.namespaces-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.439191954Z time="2021-06-24T10:05:52.439148257Z" level=info msg="loading plugin "io.containerd.service.v1.snapshots-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.439276167Z time="2021-06-24T10:05:52.439242090Z" level=info msg="loading plugin "io.containerd.runtime.v1.linux"..." type=io.containerd.runtime.v1 
-2021-06-24T10:05:52.439651926Z time="2021-06-24T10:05:52.439585487Z" level=info msg="loading plugin "io.containerd.runtime.v2.task"..." type=io.containerd.runtime.v2 
-2021-06-24T10:05:52.439879959Z time="2021-06-24T10:05:52.439836033Z" level=info msg="loading plugin "io.containerd.monitor.v1.cgroups"..." type=io.containerd.monitor.v1 
-2021-06-24T10:05:52.440537605Z time="2021-06-24T10:05:52.440462204Z" level=info msg="loading plugin "io.containerd.service.v1.tasks-service"..." type=io.containerd.service.v1 
-2021-06-24T10:05:52.440666192Z time="2021-06-24T10:05:52.440610610Z" level=info msg="loading plugin "io.containerd.internal.v1.restart"..." type=io.containerd.internal.v1 
-2021-06-24T10:05:52.441406964Z time="2021-06-24T10:05:52.441347360Z" level=info msg="loading plugin "io.containerd.grpc.v1.containers"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441503748Z time="2021-06-24T10:05:52.441444460Z" level=info msg="loading plugin "io.containerd.grpc.v1.content"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441589092Z time="2021-06-24T10:05:52.441556258Z" level=info msg="loading plugin "io.containerd.grpc.v1.diff"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441664129Z time="2021-06-24T10:05:52.441632746Z" level=info msg="loading plugin "io.containerd.grpc.v1.events"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441739237Z time="2021-06-24T10:05:52.441706260Z" level=info msg="loading plugin "io.containerd.grpc.v1.healthcheck"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441813044Z time="2021-06-24T10:05:52.441782477Z" level=info msg="loading plugin "io.containerd.grpc.v1.images"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441880682Z time="2021-06-24T10:05:52.441837054Z" level=info msg="loading plugin "io.containerd.grpc.v1.leases"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.441963447Z time="2021-06-24T10:05:52.441929050Z" level=info msg="loading plugin "io.containerd.grpc.v1.namespaces"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.442035184Z time="2021-06-24T10:05:52.442006659Z" level=info msg="loading plugin "io.containerd.internal.v1.opt"..." type=io.containerd.internal.v1 
-2021-06-24T10:05:52.467392730Z time="2021-06-24T10:05:52.467278784Z" level=info msg="loading plugin "io.containerd.grpc.v1.snapshots"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.467531187Z time="2021-06-24T10:05:52.467472378Z" level=info msg="loading plugin "io.containerd.grpc.v1.tasks"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.467643461Z time="2021-06-24T10:05:52.467607226Z" level=info msg="loading plugin "io.containerd.grpc.v1.version"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.467720468Z time="2021-06-24T10:05:52.467688775Z" level=info msg="loading plugin "io.containerd.grpc.v1.introspection"..." type=io.containerd.grpc.v1 
-2021-06-24T10:05:52.468055150Z time="2021-06-24T10:05:52.468004109Z" level=info msg=serving... address="/var/run/docker/containerd/containerd-debug.sock" 
-2021-06-24T10:05:52.468239214Z time="2021-06-24T10:05:52.468193099Z" level=info msg=serving... address="/var/run/docker/containerd/containerd.sock" 
-2021-06-24T10:05:52.468291217Z time="2021-06-24T10:05:52.468266478Z" level=info msg="containerd successfully booted in 0.081900s" 
-2021-06-24T10:05:52.524221951Z time="2021-06-24T10:05:52.524101923Z" level=info msg="Setting the storage driver from the $DOCKER_DRIVER environment variable (overlay2)"
-2021-06-24T10:05:52.524642077Z time="2021-06-24T10:05:52.524556266Z" level=info msg="parsed scheme: \"unix\"" module=grpc
-2021-06-24T10:05:52.524755768Z time="2021-06-24T10:05:52.524692011Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" module=grpc
-2021-06-24T10:05:52.524850545Z time="2021-06-24T10:05:52.524788464Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///var/run/docker/containerd/containerd.sock 0  <nil>}] <nil>}" module=grpc
-2021-06-24T10:05:52.524935116Z time="2021-06-24T10:05:52.524881146Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
-2021-06-24T10:05:52.567623503Z time="2021-06-24T10:05:52.566914101Z" level=info msg="parsed scheme: \"unix\"" module=grpc
-2021-06-24T10:05:52.567643287Z time="2021-06-24T10:05:52.566937986Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" module=grpc
-2021-06-24T10:05:52.567655739Z time="2021-06-24T10:05:52.566970026Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///var/run/docker/containerd/containerd.sock 0  <nil>}] <nil>}" module=grpc
-2021-06-24T10:05:52.567662453Z time="2021-06-24T10:05:52.566981790Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
-2021-06-24T10:05:52.709978778Z time="2021-06-24T10:05:52.709844733Z" level=info msg="Loading containers: start."
-2021-06-24T10:05:52.725128551Z time="2021-06-24T10:05:52.724998889Z" level=warning msg="Running modprobe bridge br_netfilter failed with message: ip: can't find device 'bridge'\nbridge                167936  1 br_netfilter\nstp                    16384  1 bridge\nllc                    16384  2 bridge,stp\nip: can't find device 'br_netfilter'\nbr_netfilter           24576  0 \nbridge                167936  1 br_netfilter\nmodprobe: can't change directory to '/lib/modules': No such file or directory\n, error: exit status 1"
-2021-06-24T10:05:52.865615452Z time="2021-06-24T10:05:52.865473906Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.18.0.0/16. Daemon option --bip can be used to set a preferred IP address"
-2021-06-24T10:05:52.906072150Z time="2021-06-24T10:05:52.905951330Z" level=info msg="Loading containers: done."
-2021-06-24T10:05:53.045770959Z time="2021-06-24T10:05:53.045648527Z" level=info msg="Docker daemon" commit=48a66213fe graphdriver(s)=overlay2 version=19.03.12
-2021-06-24T10:05:53.046831750Z time="2021-06-24T10:05:53.046725087Z" level=info msg="Daemon has completed initialization"
-2021-06-24T10:05:53.103835086Z time="2021-06-24T10:05:53.102928199Z" level=info msg="API listen on [::]:2375"
-2021-06-24T10:05:53.104056767Z time="2021-06-24T10:05:53.103960074Z" level=info msg="API listen on /var/run/docker.sock"
-
-[0;33m*********[0;m
-
-[0KPulling docker image docker:19.03.12 ...
-[0;m[0KUsing docker image sha256:81f5749c9058a7284e6acd8e126f2b882765a17b9ead14422b51cde1a110b85c for docker:19.03.12 with digest docker@sha256:d41efe7ad0df5a709cfd4e627c7e45104f39bbc08b1b40d7fb718c562b3ce135 ...
-[0;msection_end:1624529185:prepare_executor[0Ksection_start:1624529185:prepare_script[0K[0K[36;1mPreparing environment[0;m
-[0;mRunning on runner-72989761-project-15036160-concurrent-0 via runner-72989761-srm-1624528819-0445dbe9...
-section_end:1624529185:prepare_script[0Ksection_start:1624529185:get_sources[0K[0K[36;1mGetting source from Git repository[0;m
-[0;m[32;1m$ eval "$CI_PRE_CLONE_SCRIPT"[0;m
-[32;1mFetching changes with git depth set to 50...[0;m
-Initialized empty Git repository in /builds/sue445/tanuki_reminder/.git/
-[32;1mCreated fresh repository.[0;m
-[32;1mChecking out bf689791 as master...[0;m
-
-[32;1mSkipping Git submodules setup[0;m
-section_end:1624529187:get_sources[0Ksection_start:1624529187:step_script[0K[0K[36;1mExecuting "step_script" stage of the job script[0;m
-[0;m[0KUsing docker image sha256:81f5749c9058a7284e6acd8e126f2b882765a17b9ead14422b51cde1a110b85c for docker:19.03.12 with digest docker@sha256:d41efe7ad0df5a709cfd4e627c7e45104f39bbc08b1b40d7fb718c562b3ce135 ...
-[0;m[32;1m$ export SOURCE_CODE=$PWD[0;m
-[32;1m$ if ! docker info &>/dev/null; then # collapsed multi-line command[0;m
-[32;1m$ function propagate_env_vars() { # collapsed multi-line command[0;m
-[32;1m$ docker pull --quiet "$CODE_QUALITY_IMAGE"[0;m
-registry.gitlab.com/gitlab-org/ci-cd/codequality:0.85.24
-[32;1m$ docker run \ # collapsed multi-line command[0;m
-section_end:1624529452:step_script[0Ksection_start:1624529452:upload_artifacts_on_success[0K[0K[36;1mUploading artifacts for successful job[0;m
-[0;m[32;1mUploading artifacts...[0;m
-gl-code-quality-report.html: found 1 matching files and directories[0;m 
-Uploading artifacts as "archive" to coordinator... ok[0;m  id[0;m=1373568132 responseStatus[0;m=201 Created token[0;m=TfoWRsCz
-[32;1mUploading artifacts...[0;m
-[0;33mWARNING: gl-code-quality-report.json: no matching files[0;m 
-[31;1mERROR: No files to upload                         [0;m 
-section_end:1624529456:upload_artifacts_on_success[0Ksection_start:1624529456:cleanup_file_variables[0K[0K[36;1mCleaning up file based variables[0;m
-[0;msection_end:1624529457:cleanup_file_variables[0K[32;1mJob succeeded
-[0;m
