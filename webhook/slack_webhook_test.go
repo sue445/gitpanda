@@ -59,7 +59,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 	s := NewSlackWebhook(
 		"xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000",
 		"",
-		&gitlab.URLParserParams{
+		&fetcher.ClientParams{
 			APIEndpoint:    "http://example.com/api/v4",
 			BaseURL:        "http://example.com",
 			PrivateToken:   "xxxxxxxxxx",

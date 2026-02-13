@@ -3,17 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"strings"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/cockroachdb/errors"
-	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/webhook"
-	"net/http"
-	"os"
-	"strings"
+	"github.com/sue445/gitpanda_fetcher"
 )
 
 func startLambda() {
@@ -80,11 +81,11 @@ func lambdaMain(body string) (string, error) {
 	s := webhook.NewSlackWebhook(
 		slackOAuthAccessToken,
 		slackVerificationToken,
-		&gitlab.URLParserParams{
+		&fetcher.ClientParams{
 			APIEndpoint:     gitlabAPIEndpoint,
 			BaseURL:         gitlabBaseURL,
 			PrivateToken:    gitlabPrivateToken,
-			GitPandaVersion: Version,
+			UserAgent:       fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version),
 			IsDebugLogging:  isDebugLogging,
 		},
 	)

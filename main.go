@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"github.com/sue445/gitpanda_fetcher"
-	"github.com/sue445/gitpanda/webhook"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/sue445/gitpanda/webhook"
+	"github.com/sue445/gitpanda_fetcher"
 )
 
 var (
@@ -112,11 +113,11 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 		s := webhook.NewSlackWebhook(
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
 			os.Getenv("SLACK_VERIFICATION_TOKEN"),
-			&gitlab.URLParserParams{
+			&fetcher.ClientParams{
 				APIEndpoint:     os.Getenv("GITLAB_API_ENDPOINT"),
 				BaseURL:         os.Getenv("GITLAB_BASE_URL"),
 				PrivateToken:    os.Getenv("GITLAB_PRIVATE_TOKEN"),
-				GitPandaVersion: Version,
+				UserAgent:       fmt.Sprintf("gitpanda/%s (+https://github.com/sue445/gitpanda)", Version),
 				IsDebugLogging:  isDebugLogging,
 			},
 		)

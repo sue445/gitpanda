@@ -9,7 +9,6 @@ import (
 	"github.com/cockroachdb/errors"
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
-	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/util"
 	"github.com/sue445/gitpanda_fetcher"
 	"golang.org/x/sync/errgroup"
@@ -19,12 +18,12 @@ import (
 type SlackWebhook struct {
 	slackOAuthAccessToken  string
 	slackVerificationToken string
-	gitLabURLParserParams  *gitlab.URLParserParams
+	fetcherClientParams    *fetcher.ClientParams
 }
 
 // NewSlackWebhook create new SlackWebhook instance
-func NewSlackWebhook(slackOAuthAccessToken string, slackVerificationToken string, gitLabURLParserParams *gitlab.URLParserParams) *SlackWebhook {
-	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, slackVerificationToken: slackVerificationToken, gitLabURLParserParams: gitLabURLParserParams}
+func NewSlackWebhook(slackOAuthAccessToken string, slackVerificationToken string, fetcherClientParams *fetcher.ClientParams) *SlackWebhook {
+	return &SlackWebhook{slackOAuthAccessToken: slackOAuthAccessToken, slackVerificationToken: slackVerificationToken, fetcherClientParams: fetcherClientParams}
 }
 
 // Request handles Slack event
@@ -62,7 +61,7 @@ func (s *SlackWebhook) Request(body string, truncateLines int) (string, error) {
 }
 
 func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, truncateLines int) (string, error) {
-	p, err := gitlab.NewGitlabURLParser(s.gitLabURLParserParams)
+	p, err := fetcher.NewClient(s.fetcherClientParams)
 
 	if err != nil {
 		return "Failed: NewGitlabURLParser", errors.WithStack(err)
@@ -75,7 +74,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	for _, link := range ev.Links {
 		url := link.URL
 		eg.Go(func() error {
-			page, err := util.WithDebugLogging("FetchURL", s.gitLabURLParserParams.IsDebugLogging, func() (*gitlab.Page, error) {
+			page, err := util.WithDebugLogging("FetchURL", s.fetcherClientParams.IsDebugLogging, func() (*fetcher.Page, error) {
 				page, err := p.FetchURL(url)
 				if err != nil {
 					return nil, errors.WithStack(err)
@@ -111,7 +110,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 			}
 
 			if page.Color == "" {
-				attachment.Color = gitlab.BrandColor
+				attachment.Color = fetcher.BrandColor
 			} else {
 				attachment.Color = page.Color
 			}
@@ -137,7 +136,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 		return "do nothing", nil
 	}
 
-	_, err = util.WithDebugLogging("UnfurlMessage", s.gitLabURLParserParams.IsDebugLogging, func() (*interface{}, error) {
+	_, err = util.WithDebugLogging("UnfurlMessage", s.fetcherClientParams.IsDebugLogging, func() (*interface{}, error) {
 		api := slack.New(s.slackOAuthAccessToken)
 		_, _, _, err = api.UnfurlMessage(ev.Channel, ev.MessageTimeStamp, unfurls)
 		if err != nil {
