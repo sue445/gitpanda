@@ -114,11 +114,11 @@ func normalHandler(w http.ResponseWriter, r *http.Request) {
 			os.Getenv("SLACK_OAUTH_ACCESS_TOKEN"),
 			os.Getenv("SLACK_VERIFICATION_TOKEN"),
 			&fetcher.ClientParams{
-				APIEndpoint:     os.Getenv("GITLAB_API_ENDPOINT"),
-				BaseURL:         os.Getenv("GITLAB_BASE_URL"),
-				PrivateToken:    os.Getenv("GITLAB_PRIVATE_TOKEN"),
-				UserAgent:       getUserAgent(),
-				IsDebugLogging:  isDebugLogging,
+				APIEndpoint:    os.Getenv("GITLAB_API_ENDPOINT"),
+				BaseURL:        os.Getenv("GITLAB_BASE_URL"),
+				PrivateToken:   os.Getenv("GITLAB_PRIVATE_TOKEN"),
+				UserAgent:      getUserAgent(),
+				IsDebugLogging: isDebugLogging,
 			},
 		)
 		response, err := s.Request(body, truncateLines)

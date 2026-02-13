@@ -82,11 +82,11 @@ func lambdaMain(body string) (string, error) {
 		slackOAuthAccessToken,
 		slackVerificationToken,
 		&fetcher.ClientParams{
-			APIEndpoint:     gitlabAPIEndpoint,
-			BaseURL:         gitlabBaseURL,
-			PrivateToken:    gitlabPrivateToken,
-			UserAgent:       getUserAgent(),
-			IsDebugLogging:  isDebugLogging,
+			APIEndpoint:    gitlabAPIEndpoint,
+			BaseURL:        gitlabBaseURL,
+			PrivateToken:   gitlabPrivateToken,
+			UserAgent:      getUserAgent(),
+			IsDebugLogging: isDebugLogging,
 		},
 	)
 	response, err := s.Request(body, truncateLines)
