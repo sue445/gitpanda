@@ -1,8 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.3...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.0...main)
+
+## [v1.0.0](https://github.com/sue445/gitpanda/releases/tag/v1.0.0)
+[full changelog](http://github.com/sue445/gitpanda/compare/v0.14.3...v1.0.0)
 
 * :bomb: **[BREAKING CHANGE]** Migrate `github.com/sue445/gitpanda/gitlab/` to `github.com/sue445/gitpanda_fetcher`
   * https://github.com/sue445/gitpanda/pull/1972
+* Upgrade dependencies
 
 ## [v0.14.3](https://github.com/sue445/gitpanda/releases/tag/v0.14.3)
 [full changelog](http://github.com/sue445/gitpanda/compare/v0.14.2...v0.14.3)
