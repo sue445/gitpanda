@@ -1,13 +1,14 @@
 package webhook
 
 import (
+	"net/http"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/sue445/gitpanda/gitlab"
 	"github.com/sue445/gitpanda/testutil"
-	"net/http"
-	"testing"
+	"github.com/sue445/gitpanda_fetcher"
 )
 
 func TestSlackWebhook_Request(t *testing.T) {
@@ -26,22 +27,22 @@ func TestSlackWebhook_Request(t *testing.T) {
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/project.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/project.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fdiaspora-project-site/merge_requests/1",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/merge_request.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/merge_request.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/users?username=john_smith",
-		httpmock.NewStringResponder(200, testutil.ReadTestData("../gitlab/testdata/users.json")),
+		httpmock.NewStringResponder(200, testutil.ReadTestData("testdata/gitlab/users.json")),
 	)
 	httpmock.RegisterResponder(
 		"GET",
 		"http://example.com/api/v4/projects/diaspora%2Fmissing-repo",
-		httpmock.NewStringResponder(404, testutil.ReadTestData("../gitlab/testdata/project_not_found.json")),
+		httpmock.NewStringResponder(404, testutil.ReadTestData("testdata/gitlab/project_not_found.json")),
 	)
 
 	httpmock.RegisterResponder(
@@ -58,7 +59,7 @@ func TestSlackWebhook_Request(t *testing.T) {
 	s := NewSlackWebhook(
 		"xoxp-0000000000-0000000000-000000000000-00000000000000000000000000000000",
 		"",
-		&gitlab.URLParserParams{
+		&fetcher.ClientParams{
 			APIEndpoint:    "http://example.com/api/v4",
 			BaseURL:        "http://example.com",
 			PrivateToken:   "xxxxxxxxxx",
@@ -118,6 +119,62 @@ func TestSlackWebhook_Request(t *testing.T) {
 			if assert.NoError(t, err) {
 				assert.Equal(t, tt.want, got)
 			}
+		})
+	}
+}
+
+func TestSlackWebhook_FormatFooter(t *testing.T) {
+	type fields struct {
+		FooterTitle string
+		FooterURL   string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+		{
+			name: "title and url",
+			fields: fields{
+				FooterTitle: "GitHub",
+				FooterURL:   "https://github.com/",
+			},
+			want: "<https://github.com/|GitHub>",
+		},
+		{
+			name: "title only",
+			fields: fields{
+				FooterTitle: "GitHub",
+				FooterURL:   "",
+			},
+			want: "GitHub",
+		},
+		{
+			name: "url only",
+			fields: fields{
+				FooterTitle: "",
+				FooterURL:   "https://github.com/",
+			},
+			want: "https://github.com/",
+		},
+		{
+			name: "nothing",
+			fields: fields{
+				FooterTitle: "",
+				FooterURL:   "",
+			},
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			page := &fetcher.Page{
+				FooterTitle: tt.fields.FooterTitle,
+				FooterURL:   tt.fields.FooterURL,
+			}
+
+			got := FormatFooter(page)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
