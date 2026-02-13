@@ -39,3 +39,5 @@ updates:
     cooldown:
       default-days: 7
   ###########################################################
+      exclude:
+        - "github.com/sue445/gitpanda_fetcher"
