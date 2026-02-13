@@ -1,13 +1,14 @@
 package webhook
 
 import (
+	"net/http"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/testutil"
-	"net/http"
-	"testing"
+	"github.com/sue445/gitpanda_fetcher"
 )
 
 func TestSlackWebhook_Request(t *testing.T) {
@@ -118,6 +119,62 @@ func TestSlackWebhook_Request(t *testing.T) {
 			if assert.NoError(t, err) {
 				assert.Equal(t, tt.want, got)
 			}
+		})
+	}
+}
+
+func TestSlackWebhook_FormatFooter(t *testing.T) {
+	type fields struct {
+		FooterTitle string
+		FooterURL   string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+		{
+			name: "title and url",
+			fields: fields{
+				FooterTitle: "GitHub",
+				FooterURL:   "https://github.com/",
+			},
+			want: "<https://github.com/|GitHub>",
+		},
+		{
+			name: "title only",
+			fields: fields{
+				FooterTitle: "GitHub",
+				FooterURL:   "",
+			},
+			want: "GitHub",
+		},
+		{
+			name: "url only",
+			fields: fields{
+				FooterTitle: "",
+				FooterURL:   "https://github.com/",
+			},
+			want: "https://github.com/",
+		},
+		{
+			name: "nothing",
+			fields: fields{
+				FooterTitle: "",
+				FooterURL:   "",
+			},
+			want: "",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			page := &fetcher.Page{
+				FooterTitle: tt.fields.FooterTitle,
+				FooterURL:   tt.fields.FooterURL,
+			}
+
+			got := FormatFooter(page)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

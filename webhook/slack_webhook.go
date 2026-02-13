@@ -3,15 +3,16 @@ package webhook
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
+	"sync"
+
 	"github.com/cockroachdb/errors"
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
 	"github.com/sue445/gitpanda/gitlab"
-	"github.com/sue445/gitpanda_fetcher"
 	"github.com/sue445/gitpanda/util"
+	"github.com/sue445/gitpanda_fetcher"
 	"golang.org/x/sync/errgroup"
-	"strconv"
-	"sync"
 )
 
 // SlackWebhook represents Slack webhook
@@ -101,7 +102,7 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 				AuthorName: page.AuthorName,
 				AuthorIcon: page.AuthorAvatarURL,
 				Text:       description,
-				Footer:     page.FormatFooter(),
+				Footer:     FormatFooter(page),
 				ThumbURL:   page.AvatarURL,
 			}
 
@@ -150,4 +151,19 @@ func (s *SlackWebhook) requestLinkSharedEvent(ev *slackevents.LinkSharedEvent, t
 	}
 
 	return "ok", nil
+}
+
+// FormatFooter returns formatted footer for slack
+func FormatFooter(page *fetcher.Page) string {
+	if page.FooterURL != "" {
+		if page.FooterTitle != "" {
+			return fmt.Sprintf("<%s|%s>", page.FooterURL, page.FooterTitle)
+		}
+		return page.FooterURL
+	}
+
+	if page.FooterTitle != "" {
+		return page.FooterTitle
+	}
+	return ""
 }
