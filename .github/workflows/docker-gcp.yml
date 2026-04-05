@@ -87,7 +87,7 @@ jobs:
           IMAGE_ID: ${{ steps.build.outputs.imageid }}
 
       - name: Slack Notification
-        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
+        uses: act10ns/slack@d96404edccc6d6467fc7f8134a420c851b1e9054 # v2.2.0
         if: always()
         continue-on-error: true
         with:
@@ -128,7 +128,7 @@ jobs:
           metadata: .github/cloud_run-service.yml
 
       - name: Slack Notification
-        uses: act10ns/slack@cfcc30955fe9377f4f55e1079e5419ee1014269f # v2
+        uses: act10ns/slack@d96404edccc6d6467fc7f8134a420c851b1e9054 # v2.2.0
         if: always()
         continue-on-error: true
         with:
