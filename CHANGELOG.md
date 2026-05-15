@@ -1,5 +1,11 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.1...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.2...main)
+
+## [v1.0.2](https://github.com/sue445/gitpanda/releases/tag/v1.0.2)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.1...v1.0.2)
+
+* [GHSA-gxhx-2686-5h9g] build(deps): bump github.com/slack-go/slack from 0.23.0 to 0.23.1
+  * https://github.com/sue445/gitpanda/pull/2029
 
 ## [v1.0.1](https://github.com/sue445/gitpanda/releases/tag/v1.0.1)
 [full changelog](http://github.com/sue445/gitpanda/compare/v1.0.0...v1.0.1)
