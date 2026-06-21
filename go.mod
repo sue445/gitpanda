@@ -10,7 +10,7 @@ require (
 	github.com/cockroachdb/errors v1.13.0
 	github.com/getsentry/sentry-go v0.46.2
 	github.com/jarcoal/httpmock v1.4.1
-	github.com/slack-go/slack v0.25.0
+	github.com/slack-go/slack v0.26.0
 	github.com/stretchr/testify v1.11.1
 	github.com/sue445/gitpanda_fetcher v1.0.0
 	golang.org/x/sync v0.21.0
