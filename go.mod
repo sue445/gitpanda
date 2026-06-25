@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.42.0
 	github.com/aws/aws-sdk-go-v2/config v1.32.25
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.69.3
-	github.com/cockroachdb/errors v1.13.0
+	github.com/cockroachdb/errors v1.14.0
 	github.com/getsentry/sentry-go v0.47.0
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/slack-go/slack v0.26.0
