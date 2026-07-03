@@ -8,7 +8,6 @@
 [![docker-gcp](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml/badge.svg)](https://github.com/sue445/gitpanda/actions/workflows/docker-gcp.yml)
 [![Maintainability](https://qlty.sh/gh/sue445/projects/gitpanda/maintainability.svg)](https://qlty.sh/gh/sue445/projects/gitpanda)
 [![Coverage Status](https://coveralls.io/repos/github/sue445/gitpanda/badge.svg)](https://coveralls.io/github/sue445/gitpanda)
-[![Go Report Card](https://goreportcard.com/badge/github.com/sue445/gitpanda)](https://goreportcard.com/report/github.com/sue445/gitpanda)
 
 ## Example
 ![example1](img/example1.png)
