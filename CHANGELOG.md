@@ -6,6 +6,7 @@
 
 * [CVE-2026-56852] Upgrade to golang.org/x/text@v0.40.0
   * https://github.com/sue445/gitpanda/pull/2078
+* Upgrade dependencies
 
 ## [v1.0.2](https://github.com/sue445/gitpanda/releases/tag/v1.0.2)
 [full changelog](http://github.com/sue445/gitpanda/compare/v1.0.1...v1.0.2)
