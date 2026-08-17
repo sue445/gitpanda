@@ -11,7 +11,7 @@ require (
 	github.com/getsentry/sentry-go v0.48.0
 	github.com/jarcoal/httpmock v1.4.2
 	github.com/slack-go/slack v0.27.0
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.0
 	github.com/sue445/gitpanda_fetcher v1.0.0
 	golang.org/x/sync v0.22.0
 )
@@ -32,7 +32,6 @@ require (
 	github.com/aws/smithy-go v1.27.7 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20241215232642-bb51bb14a506 // indirect
 	github.com/cockroachdb/redact v1.1.6 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
@@ -41,7 +40,6 @@ require (
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	gitlab.com/gitlab-org/api/client-go v1.31.0 // indirect
 	golang.org/x/oauth2 v0.35.0 // indirect
