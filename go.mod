@@ -12,7 +12,7 @@ require (
 	github.com/jarcoal/httpmock v1.4.2
 	github.com/slack-go/slack v0.27.0
 	github.com/stretchr/testify v1.12.0
-	github.com/sue445/gitpanda_fetcher v1.0.0
+	github.com/sue445/gitpanda_fetcher v1.0.1
 	golang.org/x/sync v0.22.0
 )
 
@@ -41,7 +41,7 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	gitlab.com/gitlab-org/api/client-go v1.31.0 // indirect
+	gitlab.com/gitlab-org/api/client-go v1.46.0 // indirect
 	golang.org/x/oauth2 v0.35.0 // indirect
 	golang.org/x/sys v0.45.0 // indirect
 	golang.org/x/text v0.40.0 // indirect
