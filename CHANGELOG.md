@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.3...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.4...main)
+
+## [v1.0.4](https://github.com/sue445/gitpanda/releases/tag/v1.0.4)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.3...v1.0.4)
+
+* Upgrade to Go 1.27 :rocket:
+  * https://github.com/sue445/gitpanda/pull/2104
+* Upgrade dependencies
 
 ## [v1.0.3](https://github.com/sue445/gitpanda/releases/tag/v1.0.3)
 [full changelog](http://github.com/sue445/gitpanda/compare/v1.0.2...v1.0.3)
