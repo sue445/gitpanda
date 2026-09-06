@@ -4,7 +4,7 @@ go 1.27
 
 require (
 	github.com/aws/aws-lambda-go v1.55.0
-	github.com/aws/aws-sdk-go-v2 v1.45.0
+	github.com/aws/aws-sdk-go-v2 v1.45.1
 	github.com/aws/aws-sdk-go-v2/config v1.33.0
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.75.0
 	github.com/cockroachdb/errors v1.14.0
