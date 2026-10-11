@@ -13,7 +13,7 @@ require (
 	github.com/slack-go/slack v0.29.0
 	github.com/stretchr/testify v1.12.1
 	github.com/sue445/gitpanda_fetcher v1.0.2
-	golang.org/x/sync v0.23.0
+	golang.org/x/sync v0.24.0
 )
 
 require (
