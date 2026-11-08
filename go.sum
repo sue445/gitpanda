@@ -86,8 +86,8 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
 github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7so1lCWt35ZSgc=
-github.com/slack-go/slack v0.32.0 h1:N9zo22Hoz5Hx+rXwtRZSdkJP/3FrQ24eBGSf3A5S3EE=
-github.com/slack-go/slack v0.32.0/go.mod h1:ph5iUlM1bUhqOeRynzryiWfkv6vVElt5JbhXbhtApsI=
+github.com/slack-go/slack v0.33.0 h1:9pEEf1KbdlydQKuro3pyUcq6mVR6Ozwy1dOOn/GgK2I=
+github.com/slack-go/slack v0.33.0/go.mod h1:ph5iUlM1bUhqOeRynzryiWfkv6vVElt5JbhXbhtApsI=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
 github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
 github.com/sue445/gitpanda_fetcher v1.0.2 h1:DkIbsrP+wX8RiSgZthnSY0MZhHDRlznyNh5NGMvVJoY=
