@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.4...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.5...main)
+
+## [v1.0.5](https://github.com/sue445/gitpanda/releases/tag/v1.0.5)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.4...v1.0.5)
+
+* Introduce gosec
+  * https://github.com/sue445/gitpanda/pull/2195
+* Upgrade dependencies
 
 ## [v1.0.4](https://github.com/sue445/gitpanda/releases/tag/v1.0.4)
 [full changelog](http://github.com/sue445/gitpanda/compare/v1.0.3...v1.0.4)
