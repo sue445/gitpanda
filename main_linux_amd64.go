@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
@@ -38,7 +39,11 @@ func main() {
 	fmt.Printf("gitpanda started: port=%s\n", port)
 	http.HandleFunc("/", sentryClient.HandleFunc(normalHandler))
 
-	err = http.ListenAndServe(":"+port, nil)
+	server := &http.Server{
+		Addr:              ":" + port,
+		ReadHeaderTimeout: 5 * time.Second,
+	}
+	err = server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
