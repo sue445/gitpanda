@@ -10,7 +10,7 @@ require (
 	github.com/cockroachdb/errors v1.14.0
 	github.com/getsentry/sentry-go v0.50.0
 	github.com/jarcoal/httpmock v1.4.2
-	github.com/slack-go/slack v0.35.0
+	github.com/slack-go/slack v0.36.0
 	github.com/stretchr/testify v1.12.1
 	github.com/sue445/gitpanda_fetcher v1.0.2
 	golang.org/x/sync v0.25.0
@@ -42,7 +42,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	gitlab.com/gitlab-org/api/client-go/v3 v3.12.0 // indirect
-	go.yaml.in/yaml/v3 v3.0.5 // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 	golang.org/x/text v0.41.0 // indirect
