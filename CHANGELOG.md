@@ -1,5 +1,12 @@
 ## Unreleased
-[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.5...main)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.1.0...main)
+
+## [v1.0.5](https://github.com/sue445/gitpanda/releases/tag/v1.1.0)
+[full changelog](http://github.com/sue445/gitpanda/compare/v1.0.5...v1.1.0)
+
+* Migrate Docker image to Distroless
+  * https://github.com/sue445/gitpanda/pull/2203
+* Upgrade dependencies
 
 ## [v1.0.5](https://github.com/sue445/gitpanda/releases/tag/v1.0.5)
 [full changelog](http://github.com/sue445/gitpanda/compare/v1.0.4...v1.0.5)
