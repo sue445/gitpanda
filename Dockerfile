@@ -5,7 +5,7 @@ WORKDIR /work
 
 RUN make
 
-FROM debian:bookworm-slim
+FROM gcr.io/distroless/base-debian12
 COPY --from=build-env /work/bin/gitpanda /app/gitpanda
 COPY --from=build-env /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
